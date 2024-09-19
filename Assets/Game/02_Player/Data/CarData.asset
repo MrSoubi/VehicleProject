@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72b10103a4fdb5750ac95b17358010f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 75adc13fb3d111f4790c8e0cec79af85, type: 3}
   m_Name: CarData
   m_EditorClassIdentifier: 
   powerCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0.5
+      time: -0.0073891627
+      value: 0.23541248
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -25,31 +25,22 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.36987722
-      value: 0.87588
-      inSlope: 0.8178323
-      outSlope: 0.8178323
-      tangentMode: 0
+      time: 0.5344654
+      value: 0.91202146
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.86157906
-      value: 0.9587274
-      inSlope: -0.01453575
-      outSlope: -0.01453575
-      tangentMode: 0
+      time: 1.0065682
+      value: 0.5955734
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
       weightedMode: 0
-      inWeight: 0.11884864
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.5
-      inSlope: -0.20890476
-      outSlope: -0.20890476
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.22369921
+      inWeight: 0.33333334
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

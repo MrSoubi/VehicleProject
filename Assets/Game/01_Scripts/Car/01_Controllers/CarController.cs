@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
 
     [SerializeField] private SO_Car data;
-    [SerializeField] private SO_PlayerInput input;
+    //[SerializeField] private SO_PlayerInput input;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CinemachineVirtualCamera vCamera;
     [SerializeField] private int playerIndex;

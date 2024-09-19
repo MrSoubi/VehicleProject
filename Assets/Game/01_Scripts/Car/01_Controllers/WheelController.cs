@@ -9,7 +9,7 @@ public class WheelController : MonoBehaviour
     [SerializeField] private Rigidbody carRigidBody;
     [SerializeField] private Transform carTransform;
     [SerializeField] private SO_Car carData;
-    [SerializeField] private SO_PlayerInput input;
+    //[SerializeField] private SO_PlayerInput input;
     [SerializeField] private SO_Wheel data;
     [SerializeField] private GameObject mesh;
     [SerializeField] private int playerIndex;
@@ -19,6 +19,7 @@ public class WheelController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate(){
         steerInput = 0.0f;
+
         if (data.isSteerable)
         {
             steerInput = Gamepad.all[playerIndex].leftStick.x.value;
@@ -67,7 +68,7 @@ public class WheelController : MonoBehaviour
     }
 
     public void Acceleration(RaycastHit tireRay){
-        float accelInput = Input.GetAxis(input.throttle) - Input.GetAxis(input.reverse);
+        float accelInput = Gamepad.all[playerIndex].rightTrigger.value - Gamepad.all[playerIndex].leftTrigger.value;
 
         Vector3 accelDir = transform.forward;
         if (Mathf.Abs(accelInput) > 0.0f){
