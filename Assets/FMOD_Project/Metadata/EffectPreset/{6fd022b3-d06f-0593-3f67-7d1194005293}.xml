@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EffectPreset" id="{6fd022b3-d06f-0593-3f67-7d1194005293}">
+		<property name="name">
+			<value>Send</value>
+		</property>
+		<relationship name="folder">
+			<destination>{e71a9a5c-6da0-02b2-3263-b4b0745b9e07}</destination>
+		</relationship>
+		<relationship name="effect">
+			<destination>{50b6ed4a-df4b-4750-beb7-7ce6989c8b9c}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{50b6ed4a-df4b-4750-beb7-7ce6989c8b9c}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{f79830ca-e288-4fc6-8b76-a3edb6c11955}</destination>
+		</relationship>
+	</object>
+</objects>

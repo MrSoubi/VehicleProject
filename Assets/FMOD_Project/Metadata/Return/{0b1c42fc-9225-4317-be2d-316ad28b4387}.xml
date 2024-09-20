@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerReturn" id="{0b1c42fc-9225-4317-be2d-316ad28b4387}">
+		<property name="volume">
+			<value>-80</value>
+		</property>
+		<property name="name">
+			<value>Bomb Effect</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{fa2e68ea-5b28-453f-8364-99abd8d069e4}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{6bcf3f03-4f25-4ab5-804c-44cf9aa141b0}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{6682bc33-6685-42bb-a4e8-dcecc81592b2}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{fa2e68ea-5b28-453f-8364-99abd8d069e4}">
+		<relationship name="effects">
+			<destination>{8916f0c8-df04-4c72-abaf-81057a7d2144}</destination>
+			<destination>{6d47cc73-95bc-483f-b542-0230d37ca328}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{6bcf3f03-4f25-4ab5-804c-44cf9aa141b0}" />
+	<object class="MixerBusFader" id="{8916f0c8-df04-4c72-abaf-81057a7d2144}" />
+	<object class="LowpassEffect" id="{6d47cc73-95bc-483f-b542-0230d37ca328}">
+		<property name="cutoff">
+			<value>22000</value>
+		</property>
+	</object>
+</objects>

@@ -68,13 +68,17 @@ public class WheelController : MonoBehaviour
     }
 
     public void Acceleration(RaycastHit tireRay){
+
         float accelInput = Gamepad.all[playerIndex].rightTrigger.value - Gamepad.all[playerIndex].leftTrigger.value;
 
         Vector3 accelDir = transform.forward;
         if (Mathf.Abs(accelInput) > 0.0f){
+
             float carSpeed = Vector3.Dot(carTransform.forward, carRigidBody.velocity);
             float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(carSpeed) / carData.maxSpeed);
+
             float availableTorque = carData.powerCurve.Evaluate(normalizedSpeed) * accelInput;
+
             carRigidBody.AddForceAtPosition(accelDir * availableTorque * carData.enginePower, transform.position);
         }
     }

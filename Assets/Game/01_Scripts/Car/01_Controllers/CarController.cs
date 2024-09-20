@@ -9,7 +9,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
 
     [SerializeField] private SO_Car data;
-    //[SerializeField] private SO_PlayerInput input;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CinemachineVirtualCamera vCamera;
     [SerializeField] private int playerIndex;
@@ -88,5 +87,13 @@ public class CarController : MonoBehaviour
     public bool IsReturned()
     {
         return Vector3.Dot(transform.up, Vector3.down) > 0.9f;
+    }
+
+    public float GetSpeedRatio()
+    {
+        float speed = rb.velocity.magnitude / data.maxSpeed;
+        float value = data.powerCurve.Evaluate(speed);
+
+        return value;
     }
 }

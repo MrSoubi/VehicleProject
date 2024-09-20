@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 2569716526169130096}
   - component: {fileID: 147987426915421233}
   - component: {fileID: 3082953932134429330}
+  - component: {fileID: 5523232050478036365}
   m_Layer: 3
   m_Name: Car
   m_TagString: Untagged
@@ -402,7 +403,6 @@ MonoBehaviour:
   - {fileID: 30160123384052064}
   - {fileID: 3408141145917575724}
   data: {fileID: 11400000, guid: 9c70bbb5529667796b3d711aafffeae1, type: 2}
-  input: {fileID: 11400000, guid: 97c5efb521752fa4f992593d534e8c5a, type: 2}
   rb: {fileID: 4382415354077227720}
   vCamera: {fileID: 8298256669932373382}
   playerIndex: 0
@@ -418,6 +418,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f12bffb31094994b85e2bcca30a7a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5523232050478036365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838750964252467126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a951ad0b23440d54aba43e9efc731b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carController: {fileID: 147987426915421233}
 --- !u!1 &1213381478673152861
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +632,6 @@ MonoBehaviour:
   carRigidBody: {fileID: 4382415354077227720}
   carTransform: {fileID: 8400388834002193049}
   carData: {fileID: 11400000, guid: 9c70bbb5529667796b3d711aafffeae1, type: 2}
-  input: {fileID: 11400000, guid: 97c5efb521752fa4f992593d534e8c5a, type: 2}
   data: {fileID: 11400000, guid: c6d886e44899ad2488622de08aec5e1f, type: 2}
   mesh: {fileID: 2867111839664212185}
   playerIndex: 0
@@ -1057,6 +1069,7 @@ GameObject:
   - component: {fileID: 2684221646109332913}
   - component: {fileID: 8156641419611469942}
   - component: {fileID: 8025456881861069187}
+  - component: {fileID: 6011192300448873075}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1072,8 +1085,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090665275393739237}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16313684, y: 0, z: 0, w: 0.9866035}
-  m_LocalPosition: {x: 0, y: 4.65, z: -10}
+  m_LocalRotation: {x: 0.12255864, y: 0.0000000015335629, z: -1.8937904e-10, w: 0.9924613}
+  m_LocalPosition: {x: -10.599999, y: 2.1299996, z: 40.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1208,6 +1221,19 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6011192300448873075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3090665275393739237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &3128637952259434161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,7 +1366,6 @@ MonoBehaviour:
   carRigidBody: {fileID: 4382415354077227720}
   carTransform: {fileID: 8400388834002193049}
   carData: {fileID: 11400000, guid: 9c70bbb5529667796b3d711aafffeae1, type: 2}
-  input: {fileID: 11400000, guid: 97c5efb521752fa4f992593d534e8c5a, type: 2}
   data: {fileID: 11400000, guid: 1d7d36a8a6c68ffeea40f307260a5933, type: 2}
   mesh: {fileID: 4285665526213699518}
   playerIndex: 0
@@ -1391,7 +1416,6 @@ MonoBehaviour:
   carRigidBody: {fileID: 4382415354077227720}
   carTransform: {fileID: 8400388834002193049}
   carData: {fileID: 11400000, guid: 9c70bbb5529667796b3d711aafffeae1, type: 2}
-  input: {fileID: 11400000, guid: 97c5efb521752fa4f992593d534e8c5a, type: 2}
   data: {fileID: 11400000, guid: c6d886e44899ad2488622de08aec5e1f, type: 2}
   mesh: {fileID: 8716203588534754138}
   playerIndex: 0
@@ -1813,7 +1837,6 @@ MonoBehaviour:
   carRigidBody: {fileID: 4382415354077227720}
   carTransform: {fileID: 8400388834002193049}
   carData: {fileID: 11400000, guid: 9c70bbb5529667796b3d711aafffeae1, type: 2}
-  input: {fileID: 11400000, guid: 97c5efb521752fa4f992593d534e8c5a, type: 2}
   data: {fileID: 11400000, guid: 1d7d36a8a6c68ffeea40f307260a5933, type: 2}
   mesh: {fileID: 2989327025497054480}
   playerIndex: 0
