@@ -13,6 +13,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera vCamera;
     [SerializeField] private int playerIndex;
 
+    // TODO: Serialize or set these parameters in the SO_Car
     float drag;
     float flippedSince;
 
@@ -75,12 +76,6 @@ public class CarController : MonoBehaviour
             }
 
             vCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 4;
-        }
-
-        // Boost
-        if (Gamepad.all[playerIndex].buttonEast.isPressed)
-        {
-            rb.AddForce(transform.forward * data.boostForce * Time.deltaTime);
         }
 
         // Recover the car if it's stuck for too long

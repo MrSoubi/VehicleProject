@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BoostController : MonoBehaviour
 {
     [SerializeField] Rigidbody carRigidBody;
     [SerializeField] CarController carController;
     [SerializeField] SO_Car data;
+    [SerializeField] int gamepadIndex;
 
-    public void Boost()
+    private void Update()
     {
-        carRigidBody.AddForce(carRigidBody.transform.forward * data.boostForce * Time.deltaTime);
+        if (Gamepad.all[gamepadIndex].buttonEast.isPressed)
+        {
+            carRigidBody.AddForce(carRigidBody.transform.forward * data.boostForce * Time.deltaTime);
+        }
     }
 }
