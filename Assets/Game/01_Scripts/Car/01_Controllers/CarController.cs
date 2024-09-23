@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class CarController : MonoBehaviour
 {
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
-
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CinemachineVirtualCamera vCamera;
@@ -18,6 +17,23 @@ public class CarController : MonoBehaviour
 
     private void Start()
     {
+        if (rb == null)
+        {
+            Debug.LogError("RigidBody not found on " + gameObject.name);
+        }
+        if (vCamera == null)
+        {
+            Debug.LogError("Virtual Camera not found on " + gameObject.name);
+        }
+        if (data == null)
+        {
+            Debug.LogError("Data not found on " + gameObject.name);
+        }
+        if (wheels.Count != 4)
+        {
+            Debug.LogWarning("Wheels not set correctly on " + gameObject.name);
+        }
+
         drag = rb.drag;
     }
 
@@ -95,5 +111,10 @@ public class CarController : MonoBehaviour
         float value = data.powerCurve.Evaluate(speed);
 
         return value;
+    }
+
+    public void Kill()
+    {
+        transform.position = Vector3.zero;
     }
 }
