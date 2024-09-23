@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private int playerIndex;
 
     float drag;
-    float returnedSince;
+    float flippedSince;
 
     private void Start()
     {
@@ -39,7 +40,7 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
-        // On air (or tilted)
+        // On air (or flipped)
         if (!IsGrounded())
         {
             rb.drag = 0.1f;
@@ -52,13 +53,13 @@ public class CarController : MonoBehaviour
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
 
             // Check is returned
-            if (IsReturned())
+            if (IsFlipped())
             {
-                returnedSince += Time.deltaTime;
+                flippedSince += Time.deltaTime;
             }
             else
             {
-                returnedSince = 0.0f;
+                flippedSince = 0.0f;
             }
 
             vCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 20;
@@ -82,12 +83,18 @@ public class CarController : MonoBehaviour
             rb.AddForce(transform.forward * data.boostForce * Time.deltaTime);
         }
 
-        // Apply force to tilt the car if it's stuck for too long
-        if (returnedSince > 2.0f)
+        // Recover the car if it's stuck for too long
+        if (flippedSince > 2.0f)
         {
-            rb.AddForceAtPosition((Vector3.up + Vector3.right / 2) * data.jumpForce /2, transform.position, ForceMode.Impulse);
-            returnedSince = 0.0f;
+            Recover();
         }
+    }
+
+    // TODO : Make the forces applied more effective to untilt the car
+    private void Recover()
+    {
+        rb.AddForceAtPosition((Vector3.up + Vector3.right / 2) * data.jumpForce / 2, transform.position, ForceMode.Impulse);
+        flippedSince = 0.0f;
     }
 
     public bool IsGrounded()
@@ -100,7 +107,7 @@ public class CarController : MonoBehaviour
         return result;
     }
 
-    public bool IsReturned()
+    public bool IsFlipped()
     {
         return Vector3.Dot(transform.up, Vector3.down) > 0.9f;
     }
