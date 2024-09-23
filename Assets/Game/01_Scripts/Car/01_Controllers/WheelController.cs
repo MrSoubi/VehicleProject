@@ -11,7 +11,7 @@ public class WheelController : MonoBehaviour
     [SerializeField] private SO_Car carData;
     [SerializeField] private SO_Wheel data;
     [SerializeField] private GameObject mesh;
-    [SerializeField] private int gamepadIndex;
+    public int gamepadIndex;
 
     float steerInput = 0.0f;
 
