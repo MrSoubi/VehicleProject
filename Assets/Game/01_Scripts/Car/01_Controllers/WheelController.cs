@@ -25,7 +25,7 @@ public class WheelController : MonoBehaviour
         }
         
         transform.rotation = carTransform.rotation;
-        transform.Rotate(transform.up, steerInput * 30.0f);
+        transform.Rotate(transform.up, data.steeringInputFactor.Evaluate(Mathf.Abs(steerInput)) * Mathf.Sign(steerInput) * data.maxSteeringAngle);
 
         if (data.isSteerable)
         {

@@ -14,4 +14,6 @@ public class SO_Wheel : ScriptableObject
     public bool isSteerable;
     public float wheelRadius;
     public float maxSuspensionDistance;
+    public float maxSteeringAngle;
+    public AnimationCurve steeringInputFactor;
 }

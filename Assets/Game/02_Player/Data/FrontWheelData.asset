@@ -21,3 +21,28 @@ MonoBehaviour:
   isSteerable: 1
   wheelRadius: 0.3
   maxSuspensionDistance: 0.4
+  maxSteeringAngle: 30
+  steeringInputFactor:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.026982382
+      outSlope: 0.026982382
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.101185076
+    - serializedVersion: 3
+      time: 0.99835795
+      value: 1
+      inSlope: 3.3257558
+      outSlope: 3.3257558
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.02545167
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
