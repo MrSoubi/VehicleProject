@@ -9,10 +9,9 @@ public class WheelController : MonoBehaviour
     [SerializeField] private Rigidbody carRigidBody;
     [SerializeField] private Transform carTransform;
     [SerializeField] private SO_Car carData;
-    //[SerializeField] private SO_PlayerInput input;
     [SerializeField] private SO_Wheel data;
     [SerializeField] private GameObject mesh;
-    [SerializeField] private int playerIndex;
+    [SerializeField] private int gamepadIndex;
 
     float steerInput = 0.0f;
 
@@ -22,7 +21,7 @@ public class WheelController : MonoBehaviour
 
         if (data.isSteerable)
         {
-            steerInput = Gamepad.all[playerIndex].leftStick.x.value;
+            steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
         }
         
         transform.rotation = carTransform.rotation;
@@ -69,7 +68,7 @@ public class WheelController : MonoBehaviour
 
     public void Acceleration(RaycastHit tireRay){
 
-        float accelInput = Gamepad.all[playerIndex].rightTrigger.value - Gamepad.all[playerIndex].leftTrigger.value;
+        float accelInput = Gamepad.all[gamepadIndex].rightTrigger.value - Gamepad.all[gamepadIndex].leftTrigger.value;
 
         Vector3 accelDir = transform.forward;
         if (Mathf.Abs(accelInput) > 0.0f){

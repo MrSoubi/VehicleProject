@@ -11,7 +11,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CinemachineVirtualCamera vCamera;
-    [SerializeField] private int playerIndex;
+    [SerializeField] private int gamepadIndex;
 
     // TODO: Serialize or set these parameters in the SO_Car
     float drag;
@@ -47,8 +47,8 @@ public class CarController : MonoBehaviour
             rb.drag = 0.1f;
 
             // Air control
-            float steerInput = Gamepad.all[playerIndex].leftStick.x.value;
-            float pitchInput = Gamepad.all[playerIndex].leftStick.y.value;
+            float steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
+            float pitchInput = Gamepad.all[gamepadIndex].leftStick.y.value;
 
             rb.AddTorque(transform.up * steerInput * data.airSteerForce);
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
@@ -70,7 +70,7 @@ public class CarController : MonoBehaviour
             rb.drag = drag;
 
             // Jump
-            if (Gamepad.all[playerIndex].buttonSouth.wasPressedThisFrame)
+            if (Gamepad.all[gamepadIndex].buttonSouth.wasPressedThisFrame)
             {
                 rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
             }
