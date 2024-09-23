@@ -11,7 +11,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CinemachineVirtualCamera vCamera;
-    [SerializeField] private int gamepadIndex;
+    public int gamepadIndex;
 
     // TODO: Serialize or set these parameters in the SO_Car
     float drag;
@@ -118,5 +118,19 @@ public class CarController : MonoBehaviour
     public void Kill()
     {
         transform.position = Vector3.zero;
+    }
+
+    public void setGamepadIndex(int gamepadIndex)
+    {
+        this.gamepadIndex = gamepadIndex;
+        foreach (WheelController wheel in wheels)
+        {
+            wheel.GetComponent<WheelController>().gamepadIndex = gamepadIndex;
+        }
+    }
+
+    public Camera GetCamera()
+    {
+        return GetComponentInChildren<Camera>();
     }
 }
