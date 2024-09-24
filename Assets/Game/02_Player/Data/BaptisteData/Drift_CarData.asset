@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75adc13fb3d111f4790c8e0cec79af85, type: 3}
-  m_Name: FirstTest_CarData
+  m_Name: Drift_CarData
   m_EditorClassIdentifier: 
   powerCurve:
     serializedVersion: 2
@@ -54,8 +54,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxSpeed: 30
-  enginePower: 15000
-  jumpForce: 8000
-  airSteerForce: 400
-  boostForce: 800000
+  maxSpeed: 35
+  enginePower: 225000
+  jumpForce: 100000
+  airSteerForce: 10000
+  boostForce: 10000000
