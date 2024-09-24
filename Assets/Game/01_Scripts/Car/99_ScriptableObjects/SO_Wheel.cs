@@ -16,4 +16,5 @@ public class SO_Wheel : ScriptableObject
     public float maxSuspensionDistance;
     public float maxSteeringAngle;
     public AnimationCurve steeringInputFactor;
+    public AnimationCurve steeringSpeedFactor;
 }
