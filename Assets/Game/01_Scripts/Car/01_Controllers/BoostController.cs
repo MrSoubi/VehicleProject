@@ -12,7 +12,7 @@ public class BoostController : MonoBehaviour
     [SerializeField] int gamepadIndex;
 
     [SerializeField] float maxBoostAmount = 100;
-    float currentBoostAmount = 100;
+    public float currentBoostAmount = 100;
     [SerializeField] float boostConsumptionPerSecond = 25;
 
     private void Update()
