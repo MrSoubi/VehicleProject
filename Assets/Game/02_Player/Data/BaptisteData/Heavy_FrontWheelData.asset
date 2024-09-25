@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab952e38fb07a34e88f8fca88e17892, type: 3}
   m_Name: Heavy_FrontWheelData
   m_EditorClassIdentifier: 
+  isMotorised: 1
   suspensionRestDir: 0.4
+  maxSuspensionDistance: 0.4
   springStrength: 15000
   springDamper: 2000
   tireGripFactor: 1.5
   tireMass: 15
-  isMotorised: 1
-  isSteerable: 1
   wheelRadius: 0.3
-  maxSuspensionDistance: 0.4
-  maxSteeringAngle: 13
+  isSteerable: 1
+  maxSteeringAngle: 14
   steeringInputFactor:
     serializedVersion: 2
     m_Curve:
