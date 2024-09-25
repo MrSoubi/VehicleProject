@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab952e38fb07a34e88f8fca88e17892, type: 3}
   m_Name: Drift_FrontWheelData
   m_EditorClassIdentifier: 
+  isMotorised: 1
   suspensionRestDir: 0.35
+  maxSuspensionDistance: 0.3
   springStrength: 100000
   springDamper: 100
   tireGripFactor: 1.5
   tireMass: 15
-  isMotorised: 1
-  isSteerable: 1
   wheelRadius: 0.3
-  maxSuspensionDistance: 0.3
+  isSteerable: 1
   maxSteeringAngle: 25
   steeringInputFactor:
     serializedVersion: 2
