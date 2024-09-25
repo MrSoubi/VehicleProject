@@ -8,7 +8,6 @@ public class BoostDebug : MonoBehaviour
     [SerializeField] BoostController controller;
     [SerializeField] TextMeshProUGUI textMeshPro;
 
-    // Update is called once per frame
     void Update()
     {
         textMeshPro.text = controller.currentBoostAmount.ToString();
