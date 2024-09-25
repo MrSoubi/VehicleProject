@@ -21,6 +21,7 @@ public class S_CarSwitch : MonoBehaviour
     private bool isRotating = false;
     private bool isRotatingRight = true;
     private int _currentPlayerID = 0;
+    private bool canRotate = true;
 
     private void Update()
     {
@@ -51,6 +52,7 @@ public class S_CarSwitch : MonoBehaviour
             else
             {
                 isRotating = false;
+                canRotate = true;
             }
         }
     }
@@ -90,42 +92,46 @@ public class S_CarSwitch : MonoBehaviour
         Debug.Log( $"Switch {ID}");
         if (context.performed)
         {
+            if (canRotate == true) {
+                float input = context.ReadValue<float>();
+                if (input > 0)
+                {
+                    canRotate = false;
+                    isRotating = true;
+                    isRotatingRight = true;
+                    totalRotation = 0f;
+
+                    players[context.control.device].carIDSelected += 1;
+
+                    if (players[context.control.device].carIDSelected == -1)
+                    {
+                        players[context.control.device].carIDSelected = _cars.Length - 1;
+                    }
+                    else if (players[context.control.device].carIDSelected == _cars.Length)
+                    {
+                        players[context.control.device].carIDSelected = 0;
+                    }
+                }
+                else if (input < 0)
+                {
+                    canRotate = false;
+                    isRotating = true;
+                    isRotatingRight = false;
+                    totalRotation = 0f;
+
+                    players[context.control.device].carIDSelected -= 1;
+
+                    if (players[context.control.device].carIDSelected == -1)
+                    {
+                        players[context.control.device].carIDSelected = _cars.Length - 1;
+                    }
+                    else if (players[context.control.device].carIDSelected == _cars.Length)
+                    {
+                        players[context.control.device].carIDSelected = 0;
+                    }
+                }
+            }
             
-            float input = context.ReadValue<float>();
-            if (input > 0) 
-            {
-                isRotating = true;
-                isRotatingRight = true;
-                totalRotation = 0f;
-
-                players[context.control.device].carIDSelected += 1;
-
-                if (players[context.control.device].carIDSelected == -1)
-                {
-                    players[context.control.device].carIDSelected = _cars.Length;
-                }
-                else if (players[context.control.device].carIDSelected == _cars.Length + 1)
-                {
-                    players[context.control.device].carIDSelected = 0;
-                }
-            }
-            else if (input < 0) 
-            {
-                isRotating = true;
-                isRotatingRight = false;
-                totalRotation = 0f;
-
-                players[context.control.device].carIDSelected -= 1;
-
-                if (players[context.control.device].carIDSelected == -1)
-                {
-                    players[context.control.device].carIDSelected = _cars.Length;
-                }
-                else if (players[context.control.device].carIDSelected == _cars.Length + 1)
-                {
-                    players[context.control.device].carIDSelected = 0;
-                }
-            }
             Debug.Log("car ID selected: " + players[context.control.device].carIDSelected);
             
         }
