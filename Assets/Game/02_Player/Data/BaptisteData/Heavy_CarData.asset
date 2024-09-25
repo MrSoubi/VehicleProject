@@ -57,5 +57,8 @@ MonoBehaviour:
   maxSpeed: 45
   enginePower: 32000
   jumpForce: 15500
-  airSteerForce: 1000
+  airSteerForce: 5000
   boostForce: 1000000
+  maxAngularVelocity: 4
+  angularDrag_NoInput: 1.5
+  angularDrag_Input: 0

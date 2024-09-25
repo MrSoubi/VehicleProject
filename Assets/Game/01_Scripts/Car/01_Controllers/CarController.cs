@@ -41,6 +41,8 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
+        rb.maxAngularVelocity = data.maxAngularVelocity;
+
         // On air (or flipped)
         if (!IsGrounded())
         {
@@ -53,6 +55,14 @@ public class CarController : MonoBehaviour
             rb.AddTorque(transform.up * steerInput * data.airSteerForce);
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
 
+            if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
+            {
+                rb.angularDrag = data.angularDrag_NoInput;
+            }
+            else
+            {
+                rb.angularDrag = data.angularDrag_Input;
+            }
             // Check is returned
             if (IsFlipped())
             {
