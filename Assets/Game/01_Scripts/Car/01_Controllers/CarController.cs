@@ -13,12 +13,16 @@ public class CarController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera vCamera;
     public int gamepadIndex;
 
+    Transform spawnTransform;
+
     // TODO: Serialize or set these parameters in the SO_Car
     float drag;
     float flippedSince;
 
     private void Start()
     {
+        spawnTransform = transform;
+
         if (rb == null)
         {
             Debug.LogError("RigidBody not found on " + gameObject.name);
@@ -128,7 +132,10 @@ public class CarController : MonoBehaviour
 
     public void Kill()
     {
-        transform.position = Vector3.zero;
+        transform.position = spawnTransform.position;
+        transform.rotation = spawnTransform.rotation;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     public void setGamepadIndex(int gamepadIndex)
