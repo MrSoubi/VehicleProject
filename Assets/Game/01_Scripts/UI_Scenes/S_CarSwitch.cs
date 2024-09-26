@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Linq;
+
 
 public class S_CarSwitch : MonoBehaviour
 {
@@ -10,140 +12,109 @@ public class S_CarSwitch : MonoBehaviour
     [SerializeField] private Camera[] _cameras;
     [SerializeField] private RawImage[] carDisplays;
     [SerializeField] private Transform _target;
-    [SerializeField] private float _rotationSpeed  = 30f;
+    [SerializeField] private float _rotationSpeed = 30f;
     public S_CarSelection S_CarSelection;
     private Dictionary<InputDevice, PlayerInfo> players => S_CarSelection.ReturnPlayerInfo();
 
-
-
-    private float totalRotation = 0f;
-
-    private bool isRotating = false;
-    private bool isRotatingRight = true;
-    private int _currentPlayerID = 0;
-    private bool canRotate = true;
+    [SerializeField] private S_InputEventCarSelection _inputEvent;
+    
 
     private void Update()
     {
-       
 
-        if (!isRotating) 
-        {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                isRotating = true;
-                isRotatingRight = true;
-                totalRotation = 0f;
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                isRotating = true;
-                isRotatingRight = false;
-                totalRotation = 0f;
-            }
-        }
 
-        if (isRotating)
-        {
-            if (totalRotation < 90f)
-            {
-                RotateAroundTarget(_currentPlayerID);
-            }
-            else
-            {
-                isRotating = false;
-                canRotate = true;
-            }
-        }
+        
+
     }
 
-    private void RotateAroundTarget(int CameraNumber)
+    private IEnumerator RotateCamera(int playerID, bool rotateRight)
     {
-       
-        float rotationThisFrame = _rotationSpeed * Time.deltaTime;
-       
-        if (totalRotation + rotationThisFrame >= 90f)
-        {
-            rotationThisFrame = 90f - totalRotation;
-            
-        }
-        Vector3 rotationDirection = isRotatingRight ? Vector3.down : Vector3.up;
-        
+        players[players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = true;
 
-        _cameras[CameraNumber].transform.RotateAround(_target.position, rotationDirection, rotationThisFrame);      
-        totalRotation += rotationThisFrame;    
-        
+        float totalRotation = 0f;
+
+        while (totalRotation < 90f)
+        {
+            float rotationThisFrame = _rotationSpeed * Time.deltaTime;
+
+            if (totalRotation + rotationThisFrame >= 90f)
+            {
+                rotationThisFrame = 90f - totalRotation;
+            }
+
+            Vector3 rotationDirection = rotateRight ? Vector3.down : Vector3.up;
+            _cameras[playerID].transform.RotateAround(_target.position, rotationDirection, rotationThisFrame);
+            totalRotation += rotationThisFrame;
+
+
+            yield return null;
+        }
+
+        players[players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = false;
     }
+    
 
     public void SwitchCar(InputAction.CallbackContext context)
     {
-        int ID = 0;
-        
-        foreach (var value in players)
+        int PlayerID = 0;
+        InputDevice currentDevice = context.control.device;
+
+        var playerInfo = players.FirstOrDefault(x => x.Key == currentDevice).Value;
+        if (playerInfo != null)
         {
-            if (value.Key == context.control.device)
-            {
-                ID = value.Value.playerId;
-                break;
-            }
+            PlayerID = playerInfo.playerId;
         }
-        _currentPlayerID = ID;
 
-        Debug.Log( $"Switch {ID}");
-        if (context.performed)
+        //foreach (var value in players)
+        //{
+        //    if (value.Key == currentDevice)
+        //    {
+        //        PlayerID = value.Value.playerId;
+        //        break;
+        //    }
+        //}
+
+        Debug.Log($"Switch {PlayerID}");
+
+        var matchingEntry = players.FirstOrDefault(x => x.Key == context.control.device && x.Value.isValidateSelection == false);
+
+        if (context.performed && matchingEntry.Value.isValidateSelection == false)
         {
-            if (canRotate == true) {
-                float input = context.ReadValue<float>();
-                if (input > 0)
+            float input = context.ReadValue<float>();
+            if (input != 0 && !players[currentDevice].isRotating)
+            {
+                StartCoroutine(RotateCamera(PlayerID, input > 0));
+
+                players[currentDevice].carIDSelected += input > 0 ? 1 : -1;
+
+                if (players[currentDevice].carIDSelected == -1)
                 {
-                    canRotate = false;
-                    isRotating = true;
-                    isRotatingRight = true;
-                    totalRotation = 0f;
-
-                    players[context.control.device].carIDSelected += 1;
-
-                    if (players[context.control.device].carIDSelected == -1)
-                    {
-                        players[context.control.device].carIDSelected = _cars.Length - 1;
-                    }
-                    else if (players[context.control.device].carIDSelected == _cars.Length)
-                    {
-                        players[context.control.device].carIDSelected = 0;
-                    }
+                    players[currentDevice].carIDSelected = _cars.Length - 1;
                 }
-                else if (input < 0)
+                else if (players[currentDevice].carIDSelected == _cars.Length)
                 {
-                    canRotate = false;
-                    isRotating = true;
-                    isRotatingRight = false;
-                    totalRotation = 0f;
-
-                    players[context.control.device].carIDSelected -= 1;
-
-                    if (players[context.control.device].carIDSelected == -1)
-                    {
-                        players[context.control.device].carIDSelected = _cars.Length - 1;
-                    }
-                    else if (players[context.control.device].carIDSelected == _cars.Length)
-                    {
-                        players[context.control.device].carIDSelected = 0;
-                    }
+                    players[currentDevice].carIDSelected = 0;
                 }
+
+                Debug.Log("car ID selected: " + players[currentDevice].carIDSelected);
             }
-            
-            Debug.Log("car ID selected: " + players[context.control.device].carIDSelected);
-            
         }
     }
+
+    
+
+
 
     public void OnValidateButtonPress(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            
-            
-        }
-    }
+        //var matchingEntry = players.FirstOrDefault(x => x.Key == context.control.device && x.Value.isValidateSelection == false);
 
+        if (context.performed && players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
+        {
+            InputDevice currentDevice = context.control.device;
+            players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = true;
+        }
+
+
+    }
 }

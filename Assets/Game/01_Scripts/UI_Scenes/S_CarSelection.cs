@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class S_CarSelection : MonoBehaviour
 {
@@ -10,13 +12,15 @@ public class S_CarSelection : MonoBehaviour
     [SerializeField] private GameObject[] textPressATojoin;
 
     private List<int> availablePanels = new List<int>(); 
-    private Dictionary<InputDevice, PlayerInfo> playerPanelMapping = new Dictionary<InputDevice, PlayerInfo>(); 
+    private Dictionary<InputDevice, PlayerInfo> playerPanelMapping = new Dictionary<InputDevice, PlayerInfo>();
+
+    [SerializeField] private S_InputEventCarSelection _inputEvent;
 
     private int nextPlayerId = 0; 
 
     private void Start()
     {
-        // Initialiser les panneaux comme inactifs
+        
         for (int i = 0; i < carSelectionPanels.Length; i++)
         {
             carSelectionPanels[i].SetActive(false);
@@ -24,9 +28,14 @@ public class S_CarSelection : MonoBehaviour
         }
 
     }
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void OnSouthButtonPress(InputAction.CallbackContext context)
     {
+        
         if (context.performed) 
         {
             var playerInput = context.control.device;
@@ -50,7 +59,7 @@ public class S_CarSelection : MonoBehaviour
                     carSelectionPanels[assignedPanel].SetActive(true);
                     textPressATojoin[assignedPanel].SetActive(false);
 
-                    
+                    //_inputEvent.UnsubscribeFromOnButtonPress();
 
                     Debug.Log($"Joueur {newPlayer.playerId} avec {playerInput.name} a été assigné au cadrant {assignedPanel + 1}");
                 }

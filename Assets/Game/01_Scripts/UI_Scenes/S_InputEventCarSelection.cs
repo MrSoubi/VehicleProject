@@ -9,19 +9,45 @@ public class S_InputEventCarSelection : MonoBehaviour
     public S_CarSwitch carSwitchManager;
     public PlayerInput playerInput;
 
+
     private void Awake()
     {
-        
-        playerInput.actions["Jump"].performed += carSelectionManager.OnSouthButtonPress;
-        playerInput.actions["Steer"].performed += carSwitchManager.SwitchCar;
-        playerInput.actions["Boost"].performed += carSwitchManager.OnValidateButtonPress;
+        SubscribeToCarSwitching();
     }
 
+    public void OnDestroy()
+    {
+        UnsubscribeFromAll();
+    }
 
-    private void OnDestroy()
+    public void SubscribeToCarSwitching()
+    {
+        playerInput.actions["Steer"].performed += carSwitchManager.SwitchCar;
+        playerInput.actions["Jump"].performed += carSelectionManager.OnSouthButtonPress;
+    }
+
+    public void UnsubscribeFromCarSwitching()
+    {
+        playerInput.actions["Steer"].performed -= carSwitchManager.SwitchCar;
+    }
+
+    public void SubscribeToCarValidation()
+    {
+        playerInput.actions["Jump"].performed += carSwitchManager.OnValidateButtonPress;
+    }
+
+    public void UnsubscribeFromOnButtonPress()
     {
         playerInput.actions["Jump"].performed -= carSelectionManager.OnSouthButtonPress;
+        playerInput.actions["Jump"].performed += carSwitchManager.OnValidateButtonPress;
+
+    }
+
+    public void UnsubscribeFromAll()
+    {
         playerInput.actions["Steer"].performed -= carSwitchManager.SwitchCar;
-        playerInput.actions["Boost"].performed += carSwitchManager.OnValidateButtonPress;
+        playerInput.actions["Jump"].performed -= carSelectionManager.OnSouthButtonPress;
+        playerInput.actions["Jump"].performed -= carSwitchManager.OnValidateButtonPress;
     }
 }
+
