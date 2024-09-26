@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class BounceBumper : MonoBehaviour
 {
-    [SerializeField] private string playerTag;
     [SerializeField] private float bounceForce;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == playerTag)
+        if(collision.gameObject.GetComponent<CarController>() != null)
         {
             Rigidbody otherRB = collision.rigidbody;
 
