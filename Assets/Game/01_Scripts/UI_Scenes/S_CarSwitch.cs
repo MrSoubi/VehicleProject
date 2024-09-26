@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 
 public class S_CarSwitch : MonoBehaviour
@@ -108,13 +109,15 @@ public class S_CarSwitch : MonoBehaviour
     public void OnValidateButtonPress(InputAction.CallbackContext context)
     {
         //var matchingEntry = players.FirstOrDefault(x => x.Key == context.control.device && x.Value.isValidateSelection == false);
-
         if (context.performed && players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
         {
             InputDevice currentDevice = context.control.device;
             players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = true;
+            //_inputEvent.DisablePlayerInputEndSelection(currentDevice);
+            S_CarSelection.CheckAllPlayersSelection();
         }
 
 
     }
+    
 }
