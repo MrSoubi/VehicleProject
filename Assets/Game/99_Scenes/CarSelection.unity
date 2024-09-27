@@ -3228,20 +3228,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45668350a2a8e548b5c776e12bef504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carSelectionPanels:
+  _carSelectionPanels:
   - {fileID: 811760844}
   - {fileID: 1452356353}
   - {fileID: 1459174919}
   - {fileID: 65942563}
-  textPressATojoin:
+  _textPressATojoin:
   - {fileID: 2039584319}
   - {fileID: 467273053}
   - {fileID: 1894747961}
   - {fileID: 418929731}
-  timerText: {fileID: 1987031911}
-  playerData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
+  _timerText: {fileID: 1987031911}
+  _playerData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
   _inputEvent: {fileID: 1423781941}
-  countdownTimer: 2
 --- !u!114 &1423781941
 MonoBehaviour:
   m_ObjectHideFlags: 0

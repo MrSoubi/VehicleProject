@@ -75,7 +75,7 @@ public class MapSelection : MonoBehaviour
 
     private void DisableOtherPlayersControls()
     {
-        foreach (var playerInfo in playerData.playerPanelMapping.Values)
+        foreach (var playerInfo in playerData.players.Values)
         {
             if (playerInfo.playerId != 0)
             {

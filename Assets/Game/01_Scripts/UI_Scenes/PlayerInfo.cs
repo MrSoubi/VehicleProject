@@ -12,6 +12,5 @@ public class PlayerInfo
     public bool isRotating;
     public bool isValidateSelection = false;
     public PlayerInput _playerInput;
-    public InputAction jumpAction;
 
 }

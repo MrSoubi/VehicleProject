@@ -8,29 +8,29 @@ using UnityEngine.SceneManagement;
 
 public class S_CarSelection : MonoBehaviour
 {
-    [SerializeField] private GameObject[] carSelectionPanels;
-    [SerializeField] private GameObject[] textPressATojoin;
-    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private GameObject[] _carSelectionPanels;
+    [SerializeField] private GameObject[] _textPressATojoin;
+    [SerializeField] private TextMeshProUGUI _timerText;
 
-    private List<int> availablePanels = new List<int>();
-    public PlayerData playerData;
-    public Dictionary<InputDevice, PlayerInfo> playerPanelMapping => playerData.playerPanelMapping;
+    private List<int> _availablePanels = new List<int>();
+    [SerializeField] private PlayerData _playerData;
+    private Dictionary<InputDevice, PlayerInfo> _players => _playerData.players;
 
     [SerializeField] private S_InputEventCarSelection _inputEvent;
 
-    private int nextPlayerId = 0;
+    private int _nextPlayerId = 0;
 
-    private Coroutine loadSceneCoroutine;
-    private bool isLoadingScene = false;
-    [SerializeField] private float countdownTimer = 3f;
+    private Coroutine _loadSceneCoroutine;
+    private bool _isLoadingScene = false;
+    private float _countdownTimer = 3f;
 
     private void Start()
     {
-        
-        for (int i = 0; i < carSelectionPanels.Length; i++)
+        //Desactive les panel de selection et ajoute des panels disponible
+        for (int i = 0; i < _carSelectionPanels.Length; i++)
         {
-            carSelectionPanels[i].SetActive(false);
-            availablePanels.Add(i); 
+            _carSelectionPanels[i].SetActive(false);
+            _availablePanels.Add(i); 
         }
 
     }
@@ -46,37 +46,36 @@ public class S_CarSelection : MonoBehaviour
 
     public void OnSouthButtonPress(InputAction.CallbackContext context)
     {
-
+        Debug.Log("PressEnter");//Verification que la touche soit bien desactive
         if (context.performed)
         {
             InputDevice playerDevice = context.control.device;
 
-            var playerInput = PlayerInput.all.FirstOrDefault(pi => pi.devices.Contains(playerDevice));
+            var playerInput = PlayerInput.all.FirstOrDefault(x => x.devices.Contains(playerDevice));
 
-            if (playerInput != null && !playerPanelMapping.ContainsKey(playerDevice))
+            if (playerInput != null && !_players.ContainsKey(playerDevice))
             {
-                if (availablePanels.Count > 0)
+                if (_availablePanels.Count > 0)
                 {
-                    int assignedPanel = availablePanels[0];
-                    availablePanels.RemoveAt(0);
-
+                    int assignedPanel = _availablePanels[0];
+                    _availablePanels.RemoveAt(0);
+                    var _playerInput = PlayerInput.all[_nextPlayerId];
                     PlayerInfo newPlayer = new PlayerInfo
                     {
-                        playerId = nextPlayerId++,
+                        playerId = _nextPlayerId++,
                         panelIndex = assignedPanel,
-                        _playerInput = playerInput, 
-                        jumpAction = playerInput.actions["Jump"]
+                        _playerInput = _playerInput, 
                     };
 
-                    playerPanelMapping.Add(playerDevice, newPlayer);
-                    Debug.Log("yes "+ playerInput.ToString());
-                    carSelectionPanels[assignedPanel].SetActive(true);
-                    textPressATojoin[assignedPanel].SetActive(false);
+                    _players.Add(playerDevice, newPlayer);
+                    Debug.Log(playerInput.ToString());
+                    _carSelectionPanels[assignedPanel].SetActive(true);
+                    _textPressATojoin[assignedPanel].SetActive(false);
 
-                    //_inputEvent.DisablePlayerInputEnterParty(playerDevice);
+                    _inputEvent.DisablePlayerInputEnterParty(playerDevice);
 
                     Debug.Log($"Joueur {newPlayer.playerId} avec {playerDevice.name} a été assigné au cadrant {assignedPanel + 1}");
-
+                    //Debug.Log(PlayerInput.GetPlayerByIndex(newPlayer.playerId));
                     OnPlayerJoined();
                 }
             }
@@ -85,23 +84,24 @@ public class S_CarSelection : MonoBehaviour
 
     public Dictionary<InputDevice, PlayerInfo> ReturnPlayerInfo()
     {
-        return playerPanelMapping;
+        return _players;
     }
-
+    
+    //Si un joueur rejoins pendant que cela valide la partie stop la coroutine
     public void OnPlayerJoined()
     {
         
-        if (isLoadingScene)
+        if (_isLoadingScene)
         {
-            StopCoroutine(loadSceneCoroutine);
-            isLoadingScene = false;
-            timerText.gameObject.SetActive(false);
+            StopCoroutine(_loadSceneCoroutine);
+            _isLoadingScene = false;
+            _timerText.gameObject.SetActive(false);
         }
     }
 
     public void CheckAllPlayersSelection()
     {      
-        foreach (var playerInfo in playerPanelMapping.Values)
+        foreach (var playerInfo in _players.Values)
         {
             if (!playerInfo.isValidateSelection)
             {
@@ -109,20 +109,21 @@ public class S_CarSelection : MonoBehaviour
             }
         }
 
-        loadSceneCoroutine = StartCoroutine(LoadNextSceneAfterDelay());
+        _loadSceneCoroutine = StartCoroutine(LoadNextSceneAfterDelay());
     }
 
+    //Charge la nouvelle scene quand tout le monde a choisi sa voiture
     private IEnumerator LoadNextSceneAfterDelay()
     {
-        isLoadingScene = true;
-        timerText.gameObject.SetActive(true);
-        countdownTimer = 3f;
-        while (countdownTimer > 0)
+        _isLoadingScene = true;
+        _timerText.gameObject.SetActive(true);
+        _countdownTimer = 3f;
+        while (_countdownTimer > 0)
         {
-            timerText.text = Mathf.CeilToInt(countdownTimer).ToString();
-            Debug.Log($"Chargement dans {countdownTimer:F1} secondes...");
+            _timerText.text = Mathf.CeilToInt(_countdownTimer).ToString();
+            Debug.Log($"Chargement dans {_countdownTimer:F1} secondes...");
             yield return new WaitForSeconds(0.1f);
-            countdownTimer -= 0.1f;
+            _countdownTimer -= 0.1f;
         }
 
 
