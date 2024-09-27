@@ -5,14 +5,21 @@ using UnityEngine;
 public class BounceBumper : MonoBehaviour
 {
     [SerializeField] private float bounceForce;
+    [SerializeField] private float bounceRadius;
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.GetComponent<CarController>() != null)
         {
             Rigidbody otherRB = collision.rigidbody;
+             float forceBumper = otherRB.velocity.magnitude;
 
-            otherRB.AddExplosionForce(bounceForce, collision.contacts[0].point, 5);
+            otherRB.AddExplosionForce(bounceForce * forceBumper, transform.position, bounceRadius);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, bounceRadius);
     }
 }
