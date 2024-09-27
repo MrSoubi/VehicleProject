@@ -151,4 +151,9 @@ public class CarController : MonoBehaviour
     {
         return GetComponentInChildren<Camera>();
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(rb.centerOfMass, 0.2f);
+    }
 }

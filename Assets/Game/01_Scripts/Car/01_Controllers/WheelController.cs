@@ -88,4 +88,9 @@ public class WheelController : MonoBehaviour
         RaycastHit hit;
         return Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, data.maxSuspensionDistance + data.wheelRadius, mask);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, data.wheelRadius);
+    }
 }
