@@ -23,21 +23,7 @@ public class MapSelection : MonoBehaviour
 
     private void Update()
     {
-        
-            //var playerInput = playerData.playerPanelMapping[playerData.playerPanelMapping.FirstOrDefault(x => x.Value.playerId == 0)]._playerInput;
-            //Vector2 moveInput = playerInput.actions["Steer"].ReadValue<Vector2>();
-
-            
-            //if (moveInput.x > 0)
-            //{
-            //    NextMap();
-            //}
-            //else if (moveInput.x < 0)
-            //{
-            //    PreviousMap();
-            //}
-            //Debug.Log(currentMapIndex);
-            
+                    
         
     }
 

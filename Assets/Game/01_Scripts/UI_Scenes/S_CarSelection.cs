@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.InputSystem.InputAction;
+using static UnityEngine.Rendering.DebugUI;
 
 public class S_CarSelection : MonoBehaviour
 {
@@ -44,42 +48,37 @@ public class S_CarSelection : MonoBehaviour
 
     }
 
-    public void OnSouthButtonPress(InputAction.CallbackContext context)
+    public void OnSouthButtonPress(InputDevice playerDevice, PlayerInput playerInput)
     {
         Debug.Log("PressEnter");//Verification que la touche soit bien desactive
-        if (context.performed)
+        
+        
+
+        if (playerDevice != null && !_players.ContainsKey(playerDevice))
         {
-            InputDevice playerDevice = context.control.device;
-
-            var playerInput = PlayerInput.all.FirstOrDefault(x => x.devices.Contains(playerDevice));
-
-            if (playerInput != null && !_players.ContainsKey(playerDevice))
+            if (_availablePanels.Count > 0)
             {
-                if (_availablePanels.Count > 0)
+                int assignedPanel = _availablePanels[0];
+                _availablePanels.RemoveAt(0);
+                var __playerInput = PlayerInput.all[_nextPlayerId];
+                PlayerInfo newPlayer = new PlayerInfo
                 {
-                    int assignedPanel = _availablePanels[0];
-                    _availablePanels.RemoveAt(0);
-                    var _playerInput = PlayerInput.all[_nextPlayerId];
-                    PlayerInfo newPlayer = new PlayerInfo
-                    {
-                        playerId = _nextPlayerId++,
-                        panelIndex = assignedPanel,
-                        _playerInput = _playerInput, 
-                    };
+                    playerId = _nextPlayerId++,
+                    panelIndex = assignedPanel,
+                    _playerInput = playerInput, 
+                };
 
-                    _players.Add(playerDevice, newPlayer);
-                    Debug.Log(playerInput.ToString());
-                    _carSelectionPanels[assignedPanel].SetActive(true);
-                    _textPressATojoin[assignedPanel].SetActive(false);
+                _players.Add(playerDevice, newPlayer);
+                Debug.Log(playerInput.ToString());
+                _carSelectionPanels[assignedPanel].SetActive(true);
+                _textPressATojoin[assignedPanel].SetActive(false);
 
-                    _inputEvent.DisablePlayerInputEnterParty(playerDevice);
 
-                    Debug.Log($"Joueur {newPlayer.playerId} avec {playerDevice.name} a été assigné au cadrant {assignedPanel + 1}");
-                    //Debug.Log(PlayerInput.GetPlayerByIndex(newPlayer.playerId));
-                    OnPlayerJoined();
-                }
+                Debug.Log($"Joueur {newPlayer.playerId} avec {playerDevice.name} a été assigné au cadrant {assignedPanel + 1}");
+                OnPlayerJoinedOrButtonbackPressed();
             }
         }
+        
     }
 
     public Dictionary<InputDevice, PlayerInfo> ReturnPlayerInfo()
@@ -88,7 +87,7 @@ public class S_CarSelection : MonoBehaviour
     }
     
     //Si un joueur rejoins pendant que cela valide la partie stop la coroutine
-    public void OnPlayerJoined()
+    public void OnPlayerJoinedOrButtonbackPressed()
     {
         
         if (_isLoadingScene)
@@ -96,6 +95,16 @@ public class S_CarSelection : MonoBehaviour
             StopCoroutine(_loadSceneCoroutine);
             _isLoadingScene = false;
             _timerText.gameObject.SetActive(false);
+            _inputEvent.EnablePlayerInputEndSelection();
+            UnValideSelection();
+        }
+    }
+
+    public void UnValideSelection()
+    {
+        foreach (var player in _players.Keys)
+        {
+            _players[player].isValidateSelection = false;
         }
     }
 
@@ -112,7 +121,7 @@ public class S_CarSelection : MonoBehaviour
         _loadSceneCoroutine = StartCoroutine(LoadNextSceneAfterDelay());
     }
 
-    //Charge la nouvelle scene quand tout le monde a choisi sa voiture
+    
     private IEnumerator LoadNextSceneAfterDelay()
     {
         _isLoadingScene = true;
@@ -130,6 +139,20 @@ public class S_CarSelection : MonoBehaviour
         SceneManager.LoadScene("ArenaSelection");
     }
 
-   
+    public void BackToSelection(PlayerInput playerInput, InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (playerInput == _players.FirstOrDefault(x => x.Key == context.control.device).Value._playerInput)
+            {
+                _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = false;
+                OnPlayerJoinedOrButtonbackPressed();
+
+            }
+        }
+       
+    }
+
+
 }
     

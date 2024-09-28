@@ -66,15 +66,6 @@ public class S_CarSwitch : MonoBehaviour
             PlayerID = playerInfo.playerId;
         }
 
-        //foreach (var value in players)
-        //{
-        //    if (value.Key == currentDevice)
-        //    {
-        //        PlayerID = value.Value.playerId;
-        //        break;
-        //    }
-        //}
-
         Debug.Log($"Switch {PlayerID}");
 
         var matchingEntry = players.FirstOrDefault(x => x.Key == context.control.device && x.Value.isValidateSelection == false);
@@ -106,14 +97,13 @@ public class S_CarSwitch : MonoBehaviour
 
 
 
-    public void OnValidateButtonPress(InputAction.CallbackContext context)
+    public void OnValidateButtonPress(PlayerInput playerInput, InputAction.CallbackContext context)
     {
-        //var matchingEntry = players.FirstOrDefault(x => x.Key == context.control.device && x.Value.isValidateSelection == false);
         if (context.performed && players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
         {
             InputDevice currentDevice = context.control.device;
             players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = true;
-            //_inputEvent.DisablePlayerInputEndSelection(currentDevice);
+            _inputEvent.DisablePlayerInputEndSelection(playerInput);
             S_CarSelection.CheckAllPlayersSelection();
         }
 
