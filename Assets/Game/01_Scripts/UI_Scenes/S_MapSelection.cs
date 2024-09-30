@@ -17,16 +17,7 @@ public class S_MapSelection : MonoBehaviour
 
     private void Start()
     {
-        
-        //DisableOtherPlayersControls();
-
-        UpdateMapDisplay();
-    }
-
-    private void Update()
-    {
-                    
-        
+               //UpdateMapDisplay();
     }
 
     private void NextMap()
@@ -36,7 +27,7 @@ public class S_MapSelection : MonoBehaviour
         {
             currentMapIndex = 0;
         }
-        UpdateMapDisplay();
+        //UpdateMapDisplay();
     }
 
     private void PreviousMap()
@@ -46,7 +37,7 @@ public class S_MapSelection : MonoBehaviour
         {
             currentMapIndex = _maps.Length - 1;
         }
-        UpdateMapDisplay();
+        //UpdateMapDisplay();
     }
 
     private void UpdateMapDisplay()
@@ -85,10 +76,12 @@ public class S_MapSelection : MonoBehaviour
             if (input > 0)
             {
                 NextMap();
+                ChangeMapDisplay(true);
             }
             else
             {
                 PreviousMap();
+                ChangeMapDisplay(false);
             }
         }
     }
@@ -108,6 +101,11 @@ public class S_MapSelection : MonoBehaviour
         {
 
         }
+
+    }
+
+    public void ChangeMapDisplay(bool switchRight)
+    {
 
     }
 
