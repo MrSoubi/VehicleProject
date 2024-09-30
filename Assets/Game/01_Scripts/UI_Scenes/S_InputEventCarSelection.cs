@@ -10,13 +10,14 @@ public class S_InputEventCarSelection : MonoBehaviour
     [SerializeField] private S_CarSelection _carSelectionManager;
     [SerializeField] private S_CarSwitch carSwitchManager;
     [SerializeField] private PlayerInputManager playerInputManager;
-    private Dictionary<InputDevice, PlayerInfo> players => _carSelectionManager.ReturnPlayerInfo();
+    [SerializeField] private S_MapSelection _mapSelection;
+    private Dictionary<InputDevice, PlayerInfo> _players => _carSelectionManager.ReturnPlayerInfo();
 
     private void Awake()
     {
         playerInputManager.onPlayerJoined += OnPlayerJoined;
 
-       
+       DontDestroyOnLoad(gameObject);
     }
 
     public void OnDestroy()
@@ -41,9 +42,9 @@ public class S_InputEventCarSelection : MonoBehaviour
 
     }
 
-    public void EnablePlayerInputEndSelection()
+    public void EnableAllPlayersInputEndSelection()
     {
-        foreach (var player in players)
+        foreach (var player in _players)
         {
             player.Value._playerInput.actions["MoveSelection"].performed += carSwitchManager.SwitchCar;
             player.Value._playerInput.actions["Select"].performed += context => carSwitchManager.OnValidateButtonPress(player.Value._playerInput, context);
@@ -52,6 +53,29 @@ public class S_InputEventCarSelection : MonoBehaviour
 
     }
 
+    public void EnablePlayerInputEndSelection(InputDevice playerDevice)
+    {
+
+        _players[playerDevice]._playerInput.actions["MoveSelection"].performed += carSwitchManager.SwitchCar;
+        _players[playerDevice]._playerInput.actions["Select"].performed += context => carSwitchManager.OnValidateButtonPress(_players[playerDevice]._playerInput, context);
+        
+
+
+    }
+
+    public void DisableInputCarSelection()
+    {
+        foreach (var player in _players)
+        {
+            player.Value._playerInput.actions["MoveSelection"].performed -= carSwitchManager.SwitchCar;
+            player.Value._playerInput.actions["Select"].performed -= context => carSwitchManager.OnValidateButtonPress(player.Value._playerInput, context);
+            player.Value._playerInput.actions["Back"].performed -= context => _carSelectionManager.BackToSelection(player.Value._playerInput, context);
+        }
+
+    }
+
     
+
+
 }
 

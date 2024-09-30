@@ -12,10 +12,11 @@ public class S_CarSwitch : MonoBehaviour
     [SerializeField] private GameObject[] _cars;
     [SerializeField] private Camera[] _cameras;
     [SerializeField] private RawImage[] carDisplays;
+    [SerializeField] private GameObject[] _textReady;
     [SerializeField] private Transform _target;
     [SerializeField] private float _rotationSpeed = 30f;
-    public S_CarSelection S_CarSelection;
-    private Dictionary<InputDevice, PlayerInfo> players => S_CarSelection.ReturnPlayerInfo();
+    public S_CarSelection _carSelection;
+    private Dictionary<InputDevice, PlayerInfo> _players => _carSelection.ReturnPlayerInfo();
 
     [SerializeField] private S_InputEventCarSelection _inputEvent;
     
@@ -30,7 +31,7 @@ public class S_CarSwitch : MonoBehaviour
 
     private IEnumerator RotateCamera(int playerID, bool rotateRight)
     {
-        players[players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = true;
+        _players[_players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = true;
 
         float totalRotation = 0f;
 
@@ -51,7 +52,7 @@ public class S_CarSwitch : MonoBehaviour
             yield return null;
         }
 
-        players[players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = false;
+        _players[_players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = false;
     }
     
 
@@ -60,7 +61,7 @@ public class S_CarSwitch : MonoBehaviour
         int PlayerID = 0;
         InputDevice currentDevice = context.control.device;
 
-        var playerInfo = players.FirstOrDefault(x => x.Key == currentDevice).Value;
+        var playerInfo = _players.FirstOrDefault(x => x.Key == currentDevice).Value;
         if (playerInfo != null)
         {
             PlayerID = playerInfo.playerId;
@@ -68,27 +69,27 @@ public class S_CarSwitch : MonoBehaviour
 
         Debug.Log($"Switch {PlayerID}");
 
-        var matchingEntry = players.FirstOrDefault(x => x.Key == context.control.device && x.Value.isValidateSelection == false);
+        var matchingEntry = _players.FirstOrDefault(x => x.Key == context.control.device && x.Value.isValidateSelection == false);
 
         if (context.performed && matchingEntry.Value.isValidateSelection == false)
         {
             float input = context.ReadValue<float>();
-            if (input != 0 && !players[currentDevice].isRotating)
+            if (input != 0 && !_players[currentDevice].isRotating)
             {
                 StartCoroutine(RotateCamera(PlayerID, input > 0));
 
-                players[currentDevice].carIDSelected += input > 0 ? 1 : -1;
+                _players[currentDevice].carIDSelected += input > 0 ? 1 : -1;
 
-                if (players[currentDevice].carIDSelected == -1)
+                if (_players[currentDevice].carIDSelected == -1)
                 {
-                    players[currentDevice].carIDSelected = _cars.Length - 1;
+                    _players[currentDevice].carIDSelected = _cars.Length - 1;
                 }
-                else if (players[currentDevice].carIDSelected == _cars.Length)
+                else if (_players[currentDevice].carIDSelected == _cars.Length)
                 {
-                    players[currentDevice].carIDSelected = 0;
+                    _players[currentDevice].carIDSelected = 0;
                 }
 
-                Debug.Log("car ID selected: " + players[currentDevice].carIDSelected);
+                Debug.Log("car ID selected: " + _players[currentDevice].carIDSelected);
             }
         }
     }
@@ -99,12 +100,13 @@ public class S_CarSwitch : MonoBehaviour
 
     public void OnValidateButtonPress(PlayerInput playerInput, InputAction.CallbackContext context)
     {
-        if (context.performed && players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
+        if (context.performed && _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
         {
             InputDevice currentDevice = context.control.device;
-            players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = true;
+            _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = true;
             _inputEvent.DisablePlayerInputEndSelection(playerInput);
-            S_CarSelection.CheckAllPlayersSelection();
+            _textReady[_players.FirstOrDefault(x => x.Key == context.control.device).Value.playerId].gameObject.SetActive(true);
+            _carSelection.CheckAllPlayersSelection();
         }
 
 

@@ -2,21 +2,23 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class MapSelection : MonoBehaviour
+public class S_MapSelection : MonoBehaviour
 {
-    [SerializeField] private GameObject[] maps;
+    [SerializeField] private GameObject[] _maps;
     //[SerializeField] private float slideSpeed = 5f;
-    public PlayerData playerData;
+    [SerializeField] private PlayersData _playerData;
+    private Dictionary<InputDevice, PlayerInfo> _players => _playerData.players;
+
 
     private int currentMapIndex = 0;
 
     private void Start()
     {
         
-        DisableOtherPlayersControls();
+        //DisableOtherPlayersControls();
 
         UpdateMapDisplay();
     }
@@ -30,7 +32,7 @@ public class MapSelection : MonoBehaviour
     private void NextMap()
     {
         currentMapIndex++;
-        if (currentMapIndex >= maps.Length)
+        if (currentMapIndex >= _maps.Length)
         {
             currentMapIndex = 0;
         }
@@ -42,7 +44,7 @@ public class MapSelection : MonoBehaviour
         currentMapIndex--;
         if (currentMapIndex < 0)
         {
-            currentMapIndex = maps.Length - 1;
+            currentMapIndex = _maps.Length - 1;
         }
         UpdateMapDisplay();
     }
@@ -50,24 +52,76 @@ public class MapSelection : MonoBehaviour
     private void UpdateMapDisplay()
     {
         
-        foreach (var map in maps)
+        foreach (var map in _maps)
         {
             map.SetActive(false);
         }
 
         
-        maps[currentMapIndex].SetActive(true);
+        _maps[currentMapIndex].SetActive(true);
+
+        Debug.Log("current map: " + currentMapIndex);
     }
 
     private void DisableOtherPlayersControls()
     {
-        foreach (var playerInfo in playerData.players.Values)
+        foreach (var player in _players.Values)
         {
-            if (playerInfo.playerId != 0)
+            if (player.playerId != 0)
             {
-                var input = playerInfo._playerInput;
+                var input = player._playerInput;
                 input.actions.Disable();
             }
         }
+    }
+
+
+
+    public void SelectMap(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            float input = context.ReadValue<float>();
+            if (input > 0)
+            {
+                NextMap();
+            }
+            else
+            {
+                PreviousMap();
+            }
+        }
+    }
+
+    public void ValidateSelection(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ChangeActionMap();
+            SceneManager.LoadScene("Map_"+ currentMapIndex.ToString());//Load scene to test
+        }
+    }
+
+    public void CancelMapSelection(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+
+        }
+
+    }
+
+    public void ChangeActionMap()
+    {
+        foreach (var player in _players)
+        {
+            player.Value._playerInput.SwitchCurrentActionMap("CarControl");
+            Debug.Log(player.Value._playerInput.currentActionMap.ToString());
+        }
+    }
+
+    public Dictionary<InputDevice, PlayerInfo> ReturnPlayerInfo()
+    {
+        return _players;
     }
 }

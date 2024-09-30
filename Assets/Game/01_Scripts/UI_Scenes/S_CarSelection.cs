@@ -14,10 +14,11 @@ public class S_CarSelection : MonoBehaviour
 {
     [SerializeField] private GameObject[] _carSelectionPanels;
     [SerializeField] private GameObject[] _textPressATojoin;
+    [SerializeField] private GameObject[] _textReady;
     [SerializeField] private TextMeshProUGUI _timerText;
 
     private List<int> _availablePanels = new List<int>();
-    [SerializeField] private PlayerData _playerData;
+    [SerializeField] private PlayersData _playerData;
     private Dictionary<InputDevice, PlayerInfo> _players => _playerData.players;
 
     [SerializeField] private S_InputEventCarSelection _inputEvent;
@@ -34,7 +35,7 @@ public class S_CarSelection : MonoBehaviour
         for (int i = 0; i < _carSelectionPanels.Length; i++)
         {
             _carSelectionPanels[i].SetActive(false);
-            _availablePanels.Add(i); 
+            _availablePanels.Add(i);
         }
 
     }
@@ -60,7 +61,6 @@ public class S_CarSelection : MonoBehaviour
             {
                 int assignedPanel = _availablePanels[0];
                 _availablePanels.RemoveAt(0);
-                var __playerInput = PlayerInput.all[_nextPlayerId];
                 PlayerInfo newPlayer = new PlayerInfo
                 {
                     playerId = _nextPlayerId++,
@@ -95,7 +95,7 @@ public class S_CarSelection : MonoBehaviour
             StopCoroutine(_loadSceneCoroutine);
             _isLoadingScene = false;
             _timerText.gameObject.SetActive(false);
-            _inputEvent.EnablePlayerInputEndSelection();
+            _inputEvent.EnableAllPlayersInputEndSelection();
             UnValideSelection();
         }
     }
@@ -105,6 +105,11 @@ public class S_CarSelection : MonoBehaviour
         foreach (var player in _players.Keys)
         {
             _players[player].isValidateSelection = false;
+        }
+
+        for (int i = 0; i < _textReady.Length; i++) 
+        {
+            _textReady[i].gameObject.SetActive(false);
         }
     }
 
@@ -135,8 +140,9 @@ public class S_CarSelection : MonoBehaviour
             _countdownTimer -= 0.1f;
         }
 
-
+        _inputEvent.DisableInputCarSelection();
         SceneManager.LoadScene("ArenaSelection");
+        
     }
 
     public void BackToSelection(PlayerInput playerInput, InputAction.CallbackContext context)
@@ -147,7 +153,8 @@ public class S_CarSelection : MonoBehaviour
             {
                 _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = false;
                 OnPlayerJoinedOrButtonbackPressed();
-
+                _inputEvent.EnablePlayerInputEndSelection(context.control.device);
+                _textReady[_players.FirstOrDefault(x => x.Key == context.control.device).Value.playerId].gameObject.SetActive(false);
             }
         }
        
