@@ -17,7 +17,7 @@ public class S_InputEventCarSelection : MonoBehaviour
     {
         playerInputManager.onPlayerJoined += OnPlayerJoined;
 
-       DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     public void OnDestroy()

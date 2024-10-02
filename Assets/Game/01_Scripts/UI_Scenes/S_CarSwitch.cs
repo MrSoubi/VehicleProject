@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Linq;
-using UnityEngine.SceneManagement;
 
 
 public class S_CarSwitch : MonoBehaviour
@@ -33,20 +32,22 @@ public class S_CarSwitch : MonoBehaviour
     //Tourne la camera pour mettre une nouvelle voiture au centre pour le joueur assigné a sa camera et son panel
     private IEnumerator RotateCamera(int playerID, bool rotateRight)
     {
-        _players[_players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = true;
+        _players[_players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = true;//Cherche dans le dictionnaire si le joueur est en train de tourner avec l'ID correcpondant 
 
         float totalRotation = 0f;
 
+        //Tourne autour de la target position de 90 degres
         while (totalRotation < 90f)
         {
             float rotationThisFrame = _rotationSpeed * Time.deltaTime;
 
+            //Verifie a ne pas depasser les 90 degres
             if (totalRotation + rotationThisFrame >= 90f)
             {
                 rotationThisFrame = 90f - totalRotation;
             }
 
-            Vector3 rotationDirection = rotateRight ? Vector3.down : Vector3.up;
+            Vector3 rotationDirection = rotateRight ? Vector3.down : Vector3.up; 
             _cameras[playerID].transform.RotateAround(_target.position, rotationDirection, rotationThisFrame);
             totalRotation += rotationThisFrame;
 
@@ -105,9 +106,9 @@ public class S_CarSwitch : MonoBehaviour
         if (context.performed && _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
         {
             InputDevice currentDevice = context.control.device;
-            _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection = true;
+            _players.FirstOrDefault(x => x.Key == currentDevice).Value.isValidateSelection = true;
             _inputEvent.DisablePlayerInputEndSelection(playerInput);
-            _textReady[_players.FirstOrDefault(x => x.Key == context.control.device).Value.playerId].gameObject.SetActive(true);
+            _textReady[_players.FirstOrDefault(x => x.Key == currentDevice).Value.playerId].gameObject.SetActive(true);
             _carSelection.CheckAllPlayersSelection();
         }
 

@@ -6,9 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEngine.InputSystem.InputAction;
-using static UnityEngine.Rendering.DebugUI;
+
 
 public class S_CarSelection : MonoBehaviour
 {
@@ -49,6 +47,7 @@ public class S_CarSelection : MonoBehaviour
 
     }
 
+    //Quand le joueur appuie sur le bouton sud et rejoin la parte lui assigne un panel de lecran pour selectionnaer sa voiture
     public void OnSouthButtonPress(InputDevice playerDevice, PlayerInput playerInput)
     {
         Debug.Log("PressEnter");//Verification que la touche soit bien desactive
@@ -84,7 +83,7 @@ public class S_CarSelection : MonoBehaviour
         return _players;
     }
     
-    //Si un joueur rejoins pendant que cela valide la partie stop la coroutine
+    //Si un joueur rejoins pendant que cela valide la partie stop la coroutine de lancement de la scene 
     public void OnPlayerJoinedOrButtonbackPressed()
     {
         
