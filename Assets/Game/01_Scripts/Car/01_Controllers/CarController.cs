@@ -43,6 +43,7 @@ public class CarController : MonoBehaviour
         drag = rb.drag;
     }
 
+    // TODO : Passer en FixedUpdate et sortir les inputs d'ici
     private void Update()
     {
         rb.maxAngularVelocity = data.maxAngularVelocity;
