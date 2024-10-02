@@ -155,6 +155,6 @@ public class CarController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(rb.centerOfMass, 0.2f);
+        Gizmos.DrawSphere(transform.position + rb.centerOfMass, 0.2f);
     }
 }

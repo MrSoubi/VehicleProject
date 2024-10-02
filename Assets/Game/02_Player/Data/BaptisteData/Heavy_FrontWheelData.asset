@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heavy_FrontWheelData
   m_EditorClassIdentifier: 
   isMotorised: 1
-  suspensionRestDir: 0.4
+  suspensionRestDir: 0.5
   maxSuspensionDistance: 0.4
   springStrength: 15000
   springDamper: 2000
@@ -52,12 +52,21 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -1.3432083
-      outSlope: -1.3432083
+      inSlope: -0.06839113
+      outSlope: -0.06839113
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.029498525
+      outWeight: 0.08618501
+    - serializedVersion: 3
+      time: 0.4096278
+      value: 0.92970985
+      inSlope: -0.717299
+      outSlope: -0.717299
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0.4
