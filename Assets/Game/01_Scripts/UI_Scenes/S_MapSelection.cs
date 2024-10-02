@@ -31,6 +31,7 @@ public class S_MapSelection : MonoBehaviour
         Debug.Log(_maps.Length);
     }
 
+    //Switch sur la prochaine map en deplacant leur position tant qu'on ne sort pas de l'index
     private void NextMap()
     {
         
@@ -54,6 +55,7 @@ public class S_MapSelection : MonoBehaviour
         }
     }
 
+    //Switch sur la map d'aavnt en deplacant leur position tant qu'on ne sort pas de l'index
     private void PreviousMap()
     {
         _currentMapIndex--;
@@ -78,20 +80,20 @@ public class S_MapSelection : MonoBehaviour
 
     
 
-    private void DisableOtherPlayersControls()
-    {
-        foreach (var player in _players.Values)
-        {
-            if (player.playerId != 0)
-            {
-                var input = player._playerInput;
-                input.actions.Disable();
-            }
-        }
-    }
+    //private void DisableOtherPlayersControls()
+    //{
+    //    foreach (var player in _players.Values)
+    //    {
+    //        if (player.playerId != 0)
+    //        {
+    //            var input = player._playerInput;
+    //            input.actions.Disable();
+    //        }
+    //    }
+    //}
 
 
-
+    //Recupere l'action du oystick gauche du joueur
     public void SelectMap(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -110,6 +112,7 @@ public class S_MapSelection : MonoBehaviour
         }
     }
 
+    //Valide la selection en recuperent l'action map pour controller les voiture
     public void ValidateSelection(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -129,7 +132,7 @@ public class S_MapSelection : MonoBehaviour
     }
 
     
-
+    //Change l'action map de tous les joueurs en CarControl
     public void ChangeActionMap()
     {
         foreach (var player in _players)
@@ -139,8 +142,5 @@ public class S_MapSelection : MonoBehaviour
         }
     }
 
-    public Dictionary<InputDevice, PlayerInfo> ReturnPlayerInfo()
-    {
-        return _players;
-    }
+   
 }

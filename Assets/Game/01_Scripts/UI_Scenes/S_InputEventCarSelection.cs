@@ -24,6 +24,7 @@ public class S_InputEventCarSelection : MonoBehaviour
     {
     }
 
+    //Quand le joueur rejoint avec le boutton sud de la manette lui assigne ses touches disponible avec leurs actions
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         InputDevice playerDevice = playerInput.devices[0];

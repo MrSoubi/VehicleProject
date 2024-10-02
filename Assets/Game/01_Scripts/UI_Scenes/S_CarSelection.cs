@@ -52,8 +52,6 @@ public class S_CarSelection : MonoBehaviour
     public void OnSouthButtonPress(InputDevice playerDevice, PlayerInput playerInput)
     {
         Debug.Log("PressEnter");//Verification que la touche soit bien desactive
-        
-        
 
         if (playerDevice != null && !_players.ContainsKey(playerDevice))
         {
@@ -100,6 +98,7 @@ public class S_CarSelection : MonoBehaviour
         }
     }
 
+    //Cancel la selction du joueur
     public void UnValideSelection()
     {
         foreach (var player in _players.Keys)
@@ -113,6 +112,7 @@ public class S_CarSelection : MonoBehaviour
         }
     }
 
+    //Verifie que tout les joueur ont choisi leur voiture puis lance la coroutine pour la selection de la map
     public void CheckAllPlayersSelection()
     {      
         foreach (var playerInfo in _players.Values)
@@ -126,7 +126,7 @@ public class S_CarSelection : MonoBehaviour
         _loadSceneCoroutine = StartCoroutine(LoadNextSceneAfterDelay());
     }
 
-    
+    //Load la scene ArenaSelection apres 3s et l'affiche sur l'ecran le delay si auun joueur de rejoin ou cancel pour changer sa selection
     private IEnumerator LoadNextSceneAfterDelay()
     {
         _isLoadingScene = true;
@@ -145,6 +145,7 @@ public class S_CarSelection : MonoBehaviour
         
     }
 
+    //Cancel la selection
     public void BackToSelection(PlayerInput playerInput, InputAction.CallbackContext context)
     {
         if (context.performed)

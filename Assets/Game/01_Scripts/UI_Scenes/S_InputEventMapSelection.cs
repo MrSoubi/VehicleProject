@@ -19,6 +19,8 @@ public class S_InputEventMapSelection : MonoBehaviour
     {
         
     }
+
+    //Donne l'action seulementau joueur 0 pour choisir la map
     public void EnableInputMapSelection()
     {
         _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["MoveSelection"].performed += _mapSelection.SelectMap;

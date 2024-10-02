@@ -29,6 +29,8 @@ public class S_CarSwitch : MonoBehaviour
 
     }
 
+
+    //Tourne la camera pour mettre une nouvelle voiture au centre pour le joueur assigné a sa camera et son panel
     private IEnumerator RotateCamera(int playerID, bool rotateRight)
     {
         _players[_players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = true;
@@ -55,7 +57,7 @@ public class S_CarSwitch : MonoBehaviour
         _players[_players.FirstOrDefault(x => x.Value.playerId == playerID).Key].isRotating = false;
     }
     
-
+    //Recupere l'action du joystick gauche du joueur pour selectionner sa voiture
     public void SwitchCar(InputAction.CallbackContext context)
     {
         int PlayerID = 0;
@@ -97,7 +99,7 @@ public class S_CarSwitch : MonoBehaviour
     
 
 
-
+    //Valide la selection de la voiture pour le joueur en question
     public void OnValidateButtonPress(PlayerInput playerInput, InputAction.CallbackContext context)
     {
         if (context.performed && _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
