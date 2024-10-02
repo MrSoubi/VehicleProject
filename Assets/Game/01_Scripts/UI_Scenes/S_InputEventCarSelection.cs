@@ -64,7 +64,7 @@ public class S_InputEventCarSelection : MonoBehaviour
 
     }
 
-    public void DisableInputCarSelection()
+    public void DisableAllInputCarSelection()
     {
         foreach (var player in _players)
         {

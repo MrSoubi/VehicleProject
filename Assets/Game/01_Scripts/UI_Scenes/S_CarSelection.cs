@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 
 public class S_CarSelection : MonoBehaviour
@@ -27,6 +28,7 @@ public class S_CarSelection : MonoBehaviour
     private bool _isLoadingScene = false;
     private float _countdownTimer = 3f;
 
+   
     private void Start()
     {
         //Desactive les panel de selection et ajoute des panels disponible
@@ -139,7 +141,7 @@ public class S_CarSelection : MonoBehaviour
             _countdownTimer -= 0.1f;
         }
 
-        _inputEvent.DisableInputCarSelection();
+        _inputEvent.DisableAllInputCarSelection();
         SceneManager.LoadScene("ArenaSelection");
         
     }
