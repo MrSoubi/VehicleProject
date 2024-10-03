@@ -20,6 +20,8 @@ public class CarController : MonoBehaviour
 
     Transform spawnTransform;
 
+    //private PlayerInput _playerInput;
+
     // TODO: Serialize or set these parameters in the SO_Car
     float drag;
     float flippedSince;
@@ -53,9 +55,10 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
-        steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
-        pitchInput = Gamepad.all[gamepadIndex].leftStick.y.value;
-        desiredJump |= Gamepad.all[gamepadIndex].buttonSouth.wasPressedThisFrame;
+        //steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
+        //pitchInput = Gamepad.all[gamepadIndex].leftStick.y.value;
+        //desiredJump |= Gamepad.all[gamepadIndex].buttonSouth.wasPressedThisFrame;
+        
     }
 
     int framesSinceLastGrounded;
@@ -72,18 +75,19 @@ public class CarController : MonoBehaviour
             rb.drag = 0.1f;
 
             // Air control
-            rb.AddTorque(transform.up * steerInput * data.airSteerForce);
+            rb.AddTorque(transform.up * steerInput * data.airSteerForce * 10);
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
 
-            // Angular drag setting depending on playerInput
-            if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
-            {
-                rb.angularDrag = data.angularDrag_NoInput;
-            }
-            else
-            {
-                rb.angularDrag = data.angularDrag_Input;
-            }
+            //// Angular drag setting depending on playerInput
+            //if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
+            //{
+            //    rb.angularDrag = data.angularDrag_NoInput;
+            //}
+            //else
+            //{
+            //    rb.angularDrag = data.angularDrag_Input;
+            //}
+            SetAngularDrag();
 
             // Check is returned
             if (IsFlipped())
@@ -99,6 +103,7 @@ public class CarController : MonoBehaviour
         }
         else // On ground
         {
+            
             // On landing
             if (framesSinceLastGrounded > 0)
             {
@@ -113,9 +118,9 @@ public class CarController : MonoBehaviour
             // Jump
             if (desiredJump)
             {
-                rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
+                //rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
 
-                OnJump.Invoke();
+                //OnJump.Invoke();
             }
 
             
@@ -127,7 +132,7 @@ public class CarController : MonoBehaviour
             Recover();
         }
 
-        desiredJump = false;
+        //desiredJump = false;
     }
 
     // TODO : Make the forces applied more effective to untilt the car
@@ -187,5 +192,65 @@ public class CarController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position + rb.centerOfMass, 0.2f);
+    }
+
+    
+
+    //public PlayerInput GetPlayerInput()
+    //{
+    //    return _playerInput;
+    //}
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (IsGrounded() == true && context.performed)
+        {
+
+            rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
+
+            OnJump.Invoke();
+        }
+    }
+
+    public void SteerInAir(InputAction.CallbackContext context)
+    {
+       
+        steerInput = context.ReadValue<float>();
+   
+    }
+
+
+
+    public void PitchInAir(InputAction.CallbackContext context)
+    {
+        
+        pitchInput = context.ReadValue<float>();
+        
+
+        
+    }
+    public void OnSteerCanceled(InputAction.CallbackContext context)
+    {
+        steerInput = 0f;
+    }
+
+
+
+    public void OnPitchCanceled(InputAction.CallbackContext context)
+    {
+        pitchInput = 0f;
+    }
+
+    public void SetAngularDrag()
+    {
+        // Angular drag setting depending on playerInput
+        if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
+        {
+            rb.angularDrag = data.angularDrag_NoInput;
+        }
+        else
+        {
+            rb.angularDrag = data.angularDrag_Input;
+        }
     }
 }

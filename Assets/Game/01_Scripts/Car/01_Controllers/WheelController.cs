@@ -14,15 +14,19 @@ public class WheelController : MonoBehaviour
     public int gamepadIndex;
 
     float steerInput = 0.0f;
+    float accelInput => accelValue - reverseValue;
+
+    float accelValue = 0f;
+    float reverseValue = 0f;
 
     // Update is called once per frame
     void FixedUpdate(){
-        steerInput = 0.0f;
+        //steerInput = 0.0f;
 
-        if (data.isSteerable)
-        {
-            steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
-        }
+        //if (data.isSteerable)
+        //{
+        //    steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
+        //}
         
         transform.rotation = carTransform.rotation;
         transform.Rotate(transform.up, data.steeringSpeedFactor.Evaluate(carRigidBody.velocity.magnitude / carData.maxSpeed) * data.steeringInputFactor.Evaluate(Mathf.Abs(steerInput)) * Mathf.Sign(steerInput) * data.maxSteeringAngle);
@@ -68,7 +72,7 @@ public class WheelController : MonoBehaviour
 
     public void Acceleration(RaycastHit tireRay){
 
-        float accelInput = Gamepad.all[gamepadIndex].rightTrigger.value - Gamepad.all[gamepadIndex].leftTrigger.value;
+        //float accelInput = Gamepad.all[gamepadIndex].rightTrigger.value - Gamepad.all[gamepadIndex].leftTrigger.value;
 
         Vector3 accelDir = transform.forward;
         if (Mathf.Abs(accelInput) > 0.0f){
@@ -92,5 +96,42 @@ public class WheelController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position, data.wheelRadius);
+    }
+
+    public void Steer(InputAction.CallbackContext context)
+    {
+        if(context.performed && data.isSteerable && isGrounded() == true)
+        {
+            steerInput = context.ReadValue<float>();
+        }
+    }
+    public void Throttle(InputAction.CallbackContext context)
+    {
+        if (isGrounded() == true)
+        {
+            accelValue = context.ReadValue<float>();
+        }
+    }
+
+    public void Reverse(InputAction.CallbackContext context)
+    {
+        if (isGrounded() == true)
+        {
+            reverseValue = context.ReadValue<float>();
+        }
+    }
+
+    public void OnThrottleCancel(InputAction.CallbackContext context)
+    {
+
+        accelValue = 0f;
+        
+    }
+
+    public void OnReverseCancel(InputAction.CallbackContext context)
+    {
+
+        reverseValue = 0f;
+        
     }
 }

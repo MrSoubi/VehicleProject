@@ -360,6 +360,8 @@ GameObject:
   - component: {fileID: 8806550933066109933}
   - component: {fileID: 3909411334461028970}
   - component: {fileID: 1674609591206895182}
+  - component: {fileID: 3724138025028459127}
+  - component: {fileID: 845637580457535819}
   m_Layer: 6
   m_Name: Car
   m_TagString: Untagged
@@ -474,6 +476,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d3351868cfe9c46863f9b2c74e062a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnKilled:
+    m_PersistentCalls:
+      m_Calls: []
+  OnJump:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLanding:
+    m_PersistentCalls:
+      m_Calls: []
   wheels:
   - {fileID: 8896651441273347929}
   - {fileID: 3526168291272898620}
@@ -560,6 +571,55 @@ MonoBehaviour:
   gamepadIndex: 0
   rb: {fileID: 4382415354077227720}
   emissionFactor: 30
+--- !u!114 &3724138025028459127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838750964252467126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &845637580457535819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838750964252467126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c8f8d9d84c93e42a019103b1464b97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _carController: {fileID: 147987426915421233}
+  _wheelCollider:
+  - {fileID: 8896651441273347929}
+  - {fileID: 3526168291272898620}
+  - {fileID: 30160123384052064}
+  - {fileID: 3408141145917575724}
+  _boostController: {fileID: 8806550933066109933}
 --- !u!1 &1329950445697450344
 GameObject:
   m_ObjectHideFlags: 0
