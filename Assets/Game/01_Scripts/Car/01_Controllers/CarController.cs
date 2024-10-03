@@ -4,9 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class CarController : MonoBehaviour
 {
+    public UnityEvent OnKilled;
+    public UnityEvent OnJump;
+    public UnityEvent OnLanding;
+
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
@@ -43,23 +48,34 @@ public class CarController : MonoBehaviour
         drag = rb.drag;
     }
 
-    // TODO : Passer en FixedUpdate et sortir les inputs d'ici
+    float steerInput, pitchInput;
+    bool desiredJump;
+
     private void Update()
+    {
+        steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
+        pitchInput = Gamepad.all[gamepadIndex].leftStick.y.value;
+        desiredJump |= Gamepad.all[gamepadIndex].buttonSouth.wasPressedThisFrame;
+    }
+
+    int framesSinceLastGrounded;
+
+    private void FixedUpdate()
     {
         rb.maxAngularVelocity = data.maxAngularVelocity;
 
         // On air (or flipped)
         if (!IsGrounded())
         {
+            framesSinceLastGrounded++;
+
             rb.drag = 0.1f;
 
             // Air control
-            float steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
-            float pitchInput = Gamepad.all[gamepadIndex].leftStick.y.value;
-
             rb.AddTorque(transform.up * steerInput * data.airSteerForce);
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
 
+            // Angular drag setting depending on playerInput
             if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
             {
                 rb.angularDrag = data.angularDrag_NoInput;
@@ -83,15 +99,26 @@ public class CarController : MonoBehaviour
         }
         else // On ground
         {
-            rb.drag = drag;
-
-            // Jump
-            if (Gamepad.all[gamepadIndex].buttonSouth.wasPressedThisFrame)
+            // On landing
+            if (framesSinceLastGrounded > 0)
             {
-                rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
+                rb.drag = drag;
+                vCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 4;
+
+                OnLanding.Invoke();
             }
 
-            vCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 4;
+            framesSinceLastGrounded = 0;
+
+            // Jump
+            if (desiredJump)
+            {
+                rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
+
+                OnJump.Invoke();
+            }
+
+            
         }
 
         // Recover the car if it's stuck for too long
@@ -99,6 +126,8 @@ public class CarController : MonoBehaviour
         {
             Recover();
         }
+
+        desiredJump = false;
     }
 
     // TODO : Make the forces applied more effective to untilt the car
@@ -137,6 +166,8 @@ public class CarController : MonoBehaviour
         transform.rotation = spawnTransform.rotation;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+
+        OnKilled.Invoke();
     }
 
     public void setGamepadIndex(int gamepadIndex)
