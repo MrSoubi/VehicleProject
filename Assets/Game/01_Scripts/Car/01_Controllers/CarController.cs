@@ -75,7 +75,7 @@ public class CarController : MonoBehaviour
             rb.drag = 0.1f;
 
             // Air control
-            rb.AddTorque(transform.up * steerInput * data.airSteerForce * 10);
+            rb.AddTorque(transform.up * steerInput * data.airSteerForce);
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
 
             //// Angular drag setting depending on playerInput

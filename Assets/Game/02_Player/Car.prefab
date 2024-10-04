@@ -362,6 +362,7 @@ GameObject:
   - component: {fileID: 1674609591206895182}
   - component: {fileID: 3724138025028459127}
   - component: {fileID: 845637580457535819}
+  - component: {fileID: 5733122603576376436}
   m_Layer: 6
   m_Name: Car
   m_TagString: Untagged
@@ -583,7 +584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 9f492ef5af10a7b47b0e99de4be5423f,
+    type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -598,7 +600,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: CarControl
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &845637580457535819
@@ -620,6 +622,21 @@ MonoBehaviour:
   - {fileID: 30160123384052064}
   - {fileID: 3408141145917575724}
   _boostController: {fileID: 8806550933066109933}
+--- !u!114 &5733122603576376436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838750964252467126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35cb3473ac92dfd43866f84673a4d286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _virtualCamera: {fileID: 6591800809635199648}
+  _Camera: {fileID: 2684221646109332913}
+  _firstPlayerlayerIndex: 7
 --- !u!1 &1329950445697450344
 GameObject:
   m_ObjectHideFlags: 0

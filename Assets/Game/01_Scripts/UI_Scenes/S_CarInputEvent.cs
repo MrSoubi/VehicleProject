@@ -36,6 +36,7 @@ public class S_CarInputEvent : MonoBehaviour
         foreach (WheelController wheelController in _wheelCollider)
         {
             _playerInput.actions["Steer"].performed += wheelController.Steer;
+            _playerInput.actions["Steer"].canceled += wheelController.OnSteerCancel;
             _playerInput.actions["Throttle"].performed += wheelController.Throttle;
             _playerInput.actions["Reverse"].performed += wheelController.Reverse;
             _playerInput.actions["Throttle"].canceled += wheelController.OnThrottleCancel;

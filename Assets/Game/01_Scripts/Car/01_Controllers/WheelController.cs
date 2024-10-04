@@ -100,25 +100,29 @@ public class WheelController : MonoBehaviour
 
     public void Steer(InputAction.CallbackContext context)
     {
-        if(context.performed && data.isSteerable && isGrounded() == true)
+        if(data.isSteerable)
         {
             steerInput = context.ReadValue<float>();
         }
     }
+    public void OnSteerCancel(InputAction.CallbackContext context)
+    {
+
+        steerInput = 0f;
+
+    }
     public void Throttle(InputAction.CallbackContext context)
     {
-        if (isGrounded() == true)
-        {
+       
             accelValue = context.ReadValue<float>();
-        }
+        
     }
 
     public void Reverse(InputAction.CallbackContext context)
     {
-        if (isGrounded() == true)
-        {
+        
             reverseValue = context.ReadValue<float>();
-        }
+        
     }
 
     public void OnThrottleCancel(InputAction.CallbackContext context)

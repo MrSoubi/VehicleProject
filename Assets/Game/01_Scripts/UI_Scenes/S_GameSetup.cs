@@ -9,9 +9,9 @@ public class S_GameSetup : MonoBehaviour
     [SerializeField] private PlayersData _playersData;
     [SerializeField] private List<GameObject> _carsPrefabs; //Faut que cela corresponde a l'ordre de voiture dans la scne Car Selection
     [SerializeField] private List<Vector3> _playersSpawnPosition;
-    [SerializeField] float viewportX, viewportY, viewportHeight, viewportWidth;
+    [SerializeField] private DisplayManager _displayManager;
     private Dictionary<InputDevice, PlayerInfo> players => _playersData.players;
-    void Start()
+    void Awake()
     {
         foreach (var player in players)
         {
@@ -23,11 +23,13 @@ public class S_GameSetup : MonoBehaviour
 
             S_CarInputEvent s_CarInputEvent = carInstance.GetComponent<S_CarInputEvent>();
 
+            S_CameraLayerSetup s_CameraLayerSetup = carInstance.GetComponentInChildren<S_CameraLayerSetup>();
+            s_CameraLayerSetup.SetPlayerID(player.Value.playerId);
+            //CarController carController = carInstance.GetComponent<CarController>();
+            //_displayManager.ReturnCarControllerList().Add(carController);
+            _displayManager.SetupCamera();
+
             s_CarInputEvent.Initialize(playerInput);
-
-            //Rect viewport = new Rect(viewportX, viewportY, viewportWidth, viewportHeight);
-
-            //carInstance.GetComponent<CarController>().GetCamera().rect = viewport;
 
         }
     }
