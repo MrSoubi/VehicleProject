@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class VFXTest : MonoBehaviour
+public class VFXWheelMud : MonoBehaviour
 {
     [SerializeField] private List<ParticleSystem> mud;
-    [SerializeField] private int gamepadIndex;
     [SerializeField] private Rigidbody rb;
     public float emissionFactor;
 

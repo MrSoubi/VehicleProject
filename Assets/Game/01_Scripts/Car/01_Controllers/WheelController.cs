@@ -15,6 +15,13 @@ public class WheelController : MonoBehaviour
 
     float steerInput = 0.0f;
 
+    private void LateUpdate()
+    {
+        // Mesh rotation around X axis depending on the car velocity
+        // Bug with the rotation, something to do with the forward of the velocity and of the wheel.
+        mesh.transform.Rotate(Mathf.Rad2Deg * carRigidBody.velocity.magnitude / data.wheelRadius * Time.deltaTime, 0, 0);
+    }
+
     // Update is called once per frame
     void FixedUpdate(){
         steerInput = 0.0f;
@@ -25,12 +32,8 @@ public class WheelController : MonoBehaviour
         }
         
         transform.rotation = carTransform.rotation;
-        transform.Rotate(transform.up, data.steeringSpeedFactor.Evaluate(carRigidBody.velocity.magnitude / carData.maxSpeed) * data.steeringInputFactor.Evaluate(Mathf.Abs(steerInput)) * Mathf.Sign(steerInput) * data.maxSteeringAngle);
-
-        if (data.isSteerable)
-        {
-            mesh.transform.rotation = transform.rotation;
-        }
+        float steeringAngle = data.steeringSpeedFactor.Evaluate(carRigidBody.velocity.magnitude / carData.maxSpeed) * data.steeringInputFactor.Evaluate(Mathf.Abs(steerInput)) * Mathf.Sign(steerInput) * data.maxSteeringAngle;
+        transform.Rotate(transform.up, steeringAngle);
 
         LayerMask mask = LayerMask.GetMask("Ground");
         RaycastHit hit;
@@ -89,8 +92,13 @@ public class WheelController : MonoBehaviour
         return Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, data.maxSuspensionDistance + data.wheelRadius, mask);
     }
 
+    public bool debug = false;
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.position, data.wheelRadius);
+        if (debug)
+        {
+            Gizmos.DrawSphere(transform.position, data.wheelRadius);
+
+        }
     }
 }
