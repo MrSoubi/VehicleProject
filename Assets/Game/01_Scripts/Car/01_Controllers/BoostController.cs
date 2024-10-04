@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 // TODO: See Baptiste for the boost behaviour. Boost limit ? Boost max speed ? Boost quantity ?
 public class BoostController : MonoBehaviour
@@ -11,6 +12,8 @@ public class BoostController : MonoBehaviour
     [SerializeField] SO_Car data;
     [SerializeField] int gamepadIndex;
 
+    public bool isBoosting;
+
     public float currentBoostAmount = 100;
 
     private void Update()
@@ -19,6 +22,11 @@ public class BoostController : MonoBehaviour
         {
             carRigidBody.AddForce(carRigidBody.transform.forward * data.boostForce * Time.deltaTime);
             currentBoostAmount -= data.boostConsumptionPerSecond * Time.deltaTime;
+            isBoosting = true;
+        }
+        else
+        {
+            isBoosting = false;
         }
     }
 
