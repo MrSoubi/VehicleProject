@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Synty_GoopShader_01
+  m_Shader: {fileID: 4800000, guid: 60dd4f2fd4a796949a23abb2c99d9309, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: be2410df551d96a47862a8fcb833563a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emissive:
+        m_Texture: {fileID: 2800000, guid: 76a8a326cd1816a43a3687dcb5a56530, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emissive1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamTexture:
+        m_Texture: {fileID: 2800000, guid: b164af25093b46140af8c4fb65855882, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamTexture1:
+        m_Texture: {fileID: 2800000, guid: b164af25093b46140af8c4fb65855882, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: 9945c39703054724fa43f3de1ff1f9f9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Specular:
+        m_Texture: {fileID: 2800000, guid: 76a8a326cd1816a43a3687dcb5a56530, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 9945c39703054724fa43f3de1ff1f9f9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlbedoBlend: 0.022
+    - _AlphaCutoff: 0.5
+    - _Cutoff: 0.5
+    - _Depth1: 2.38
+    - _EmitAmount: 0
+    - _EmitBlend: 0.071
+    - _EnvironmentReflections: 1
+    - _Float0: 1
+    - _Float1: 2
+    - _Float2: 1
+    - _Float3: 1
+    - _FoamFalloff: 2.25
+    - _FoamFalloff1: 0
+    - _FoamMoveDistance: 0.03
+    - _FoamMoveDistance1: 0
+    - _FoamScale: 0.19
+    - _FoamScale1: 0
+    - _FoamSpeed: 1.07
+    - _FoamSpeed1: 0
+    - _FoamSpread: 0.62
+    - _FoamSpread1: 0
+    - _FoamWobble: 0.46
+    - _FoamWobble1: 0
+    - _NormalAmount: 0.61
+    - _NormalTilingX: 1
+    - _NormalTilingY: 1
+    - _Opacity: 0.937
+    - _OverallFalloff1: 0.29
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _ScrollSpeed: 0.041
+    - _ScrollSpeed1: 1
+    - _ScrollSpeed_Normal: 0.023
+    - _Shoreline: 11.43
+    - _Shoreline1: 0
+    - _Smoothness: 0.448
+    - _SpecAmount: 0.092
+    - _SpecularHighlights: 1
+    - _TilingX: 2
+    - _TilingY: 1.69
+    - __dirty: 0
+    - _albedoBlend: 0.153
+    - _albedoSwitch: 0.169
+    - _normalAmount: 0.34
+    m_Colors:
+    - _BaseColour: {r: 0.3378088, g: 0.589, b: 0.1862279, a: 0}
+    - _Color0: {r: 0.3865272, g: 0.6039216, b: 0.054901946, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmitColour: {r: 0.26274505, g: 0.6039216, b: 0.05490192, a: 0}
+    - _FoamTint: {r: 0.7019608, g: 0.8196079, b: 0.47450978, a: 0}
+    - _FoamTint1: {r: 1, g: 1, b: 1, a: 0}
+    - _ShallowColour1: {r: 0.8714997, g: 0.990566, b: 0.61209506, a: 0}
+  m_BuildTextureStacks: []
