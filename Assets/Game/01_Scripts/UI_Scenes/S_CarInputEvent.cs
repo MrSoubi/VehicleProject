@@ -10,6 +10,16 @@ public class S_CarInputEvent : MonoBehaviour
     [SerializeField] private CarController _carController;
     [SerializeField] private WheelController[] _wheelCollider;
     [SerializeField] private BoostController _boostController;
+
+    [SerializeField] private bool _isForTest = false;
+
+    private void Awake()
+    {
+        if (_isForTest == true)
+        {
+            Initialize(GetComponent<PlayerInput>());
+        }
+    }
     void Start()
     {
         

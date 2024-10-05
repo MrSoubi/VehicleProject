@@ -46,7 +46,7 @@ public class DisplayManager : MonoBehaviour
         List<Rect> settings = new List<Rect>();
         List<int> playerDisplays = new List<int>();
 
-        if (displayCount == 1 &&  /*carControllers */_playersData.players.Count == 2) // 1 screen 2 players
+        if (displayCount == 1 &&  /*carControllers*/_playersData.players.Count == 2) // 1 screen 2 players
         {
             settings.Add(new Rect(0, 0, 1, 0.5f));
             playerDisplays.Add(0);
@@ -122,7 +122,7 @@ public class DisplayManager : MonoBehaviour
             Debug.LogError("Number of cars should be at least 1");
         }
 
-        for (int i = 0; i < _playersData.players.Count; i++)
+        for (int i = 0; i < /*Camera.allCamerasCount*/ _playersData.players.Count; i++)
         {
             PlayerInfo localPlayerInfo = new PlayerInfo();
             localPlayerInfo.camera = Camera.allCameras[i];
