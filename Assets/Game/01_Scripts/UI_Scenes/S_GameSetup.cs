@@ -12,7 +12,7 @@ public class S_GameSetup : MonoBehaviour
     [SerializeField] private List<Quaternion> _playersSpawnRotation;
     [SerializeField] private DisplayManager _displayManager;
     private Dictionary<InputDevice, PlayerInfo> players => _playersData.players;
-    void Awake()
+    void Start()
     {
         foreach (var player in players)
         {

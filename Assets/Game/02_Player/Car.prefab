@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c8f8d9d84c93e42a019103b1464b97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 3724138025028459127}
   _carController: {fileID: 147987426915421233}
   _wheelCollider:
   - {fileID: 8896651441273347929}
@@ -622,6 +623,7 @@ MonoBehaviour:
   - {fileID: 30160123384052064}
   - {fileID: 3408141145917575724}
   _boostController: {fileID: 8806550933066109933}
+  _isForTest: 0
 --- !u!114 &5733122603576376436
 MonoBehaviour:
   m_ObjectHideFlags: 0
