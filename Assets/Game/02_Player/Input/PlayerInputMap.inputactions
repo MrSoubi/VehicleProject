@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "Steer",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "48fde6a6-2e20-428d-8191-8cff853ef265",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -61,12 +61,12 @@
                 },
                 {
                     "name": "Pitch",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "55ef488b-ef7a-45a4-ab13-59af8d79a9f6",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
