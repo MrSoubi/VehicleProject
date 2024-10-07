@@ -7,21 +7,21 @@
             "actions": [
                 {
                     "name": "Throttle",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "31f2ba46-3fb9-43d1-8298-56c47571b1a1",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Analog",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Reverse",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "c58018dd-79fb-4b3b-9570-6c93680c47bd",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Analog",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Steer",
