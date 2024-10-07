@@ -14,12 +14,13 @@ public class S_GameSetup : MonoBehaviour
     private Dictionary<InputDevice, PlayerInfo> players => _playersData.players;
     void Start()
     {
+        //Creer tous les voitures des players dans le players data en focntion de son carIDSelected selectioné dans la scene CarSelction et setup les cameras du splitscreen
         foreach (var player in players)
         {
             GameObject carPrefab = GetCarPrefabID(player.Value.carIDSelected);
             GameObject carInstance = Instantiate(carPrefab, GetSpawnPosition(player.Value.playerId), GetSpawnRotation(player.Value.playerId));
 
-            PlayerInput playerInput = player.Value._playerInput;
+            PlayerInput playerInput = player.Value._playerInput; //Assigne le player input du PlayerData au player assigné
            
 
             S_CarInputEvent s_CarInputEvent = carInstance.GetComponent<S_CarInputEvent>();
@@ -30,7 +31,7 @@ public class S_GameSetup : MonoBehaviour
             //_displayManager.ReturnCarControllerList().Add(carController);
             
 
-            s_CarInputEvent.Initialize(playerInput);
+            s_CarInputEvent.Initialize(playerInput); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
 
         }
         _displayManager.SetupCamera();

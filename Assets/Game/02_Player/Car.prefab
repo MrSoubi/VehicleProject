@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f12bffb31094994b85e2bcca30a7a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mutiplierByBumpPourcentage: 0.01
 --- !u!114 &5523232050478036365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +557,9 @@ MonoBehaviour:
   velocityEvenFrame: {x: 0, y: 0, z: 0}
   lastVelocity: {x: 0, y: 0, z: 0}
   isVerbose: 1
+  _playerLifeManager: {fileID: 3082953932134429330}
+  _baseImpactForceMultiplier: 4000
+  _pourcentageMultiplier: 2
 --- !u!114 &3724138025028459127
 MonoBehaviour:
   m_ObjectHideFlags: 0

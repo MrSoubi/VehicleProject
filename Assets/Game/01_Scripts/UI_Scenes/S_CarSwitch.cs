@@ -10,7 +10,6 @@ public class S_CarSwitch : MonoBehaviour
 {
     [SerializeField] private GameObject[] _cars;
     [SerializeField] private Camera[] _cameras;
-    [SerializeField] private RawImage[] carDisplays;
     [SerializeField] private GameObject[] _textReady;
     [SerializeField] private Transform _target;
     [SerializeField] private float _rotationSpeed = 30f;
