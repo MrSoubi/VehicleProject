@@ -8,7 +8,7 @@ public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private float delay;
     [SerializeField] private GameObject objectToSpawn;
-    [SerializeField] private Vector3 objectSpawnTransform;
+    [SerializeField] private Transform objectSpawnTransform;
     private GameObject objectSpawn;
     private float delayTemp;
 
@@ -23,7 +23,7 @@ public class ObjectSpawner : MonoBehaviour
         {
             if(delayTemp >= delay)
             {
-                objectSpawn = Instantiate(objectToSpawn, objectSpawnTransform, Quaternion.identity);
+                objectSpawn = Instantiate(objectToSpawn, objectSpawnTransform.position, Quaternion.identity);
                  
             }
             else
