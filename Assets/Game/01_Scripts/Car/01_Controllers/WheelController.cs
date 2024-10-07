@@ -14,6 +14,10 @@ public class WheelController : MonoBehaviour
     public int gamepadIndex;
 
     float steerInput = 0.0f;
+    float accelInput => accelValue - reverseValue;
+
+    float accelValue = 0f;
+    float reverseValue = 0f;
 
     private void LateUpdate()
     {
@@ -24,12 +28,12 @@ public class WheelController : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate(){
-        steerInput = 0.0f;
+        //steerInput = 0.0f;
 
-        if (data.isSteerable)
-        {
-            steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
-        }
+        //if (data.isSteerable)
+        //{
+        //    steerInput = Gamepad.all[gamepadIndex].leftStick.x.value;
+        //}
         
         transform.rotation = carTransform.rotation;
         float steeringAngle = data.steeringSpeedFactor.Evaluate(carRigidBody.velocity.magnitude / carData.maxSpeed) * data.steeringInputFactor.Evaluate(Mathf.Abs(steerInput)) * Mathf.Sign(steerInput) * data.maxSteeringAngle;
@@ -71,7 +75,7 @@ public class WheelController : MonoBehaviour
 
     public void Acceleration(RaycastHit tireRay){
 
-        float accelInput = Gamepad.all[gamepadIndex].rightTrigger.value - Gamepad.all[gamepadIndex].leftTrigger.value;
+        //float accelInput = Gamepad.all[gamepadIndex].rightTrigger.value - Gamepad.all[gamepadIndex].leftTrigger.value;
 
         Vector3 accelDir = transform.forward;
         if (Mathf.Abs(accelInput) > 0.0f){
@@ -100,5 +104,46 @@ public class WheelController : MonoBehaviour
             Gizmos.DrawSphere(transform.position, data.wheelRadius);
 
         }
+    }
+
+    public void Steer(InputAction.CallbackContext context)
+    {
+        if(data.isSteerable)
+        {
+            steerInput = context.ReadValue<float>();
+        }
+    }
+    public void OnSteerCancel(InputAction.CallbackContext context)
+    {
+
+        steerInput = 0f;
+
+    }
+    public void Throttle(InputAction.CallbackContext context)
+    {
+       
+            accelValue = context.ReadValue<float>();
+        
+    }
+
+    public void Reverse(InputAction.CallbackContext context)
+    {
+        
+            reverseValue = context.ReadValue<float>();
+        
+    }
+
+    public void OnThrottleCancel(InputAction.CallbackContext context)
+    {
+
+        accelValue = 0f;
+        
+    }
+
+    public void OnReverseCancel(InputAction.CallbackContext context)
+    {
+
+        reverseValue = 0f;
+        
     }
 }

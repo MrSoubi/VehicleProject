@@ -118,7 +118,8 @@ public class S_MapSelection : MonoBehaviour
         if (context.performed)
         {
             ChangeActionMap();
-            SceneManager.LoadScene("Map_"+ _currentMapIndex.ToString());//Load scene to test
+            //SceneManager.LoadScene("Map_"+ _currentMapIndex.ToString());//Load scene to test
+            SceneManager.LoadScene("BasicLevel");//Load scene to test
         }
     }
 
