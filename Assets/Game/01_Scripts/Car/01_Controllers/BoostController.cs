@@ -12,10 +12,9 @@ public class BoostController : MonoBehaviour
     [SerializeField] SO_Car data;
     [SerializeField] int gamepadIndex;
 
-    public bool isBoosting;
+    public bool isBoosting = false;
 
     public float currentBoostAmount = 100;
-    private bool isBoosting = false;
 
     private void Update()
     {
