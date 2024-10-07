@@ -49,7 +49,7 @@ public class S_CarSelection : MonoBehaviour
 
     }
 
-    //Quand le joueur appuie sur le bouton sud et rejoin la parte lui assigne un panel de lecran pour selectionnaer sa voiture
+    //Quand le joueur appuie sur le bouton sud et rejoint la partie puis lui assigne un panel de l'ecran pour selectionnaer sa voiture
     public void OnSouthButtonPress(InputDevice playerDevice, PlayerInput playerInput)
     {
         Debug.Log("PressEnter");//Verification que la touche soit bien desactive

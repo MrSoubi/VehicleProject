@@ -10,7 +10,6 @@ public class S_InputEventCarSelection : MonoBehaviour
     [SerializeField] private S_CarSelection _carSelectionManager;
     [SerializeField] private S_CarSwitch carSwitchManager;
     [SerializeField] private PlayerInputManager playerInputManager;
-    [SerializeField] private S_MapSelection _mapSelection;
     private Dictionary<InputDevice, PlayerInfo> _players => _carSelectionManager.ReturnPlayerInfo();
 
     private void Awake()
