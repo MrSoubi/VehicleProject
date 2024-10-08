@@ -99,10 +99,9 @@ public class WheelController : MonoBehaviour
     public bool debug = false;
     private void OnDrawGizmos()
     {
-        if (debug)
+        if (debug && isGrounded())
         {
             Gizmos.DrawSphere(transform.position, data.wheelRadius);
-
         }
     }
 
