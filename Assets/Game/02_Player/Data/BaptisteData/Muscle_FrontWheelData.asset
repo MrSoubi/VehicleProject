@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMotorised: 1
   suspensionRestDir: 0.5
-  maxSuspensionDistance: 0.5
-  springStrength: 25000
+  maxSuspensionDistance: 0.7
+  springStrength: 30000
   springDamper: 2000
-  tireGripFactor: 1.5
-  tireMass: 15
-  wheelRadius: 0.55
+  tireGripFactor: 2
+  tireMass: 60
+  wheelRadius: 0.4
   isSteerable: 1
-  maxSteeringAngle: 14
+  maxSteeringAngle: 27
   steeringInputFactor:
     serializedVersion: 2
     m_Curve:
