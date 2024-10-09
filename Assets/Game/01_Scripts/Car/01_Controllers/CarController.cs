@@ -10,19 +10,26 @@ public class CarController : MonoBehaviour
 {
     public UnityEvent OnKilled;
     public UnityEvent OnJump;
+    public UnityEvent OnTakeOff;
     public UnityEvent OnLanding;
+    public UnityEvent OnReverse;
+    public UnityEvent OnForward;
 
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private CinemachineVirtualCamera vCamera;
+
     public int gamepadIndex;
+
+    [SerializeField] float jumpDelay = 5;
 
     Transform spawnTransform;
 
     // TODO: Serialize or set these parameters in the SO_Car
     float drag;
     float flippedSince;
+
+    bool canJump;
 
     private void Start()
     {
@@ -31,10 +38,6 @@ public class CarController : MonoBehaviour
         if (rb == null)
         {
             Debug.LogError("RigidBody not found on " + gameObject.name);
-        }
-        if (vCamera == null)
-        {
-            Debug.LogError("Virtual Camera not found on " + gameObject.name);
         }
         if (data == null)
         {
@@ -50,8 +53,8 @@ public class CarController : MonoBehaviour
 
     float steerInput, pitchInput;
     bool desiredJump;
-
     int framesSinceLastGrounded;
+    int framesSinceGoingReverse;
 
     private void FixedUpdate()
     {
@@ -60,6 +63,11 @@ public class CarController : MonoBehaviour
         // On air (or flipped)
         if (!IsGrounded())
         {
+            if (framesSinceLastGrounded == 0)
+            {
+                OnTakeOff.Invoke();
+            }
+
             framesSinceLastGrounded++;
 
             rb.drag = 0.1f;
@@ -79,22 +87,37 @@ public class CarController : MonoBehaviour
             {
                 flippedSince = 0.0f;
             }
-
-            vCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 20;
         }
         else // On ground
         {
-            
             // On landing
             if (framesSinceLastGrounded > 0)
             {
                 rb.drag = drag;
-                vCamera.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 4;
+
+                if (!canJump)
+                {
+                    StartCoroutine(JumpReloadRoutine());
+                }
 
                 OnLanding.Invoke();
             }
 
             framesSinceLastGrounded = 0;
+
+            if (IsGoingInReverse())
+            {
+                if (framesSinceGoingReverse == 0)
+                {
+                    OnReverse.Invoke();
+                }
+                framesSinceGoingReverse++;
+            }
+            else
+            {
+                framesSinceGoingReverse = 0;
+                OnForward.Invoke();
+            }
         }
 
         // Recover the car if it's stuck for too long
@@ -102,6 +125,27 @@ public class CarController : MonoBehaviour
         {
             Recover();
         }
+    }
+
+    private bool IsGoingInReverse()
+    {
+        return Vector3.Dot(rb.velocity, transform.forward) < 0 && reverseValue > 0;
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (canJump && context.performed)
+        {
+            rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
+            OnJump.Invoke();
+            canJump = false;
+        }
+    }
+
+    private IEnumerator JumpReloadRoutine()
+    {
+        yield return new WaitForSeconds(jumpDelay);
+        canJump = true;
     }
 
     // TODO : Make the forces applied more effective to untilt the car
@@ -119,6 +163,19 @@ public class CarController : MonoBehaviour
             result |= wheel.isGrounded();
         }
         return result;
+    }
+
+    public void SetAngularDrag()
+    {
+        // Angular drag setting depending on playerInput
+        if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
+        {
+            rb.angularDrag = data.angularDrag_NoInput;
+        }
+        else
+        {
+            rb.angularDrag = data.angularDrag_Input;
+        }
     }
 
     public bool IsFlipped()
@@ -143,6 +200,8 @@ public class CarController : MonoBehaviour
 
         OnKilled.Invoke();
     }
+
+    // Still in use ?
     public void setGamepadIndex(int gamepadIndex)
     {
         this.gamepadIndex = gamepadIndex;
@@ -152,6 +211,7 @@ public class CarController : MonoBehaviour
         }
     }
 
+    // Should not be used ! SOLID !
     public Camera GetCamera()
     {
         return GetComponentInChildren<Camera>();
@@ -162,15 +222,7 @@ public class CarController : MonoBehaviour
         Gizmos.DrawSphere(transform.position + rb.centerOfMass, 0.2f);
     }
 
-    public void Jump(InputAction.CallbackContext context)
-    {
-        if (IsGrounded() == true && context.performed)
-        {
-            rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
-            OnJump.Invoke();
-        }
-    }
-
+    #region INPUT
     public void SteerInAir(InputAction.CallbackContext context)
     {
         steerInput = context.ReadValue<float>();
@@ -189,16 +241,15 @@ public class CarController : MonoBehaviour
         pitchInput = 0f;
     }
 
-    public void SetAngularDrag()
+    float reverseValue;
+    public void Reverse(InputAction.CallbackContext context)
     {
-        // Angular drag setting depending on playerInput
-        if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
-        {
-            rb.angularDrag = data.angularDrag_NoInput;
-        }
-        else
-        {
-            rb.angularDrag = data.angularDrag_Input;
-        }
+        reverseValue = context.ReadValue<float>();
     }
+
+    public void OnReverseCancel(InputAction.CallbackContext context)
+    {
+        reverseValue = 0f;
+    }
+    #endregion
 }

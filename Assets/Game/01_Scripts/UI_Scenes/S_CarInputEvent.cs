@@ -43,6 +43,8 @@ public class S_CarInputEvent : MonoBehaviour
         _playerInput.actions["Steer"].canceled += _carController.OnSteerCanceled;
         _playerInput.actions["Pitch"].performed += _carController.PitchInAir;
         _playerInput.actions["Pitch"].canceled += _carController.OnPitchCanceled;
+        _playerInput.actions["Reverse"].performed += _carController.Reverse;
+        _playerInput.actions["Reverse"].canceled += _carController.OnReverseCancel;
 
         foreach (WheelController wheelController in _wheelCollider)
         {
