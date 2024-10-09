@@ -34,8 +34,12 @@ public class SO_Car : ScriptableObject
     public float angularDrag_Input;
 
     [FoldoutGroup("Boost")]
-    [LabelText("Strength")]
-    public float boostForce;
+    [LabelText("Strength on ground")]
+    public float boostForceOnGround;
+
+    [FoldoutGroup("Boost")]
+    [LabelText("Strength on air")]
+    public float boostForceOnAir;
 
     [FoldoutGroup("Boost")]
     [LabelText("Max capacity")]

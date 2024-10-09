@@ -7,6 +7,8 @@ using UnityEngine.Events;
 // TODO: See Baptiste for the boost behaviour. Boost limit ? Boost max speed ? Boost quantity ?
 public class BoostController : MonoBehaviour
 {
+    public UnityEvent OnBoostActivation;
+    public UnityEvent OnBoostDeactivation;
     [SerializeField] Rigidbody carRigidBody;
     [SerializeField] CarController carController;
     [SerializeField] SO_Car data;
@@ -20,17 +22,34 @@ public class BoostController : MonoBehaviour
     {
         if (currentBoostAmount > 0 && isBoosting == true)
         {
-            carRigidBody.AddForce(carRigidBody.transform.forward * data.boostForce * Time.deltaTime);
+            if (!isBoosting)
+            {
+                OnBoostActivation.Invoke();
+            }
+
+            if (carController.IsGrounded())
+            {
+                carRigidBody.AddForce(carRigidBody.transform.forward * data.boostForceOnGround * Time.deltaTime);
+            }
+            else
+            {
+                carRigidBody.AddForce(carRigidBody.transform.forward * data.boostForceOnAir * Time.deltaTime);
+            }
+            
             currentBoostAmount -= data.boostConsumptionPerSecond * Time.deltaTime;
             isBoosting = true;
         }
         else
         {
+            if (isBoosting)
+            {
+                OnBoostDeactivation.Invoke();
+            }
             isBoosting = false;
         }
     }
 
-    public void AdddBoost(float amount)
+    public void AddBoost(float amount)
     {
         currentBoostAmount = Mathf.Min(currentBoostAmount + amount, data.maxBoostAmount);
     }

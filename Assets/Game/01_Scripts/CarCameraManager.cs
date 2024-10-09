@@ -6,7 +6,7 @@ using UnityEngine;
 public class CarCameraManager : MonoBehaviour
 {
     [SerializeField] CarController carController;
-
+    [SerializeField] BoostController boostController;
     [SerializeField] Camera cam;
 
     [SerializeField] CinemachineVirtualCamera groundCam;
@@ -25,11 +25,24 @@ public class CarCameraManager : MonoBehaviour
         carController.OnForward.AddListener(ActivateGroundCamera);
         carController.OnReverse.AddListener(ActivateReverseCamera);
 
+        boostController.OnBoostActivation.AddListener(OnBoost);
+        boostController.OnBoostDeactivation.AddListener(OnBoost);
+
         reverseCam.enabled = false;
         airCam.enabled = false;
         leftCam.enabled = false;
         rightCam.enabled = false;
         deathCam.enabled = false;
+    }
+
+    private void OnBoost()
+    {
+        airCam.GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 10;
+    }
+
+    private void OnNotBoost()
+    {
+        airCam.GetCinemachineComponent<CinemachineTransposer>().m_YawDamping = 20;
     }
 
     public void ActivateReverseCamera()

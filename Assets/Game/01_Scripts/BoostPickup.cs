@@ -10,7 +10,7 @@ public class BoostPickup : MonoBehaviour
     {
         if (other.GetComponent<BoostController>() != null)
         {
-            other.GetComponent<BoostController>().AdddBoost(boostAmount);
+            other.GetComponent<BoostController>().AddBoost(boostAmount);
             Destroy(gameObject);
         }
     }
