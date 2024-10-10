@@ -1,33 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-
 
 public class ImpactManager : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
-    public Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
-
-    public bool isVerbose;
-    bool isInvicible = false;
-
     [SerializeField] private PlayerLifeManager _playerLifeManager;
-    [SerializeField] private float _baseImpactForceMultiplier;
-    [SerializeField] private float _pourcentageMultiplier;
 
-    private float lastSpeed, speedOddFrame, speedEvenFrame;
+    public Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
+    bool isInvicible = false;
 
     private void Start()
     {
         velocityOddFrame = rb.velocity;
         velocityEvenFrame = rb.velocity;
         lastVelocity = rb.velocity;
-
-        speedOddFrame = rb.velocity.magnitude;
-        speedEvenFrame = rb.velocity.magnitude;
-        lastSpeed = rb.velocity.magnitude;
     }
 
     private void FixedUpdate()
@@ -36,26 +22,17 @@ public class ImpactManager : MonoBehaviour
         {
             velocityEvenFrame = rb.velocity;
             lastVelocity = velocityOddFrame;
-
-            speedEvenFrame = rb.velocity.magnitude;
-            lastSpeed = speedOddFrame;
         }
         else
         {
             velocityOddFrame = rb.velocity;
             lastVelocity = velocityEvenFrame;
-
-            speedOddFrame = rb.velocity.magnitude;
-            lastSpeed = speedEvenFrame;
-
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         ImpactManager otherCar;
-        PlayerLifeManager otherCarLifeManager;
-        collision.gameObject.TryGetComponent<PlayerLifeManager>(out otherCarLifeManager);
 
         if (!collision.gameObject.TryGetComponent<ImpactManager>(out otherCar))
         {
@@ -69,11 +46,14 @@ public class ImpactManager : MonoBehaviour
 
         isInvicible = true;
 
-        HandleImpact(otherCar, collision, otherCarLifeManager);
+        HandleImpact(otherCar, collision);
     }
 
-    private void HandleImpact(ImpactManager otherCar, Collision collision, PlayerLifeManager otherLifeManager)
+    private void HandleImpact(ImpactManager otherCar, Collision collision)
     {
+        // Determination de l'avantage
+        // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
+        // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
         Vector3 impactVelocity = lastVelocity + otherCar.lastVelocity;
 
         float score_A = Vector3.Dot(impactVelocity, lastVelocity);
@@ -81,27 +61,30 @@ public class ImpactManager : MonoBehaviour
 
         bool hasAdvantage = score_A > score_B;
 
+        // On lance une invincibilité après chaque impact
         StartCoroutine(nameof(InvicibilityRoutine));
         
+        // Sans avantage, on prend des dégâts et une force d'impact sur le RB
         if (!hasAdvantage)
         {
             Vector3 impactForce = rb.velocity - lastVelocity;
+
+            // On applique des dégâts équivalents à la force de l'impact
+            // La force d'impact est calculée en retirant la vélocité de la dernière frame à la vélocité actuelle
             _playerLifeManager.ApplyDamage(impactForce.magnitude);
 
+            // La force d'impact appliquée au RB est multipliée par le pourcentage de dégâts
             impactForce *= _playerLifeManager.GetDamageMultiplier();
 
             rb.AddForce(impactForce, ForceMode.Impulse);
         }
+
+        // Avec l'avantage on ne subit rien du tout
     }
 
     private IEnumerator InvicibilityRoutine()
     {
         yield return new WaitForSeconds(1f);
         isInvicible = false;
-    }
-
-    public float GetPourcentageMultiplier()
-    {
-        return _pourcentageMultiplier;
     }
 }
