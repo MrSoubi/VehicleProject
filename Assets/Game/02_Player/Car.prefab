@@ -667,6 +667,7 @@ GameObject:
   - component: {fileID: 3445353022898879297}
   - component: {fileID: 4886923931704245874}
   - component: {fileID: 8314755690009484011}
+  - component: {fileID: 8356073542517730918}
   m_Layer: 6
   m_Name: Car
   m_TagString: Untagged
@@ -1040,6 +1041,24 @@ MonoBehaviour:
   leftCam: {fileID: 2979960188257770275}
   rightCam: {fileID: 8417316115594626881}
   deathCam: {fileID: 114910830879870457}
+--- !u!114 &8356073542517730918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838750964252467126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d713b2c9535d5044da917f0d51c11e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carRigidbody: {fileID: 4382415354077227720}
+  carController: {fileID: 147987426915421233}
+  VFX: {fileID: 5339739117810204693, guid: 26e1cb216e3635e4a820f58a1118d6b9, type: 3}
+  xRotation: 0
+  yRotation: 0
+  zRotation: 0
 --- !u!1 &1329950445697450344
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,8 +1903,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090665275393739237}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04177258, y: 0.88519675, z: -0.08094939, w: 0.45621166}
-  m_LocalPosition: {x: 57.720577, y: 4.4118576, z: 67.84801}
+  m_LocalRotation: {x: 0.081330866, y: -0.63505876, z: 0.06749862, w: 0.76519907}
+  m_LocalPosition: {x: 20.601997, y: 7.880085, z: 0.98973465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
