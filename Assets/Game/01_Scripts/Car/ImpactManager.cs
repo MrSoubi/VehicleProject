@@ -5,15 +5,28 @@ public class ImpactManager : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] private PlayerLifeManager _playerLifeManager;
+    [SerializeField] private float _baseImpactForceMultiplier;
+    [SerializeField] private float _pourcentageMultiplier;
+    [SerializeField][Range(0, 0.1f)] private float _verticalBumpForce;
+
+    [SerializeField][Range(0, 1)] private float _advantageMultiplier; //Le multiplicateur pour le joueur qui a l avantage dans la collision
 
     public Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
     bool isInvicible = false;
+
+    private float lastSpeed, _speedOddFrame, _speedEvenFrame;
+    
+
 
     private void Start()
     {
         velocityOddFrame = rb.velocity;
         velocityEvenFrame = rb.velocity;
         lastVelocity = rb.velocity;
+
+        _speedOddFrame = rb.velocity.magnitude;
+        _speedEvenFrame = rb.velocity.magnitude;
+        lastSpeed = rb.velocity.magnitude;
     }
 
     private void FixedUpdate()
@@ -22,11 +35,17 @@ public class ImpactManager : MonoBehaviour
         {
             velocityEvenFrame = rb.velocity;
             lastVelocity = velocityOddFrame;
+
+            _speedEvenFrame = rb.velocity.magnitude;
+            lastSpeed = _speedOddFrame;
         }
         else
         {
             velocityOddFrame = rb.velocity;
             lastVelocity = velocityEvenFrame;
+
+            _speedOddFrame = rb.velocity.magnitude;
+            lastSpeed = _speedEvenFrame;
         }
     }
 
@@ -55,6 +74,7 @@ public class ImpactManager : MonoBehaviour
         // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
         // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
         Vector3 impactVelocity = lastVelocity + otherCar.lastVelocity;
+        float LastSpeedOtherCar = otherCar.lastSpeed;
 
         float score_A = Vector3.Dot(impactVelocity, lastVelocity);
         float score_B = Vector3.Dot(impactVelocity, otherCar.lastVelocity);
@@ -84,6 +104,44 @@ public class ImpactManager : MonoBehaviour
             // Ajout d'un léger torque
             rb.AddTorque(impactForce / 20, ForceMode.Impulse);
         }
+        /*
+        if (!hasAdvantage)
+        {
+            Vector3 impactForce = rb.velocity - lastVelocity;
+
+            impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
+
+            impactForce *= _playerLifeManager.GetDamageMultiplier() * _baseImpactForceMultiplier;
+            _playerLifeManager.ApplyDamage(Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
+            Debug.Log("Multiplier add to other car" + Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
+
+            //impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
+
+
+            rb.AddForce(impactForce, ForceMode.Impulse);
+
+
+        }
+
+        if (hasAdvantage)
+        {
+            Vector3 impactForce = rb.velocity - lastVelocity;
+
+            impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
+
+            impactForce *= _playerLifeManager.GetDamageMultiplier() * _baseImpactForceMultiplier * _advantageMultiplier;
+            _playerLifeManager.ApplyDamage(LastSpeedOtherCar * _pourcentageMultiplier * _advantageMultiplier);
+
+            //impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
+
+
+            Debug.Log("Multiplier add" + LastSpeedOtherCar * _pourcentageMultiplier * _advantageMultiplier);
+
+
+            rb.AddForce(impactForce, ForceMode.Impulse);
+
+        }*/
+
 
         // Avec l'avantage on ne subit rien du tout
     }
