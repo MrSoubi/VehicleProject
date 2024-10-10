@@ -877,14 +877,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4382415354077227720}
+  _playerLifeManager: {fileID: 3082953932134429330}
   velocityOddFrame: {x: 0, y: 0, z: 0}
   velocityEvenFrame: {x: 0, y: 0, z: 0}
   lastVelocity: {x: 0, y: 0, z: 0}
-  isVerbose: 1
-  _playerLifeManager: {fileID: 3082953932134429330}
-  _baseImpactForceMultiplier: 4000
-  _pourcentageMultiplier: 1
-  _advantageMultiplier: 0.5
 --- !u!114 &3724138025028459127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1056,9 +1052,6 @@ MonoBehaviour:
   carRigidbody: {fileID: 4382415354077227720}
   carController: {fileID: 147987426915421233}
   VFX: {fileID: 5339739117810204693, guid: 26e1cb216e3635e4a820f58a1118d6b9, type: 3}
-  xRotation: 0
-  yRotation: 0
-  zRotation: 0
 --- !u!1 &1329950445697450344
 GameObject:
   m_ObjectHideFlags: 0
@@ -4176,7 +4169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 2
+  m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 3, z: -10}
   m_XDamping: 1
   m_YDamping: 0
