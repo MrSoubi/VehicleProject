@@ -31,6 +31,9 @@ public class CarController : MonoBehaviour
 
     bool canJump;
 
+    Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
+    float lastSpeed, speedOddFrame, speedEvenFrame;
+
     private void Start()
     {
         spawnTransform = transform;
@@ -49,6 +52,14 @@ public class CarController : MonoBehaviour
         }
 
         drag = rb.drag;
+
+        velocityOddFrame = rb.velocity;
+        velocityEvenFrame = rb.velocity;
+        lastVelocity = rb.velocity;
+
+        speedOddFrame = rb.velocity.magnitude;
+        speedEvenFrame = rb.velocity.magnitude;
+        lastSpeed = rb.velocity.magnitude;
     }
 
     float steerInput, pitchInput;
@@ -58,6 +69,24 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Time.frameCount % 2 == 0)
+        {
+            velocityEvenFrame = rb.velocity;
+            lastVelocity = velocityOddFrame;
+
+            speedEvenFrame = rb.velocity.magnitude;
+            lastSpeed = speedOddFrame;
+        }
+        else
+        {
+            velocityOddFrame = rb.velocity;
+            lastVelocity = velocityEvenFrame;
+
+            speedOddFrame = rb.velocity.magnitude;
+            lastSpeed = speedEvenFrame;
+
+        }
+
         rb.maxAngularVelocity = data.maxAngularVelocity;
 
         // On air (or flipped)
@@ -100,6 +129,9 @@ public class CarController : MonoBehaviour
                     StartCoroutine(JumpReloadRoutine());
                 }
 
+                // A modifier ! Sert à redonner une bonne velo à la voiture lors de la réception
+                // rb.velocity = Vector3.ProjectOnPlane(transform.forward, GetFloorNormal()) * lastSpeed;
+
                 OnLanding.Invoke();
             }
 
@@ -127,6 +159,13 @@ public class CarController : MonoBehaviour
         }
     }
 
+    Vector3 GetFloorNormal()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position, -transform.up, out hit);
+
+        return hit.normal;
+    }
     private bool IsGoingInReverse()
     {
         return Vector3.Dot(rb.velocity, transform.forward) < 0 && reverseValue > 0;
