@@ -10,8 +10,8 @@ public class TrickManager : MonoBehaviour
 
     [SerializeField] GameObject VFX;
 
-    public float xRotation, yRotation, zRotation;
-    Quaternion lastRotation;
+    float xRotation, yRotation, zRotation;
+
     Vector3 lastForward;
     Vector3 lastUpward;
     Vector3 lastSideward;
@@ -40,6 +40,8 @@ public class TrickManager : MonoBehaviour
 
     private void Update()
     {
+        if (!canDoTricks) return;
+
         HandleRotation();
 
         HandleTricks();
@@ -71,8 +73,11 @@ public class TrickManager : MonoBehaviour
         zRotation += zDelta;
     }
 
+    bool canDoTricks = false;
     private void HandleTakeOff()
     {
+        canDoTricks = true;
+
         xRotation = 0;
         yRotation = 0;
         zRotation = 0;
@@ -80,7 +85,7 @@ public class TrickManager : MonoBehaviour
 
     private void HandleLanding()
     {
-        PrintTricks();
+        canDoTricks = false;
 
         currentTricks.Clear();
 
