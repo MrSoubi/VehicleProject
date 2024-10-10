@@ -112,14 +112,14 @@ public class S_MapSelection : MonoBehaviour
         }
     }
 
+    [SerializeField] List<string> arenas;
     //Valide la selection en recuperent l'action map pour controller les voiture
     public void ValidateSelection(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             ChangeActionMap();
-            //SceneManager.LoadScene("Map_"+ _currentMapIndex.ToString());//Load scene to test
-            SceneManager.LoadScene("BasicLevel");//Load scene to test
+            SceneManager.LoadScene(arenas[_currentMapIndex]);
         }
     }
 

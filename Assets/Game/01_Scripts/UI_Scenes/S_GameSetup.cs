@@ -8,8 +8,8 @@ public class S_GameSetup : MonoBehaviour
 {
     [SerializeField] private PlayersData _playersData;
     [SerializeField] private List<GameObject> _carsPrefabs; //Faut que cela corresponde a l'ordre de voiture dans la scne Car Selection
-    [SerializeField] private List<Vector3> _playersSpawnPosition;
-    [SerializeField] private List<Quaternion> _playersSpawnRotation;
+
+    [SerializeField] private List<Transform> _playerSpawnTransforms;
     [SerializeField] private DisplayManager _displayManager;
     private Dictionary<InputDevice, PlayerInfo> players => _playersData.players;
     void Start()
@@ -46,11 +46,11 @@ public class S_GameSetup : MonoBehaviour
 
     Vector3 GetSpawnPosition(int playerID)
     {
-        return _playersSpawnPosition[playerID];
+        return _playerSpawnTransforms[playerID].position;
     }
 
     Quaternion GetSpawnRotation(int playerID)
     {
-        return _playersSpawnRotation[playerID];
+        return _playerSpawnTransforms[playerID].rotation;
     }
 }
