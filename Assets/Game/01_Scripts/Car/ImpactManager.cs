@@ -74,9 +74,15 @@ public class ImpactManager : MonoBehaviour
             _playerLifeManager.ApplyDamage(impactForce.magnitude);
 
             // La force d'impact appliquée au RB est multipliée par le pourcentage de dégâts
-            impactForce *= _playerLifeManager.GetDamageMultiplier();
+            impactForce *= _playerLifeManager.GetDamageMultiplier() * 4000;
 
             rb.AddForce(impactForce, ForceMode.Impulse);
+
+            // Ajout d'une légère force vers le haut
+            rb.AddForce(Vector3.up * impactForce.magnitude / 10, ForceMode.Impulse);
+
+            // Ajout d'un léger torque
+            rb.AddTorque(impactForce / 20, ForceMode.Impulse);
         }
 
         // Avec l'avantage on ne subit rien du tout
