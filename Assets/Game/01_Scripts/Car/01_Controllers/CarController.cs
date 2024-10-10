@@ -114,6 +114,7 @@ public class CarController : MonoBehaviour
             }
             else
             {
+                canRecover = false;
                 flippedSince = 0.0f;
             }
         }
@@ -153,11 +154,13 @@ public class CarController : MonoBehaviour
         }
 
         // Recover the car if it's stuck for too long
-        if (flippedSince > 2.0f)
+        if (flippedSince > 0.5f)
         {
-            Recover();
+            canRecover = true;
         }
     }
+
+    bool canRecover;
 
     Vector3 GetFloorNormal()
     {
@@ -173,11 +176,19 @@ public class CarController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (canRecover && context.performed)
+        {
+            rb.AddForce(-transform.up * data.jumpForce, ForceMode.Impulse);
+            canRecover = false;
+            return;
+        }
+
         if (canJump && context.performed)
         {
             rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
             OnJump.Invoke();
             canJump = false;
+            return;
         }
     }
 
