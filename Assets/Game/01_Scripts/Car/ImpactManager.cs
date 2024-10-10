@@ -16,7 +16,6 @@ public class ImpactManager : MonoBehaviour
     [SerializeField] private PlayerLifeManager _playerLifeManager;
     [SerializeField] private float _baseImpactForceMultiplier;
     [SerializeField] private float _pourcentageMultiplier;
-    [SerializeField] [Range(0, 1)]private float _advantageMultiplier; //Le multiplicateur pour le joueur qui a l avantage dans la collision
 
     private float lastSpeed, speedOddFrame, speedEvenFrame;
 
@@ -54,7 +53,6 @@ public class ImpactManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        float OtherCarSpeed = collision.rigidbody.velocity.magnitude;
         ImpactManager otherCar;
         PlayerLifeManager otherCarLifeManager;
         collision.gameObject.TryGetComponent<PlayerLifeManager>(out otherCarLifeManager);
@@ -71,17 +69,16 @@ public class ImpactManager : MonoBehaviour
 
         isInvicible = true;
 
-        HandleImpact(otherCar, collision, otherCarLifeManager, OtherCarSpeed);
+        HandleImpact(otherCar, collision, otherCarLifeManager);
     }
 
-    private void HandleImpact(ImpactManager otherCar, Collision collision, PlayerLifeManager otherLifeManager, float OtherCarSpeed)
+    private void HandleImpact(ImpactManager otherCar, Collision collision, PlayerLifeManager otherLifeManager)
     {
         Vector3 impactVelocity = lastVelocity + otherCar.lastVelocity;
 
         float score_A = Vector3.Dot(impactVelocity, lastVelocity);
         float score_B = Vector3.Dot(impactVelocity, otherCar.lastVelocity);
-        Debug.Log("scoreA : " + score_A);
-        Debug.Log("score_B : " + score_B);
+
         bool hasAdvantage = score_A > score_B;
 
         StartCoroutine(nameof(InvicibilityRoutine));
@@ -89,40 +86,11 @@ public class ImpactManager : MonoBehaviour
         if (!hasAdvantage)
         {
             Vector3 impactForce = rb.velocity - lastVelocity;
+            _playerLifeManager.ApplyDamage(impactForce.magnitude);
 
-            Debug.Log("Impact Velocity : " +impactVelocity);
-            Debug.Log("Impact force : " + impactForce);
-
-            //float OtherCarSpeed= collision.rigidbody.velocity.magnitude;
-            //OtherCarSpeed = 
-            Debug.Log(rb.velocity.magnitude);
-
-            impactForce *= _playerLifeManager.GetDamageMultiplier() * _baseImpactForceMultiplier;
-            _playerLifeManager.ApplyDamage(OtherCarSpeed * _pourcentageMultiplier);
-            //Debug.Log("Multiplier add to other car" + OtherCarSpeed * _pourcentageMultiplier);
-
-
-            
-
+            impactForce *= _playerLifeManager.GetDamageMultiplier();
 
             rb.AddForce(impactForce, ForceMode.Impulse);
-            
-        }
-
-        if (hasAdvantage)
-        {
-            Vector3 impactForce = rb.velocity - lastVelocity;
-            //Debug.Log(rb.velocity.magnitude);
-            //float OtherCarSpeed = collision.rigidbody.velocity.magnitude;
-            //Debug.Log(OtherCarSpeed);
-            impactForce *= _playerLifeManager.GetDamageMultiplier() * _baseImpactForceMultiplier * _advantageMultiplier;
-            _playerLifeManager.ApplyDamage(OtherCarSpeed * _pourcentageMultiplier * _advantageMultiplier);
-
-            rb.AddForce(impactForce, ForceMode.Impulse);
-
-            //Debug.Log("Multiplier add" + OtherCarSpeed * _pourcentageMultiplier * _advantageMultiplier);
-
-            Debug.Log(gameObject);
         }
     }
 
@@ -136,5 +104,4 @@ public class ImpactManager : MonoBehaviour
     {
         return _pourcentageMultiplier;
     }
-    
 }
