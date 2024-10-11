@@ -302,4 +302,9 @@ public class CarController : MonoBehaviour
         reverseValue = 0f;
     }
     #endregion
+
+    public void OnWreckingBallEffect()
+    {
+        Debug.Log("Hit");
+    }
 }
