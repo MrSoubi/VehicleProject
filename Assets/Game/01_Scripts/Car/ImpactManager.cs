@@ -74,7 +74,8 @@ public class ImpactManager : MonoBehaviour
         // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
         // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
         Vector3 impactVelocity = lastVelocity + otherCar.lastVelocity;
-        float LastSpeedOtherCar = otherCar.lastSpeed;
+
+        float LastSpeedOtherCar = otherCar.lastSpeed; //On recupere la derniere vitesse de l'autre voiture
 
         float score_A = Vector3.Dot(impactVelocity, lastVelocity);
         float score_B = Vector3.Dot(impactVelocity, otherCar.lastVelocity);
@@ -83,64 +84,47 @@ public class ImpactManager : MonoBehaviour
 
         // On lance une invincibilité après chaque impact
         StartCoroutine(nameof(InvicibilityRoutine));
-        
+
         // Sans avantage, on prend des dégâts et une force d'impact sur le RB
+        //if (!hasAdvantage)
+        //{
+        //    Vector3 impactForce = rb.velocity - lastVelocity;
+
+        //    // On applique des dégâts équivalents à la force de l'impact
+        //    // La force d'impact est calculée en retirant la vélocité de la dernière frame à la vélocité actuelle
+        //    _playerLifeManager.ApplyDamage(impactForce.magnitude);
+
+        //    // La force d'impact appliquée au RB est multipliée par le pourcentage de dégâts
+        //    impactForce *= _playerLifeManager.GetDamageMultiplier() * 4000;
+
+        //    rb.AddForce(impactForce, ForceMode.Impulse);
+
+        //    // Ajout d'une légère force vers le haut
+        //    rb.AddForce(Vector3.up * impactForce.magnitude / 10, ForceMode.Impulse);
+
+        //    // Ajout d'un léger torque
+        //    rb.AddTorque(impactForce / 20, ForceMode.Impulse);
+        //}
+
         if (!hasAdvantage)
         {
             Vector3 impactForce = rb.velocity - lastVelocity;
-
-            // On applique des dégâts équivalents à la force de l'impact
-            // La force d'impact est calculée en retirant la vélocité de la dernière frame à la vélocité actuelle
-            _playerLifeManager.ApplyDamage(impactForce.magnitude);
-
-            // La force d'impact appliquée au RB est multipliée par le pourcentage de dégâts
-            impactForce *= _playerLifeManager.GetDamageMultiplier() * 4000;
-
-            rb.AddForce(impactForce, ForceMode.Impulse);
-
-            // Ajout d'une légère force vers le haut
-            rb.AddForce(Vector3.up * impactForce.magnitude / 10, ForceMode.Impulse);
-
-            // Ajout d'un léger torque
-            rb.AddTorque(impactForce / 20, ForceMode.Impulse);
-        }
-        /*
-        if (!hasAdvantage)
-        {
-            Vector3 impactForce = rb.velocity - lastVelocity;
+            //Vector3 impactForce = rb.velocity - lastVelocity + Vector3.up;
 
             impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
 
-            impactForce *= _playerLifeManager.GetDamageMultiplier() * _baseImpactForceMultiplier;
+             impactForce *= _playerLifeManager.GetDamageMultiplier() * _baseImpactForceMultiplier;
+
             _playerLifeManager.ApplyDamage(Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
+
             Debug.Log("Multiplier add to other car" + Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
 
             //impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
 
-
             rb.AddForce(impactForce, ForceMode.Impulse);
 
 
         }
-
-        if (hasAdvantage)
-        {
-            Vector3 impactForce = rb.velocity - lastVelocity;
-
-            impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
-
-            impactForce *= _playerLifeManager.GetDamageMultiplier() * _baseImpactForceMultiplier * _advantageMultiplier;
-            _playerLifeManager.ApplyDamage(LastSpeedOtherCar * _pourcentageMultiplier * _advantageMultiplier);
-
-            //impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
-
-
-            Debug.Log("Multiplier add" + LastSpeedOtherCar * _pourcentageMultiplier * _advantageMultiplier);
-
-
-            rb.AddForce(impactForce, ForceMode.Impulse);
-
-        }*/
 
 
         // Avec l'avantage on ne subit rien du tout
