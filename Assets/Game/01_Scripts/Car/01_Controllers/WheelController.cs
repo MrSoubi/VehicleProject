@@ -15,8 +15,11 @@ public class WheelController : MonoBehaviour
 
     private float _gripFactor => data.tireGripFactor;
     private float _driftGripFactor => data.tireDriftGripFactor;
-    private bool _isDrifting = false;
+    private float _currentGripFactor;
     
+    private bool _isThrottle = false;
+    private bool _isReverse = false;
+    private bool _isDrifting => _isReverse && _isThrottle;
 
     float steerInput = 0.0f;
     float accelInput => accelValue - reverseValue;
@@ -24,6 +27,9 @@ public class WheelController : MonoBehaviour
     float accelValue = 0f;
     float reverseValue = 0f;
 
+    private void Awake(){
+        _currentGripFactor = _gripFactor;
+    }
     private void LateUpdate()
     {
         // Mesh rotation around X axis depending on the car velocity
@@ -56,6 +62,9 @@ public class WheelController : MonoBehaviour
             steeringForce = Vector3.zero;
             accelerationForce = Vector3.zero;
         }
+
+        Debug.Log("current gripFactor" + _currentGripFactor);
+        Debug.Log("current isDrifting" + _isDrifting);
     }
 
     Vector3 suspensionForce = Vector3.zero;
@@ -76,7 +85,7 @@ public class WheelController : MonoBehaviour
         Vector3 steeringDir = transform.right;
         Vector3 tireWorldVel = carRigidBody.GetPointVelocity(transform.position);
         float steeringVel = Vector3.Dot(steeringDir, tireWorldVel);
-        float desiredVelChange = -steeringVel * data.tireGripFactor;
+        float desiredVelChange = -steeringVel * _currentGripFactor;
         float desiredAccel = desiredVelChange / Time.fixedDeltaTime;
         carRigidBody.AddForceAtPosition(steeringDir * data.tireMass * desiredAccel, transform.position);
 
@@ -139,20 +148,57 @@ public class WheelController : MonoBehaviour
     public void Throttle(InputAction.CallbackContext context)
     {
         accelValue = context.ReadValue<float>();
+        _isThrottle = true;
     }
 
     public void Reverse(InputAction.CallbackContext context)
     {
+        
+        
         reverseValue = context.ReadValue<float>();
+        _isReverse = true;
+
+
+        if (_isDrifting == true){
+            _currentGripFactor = SetDriftGriptFactor();
+        }
     }
 
     public void OnThrottleCancel(InputAction.CallbackContext context)
     {
+        _isThrottle = false;
         accelValue = 0f;
     }
 
     public void OnReverseCancel(InputAction.CallbackContext context)
     {
+        if (_isDrifting == true){
+            _currentGripFactor = Mathf.Lerp(SetDriftGriptFactor(), SetGripFactor(), 1f);
+        }
+        else{
+            _currentGripFactor = SetGripFactor();
+        }
+        _isReverse = false;
         reverseValue = 0f;
     }
+
+    private float SetGripFactor(){
+        return _gripFactor;
+    }
+
+    private float SetDriftGriptFactor(){
+        return _driftGripFactor;
+    }
+
+    private float SetFactor(){
+        if (_isDrifting == true)
+        {
+            return SetDriftGriptFactor();
+        }
+        else{
+            return SetGripFactor();
+        }
+    }
+
+    
 }
