@@ -303,8 +303,10 @@ public class CarController : MonoBehaviour
     }
     #endregion
 
-    public void OnWreckingBallEffect()
+    public void OnWreckingBallEffect(float force)
     {
         Debug.Log("Hit");
+        rb.AddForce(-transform.forward *  force, ForceMode.Impulse);
+        rb.AddTorque(transform.up, ForceMode.Impulse);
     }
 }
