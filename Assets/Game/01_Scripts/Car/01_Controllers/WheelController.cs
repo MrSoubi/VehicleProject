@@ -52,9 +52,13 @@ public class WheelController : MonoBehaviour
         else
         {
             mesh.transform.position = transform.position;
+            suspensionForce = Vector3.zero;
+            steeringForce = Vector3.zero;
+            accelerationForce = Vector3.zero;
         }
     }
 
+    Vector3 suspensionForce = Vector3.zero;
     public void Suspension(RaycastHit tireRay){
         Vector3 springDir = transform.up;
         Vector3 tireWorldVel = carRigidBody.GetPointVelocity(transform.position);
@@ -64,8 +68,10 @@ public class WheelController : MonoBehaviour
         carRigidBody.AddForceAtPosition(springDir * force, transform.position);
 
         mesh.transform.position = transform.position + new Vector3(0, -tireRay.distance + data.wheelRadius, 0);
+        suspensionForce = springDir * force;
     }
 
+    Vector3 steeringForce = Vector3.zero;
     public void Steering(RaycastHit tireRay){
         Vector3 steeringDir = transform.right;
         Vector3 tireWorldVel = carRigidBody.GetPointVelocity(transform.position);
@@ -73,8 +79,11 @@ public class WheelController : MonoBehaviour
         float desiredVelChange = -steeringVel * data.tireGripFactor;
         float desiredAccel = desiredVelChange / Time.fixedDeltaTime;
         carRigidBody.AddForceAtPosition(steeringDir * data.tireMass * desiredAccel, transform.position);
+
+        steeringForce = steeringDir * data.tireMass * desiredAccel;
     }
 
+    Vector3 accelerationForce = Vector3.zero;
     public void Acceleration(RaycastHit tireRay)
     {
         Vector3 accelDir = transform.forward;
@@ -86,6 +95,7 @@ public class WheelController : MonoBehaviour
             float availableTorque = carData.powerCurve.Evaluate(normalizedSpeed) * accelInput;
 
             carRigidBody.AddForceAtPosition(accelDir * availableTorque * carData.enginePower, transform.position);
+            accelerationForce = accelDir * availableTorque * carData.enginePower;
         }
     }
 
@@ -97,11 +107,19 @@ public class WheelController : MonoBehaviour
     }
 
     public bool debug = false;
+    public float debugVectorFactor = 1;
     private void OnDrawGizmos()
     {
         if (debug)
         {
+            Gizmos.color = Color.white;
             Gizmos.DrawSphere(transform.position, data.wheelRadius);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(transform.position, transform.position + accelerationForce * debugVectorFactor);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + steeringForce * debugVectorFactor);
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, transform.position + suspensionForce * debugVectorFactor);
         }
     }
 
