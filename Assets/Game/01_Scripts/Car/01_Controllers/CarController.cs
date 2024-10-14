@@ -309,11 +309,4 @@ public class CarController : MonoBehaviour
         reverseValue = 0f;
     }
     #endregion
-
-    public void OnWreckingBallEffect(float force)
-    {
-        Debug.Log("Hit");
-        rb.AddForce(-transform.forward *  force, ForceMode.Impulse);
-        rb.AddTorque(transform.up, ForceMode.Impulse);
-    }
 }

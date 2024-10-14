@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class WreckingBall : MonoBehaviour
 {
-    [SerializeField] private float wreckingBallForce;
+    [SerializeField] private float wreckingBallForceHorizontal;
+    [SerializeField] private float wreckingBallForceUp;
+
     private void OnTriggerEnter(Collider other)
     {
-        CarController car;
-
-        if (other.TryGetComponent<CarController>(out car))
+        if (other.GetComponent<CarController>() != null)
         {
-            car.OnWreckingBallEffect(wreckingBallForce);
+            Debug.Log("Hit");
+            Vector3 dir = Vector3.ProjectOnPlane((other.transform.position - transform.position), Vector3.up).normalized;
+            Rigidbody otherRB = other.GetComponent<Rigidbody>();
+            otherRB.AddForce(dir * wreckingBallForceHorizontal, ForceMode.Impulse);
+            otherRB.AddForce(Vector3.up * wreckingBallForceUp, ForceMode.Impulse);
+            otherRB.AddTorque(Vector3.zero);
         }
     }
 }
