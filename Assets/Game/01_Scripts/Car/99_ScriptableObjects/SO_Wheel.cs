@@ -30,6 +30,9 @@ public class SO_Wheel : ScriptableObject
     [LabelText("Grip factor")]
     public float tireGripFactor;
     [FoldoutGroup("Tire")]
+    [LabelText("Drift drip factor ")]
+    public float tireDriftGripFactor;
+    [FoldoutGroup("Tire")]
     public float tireMass;
     [FoldoutGroup("Tire")]
     public float wheelRadius;

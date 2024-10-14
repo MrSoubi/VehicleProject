@@ -12,7 +12,7 @@ public class BounceBumper : MonoBehaviour
         if(collision.gameObject.GetComponent<CarController>() != null)
         {
             Rigidbody otherRB = collision.rigidbody;
-             float forceBumper = otherRB.velocity.magnitude;
+            float forceBumper = otherRB.velocity.magnitude;
 
             otherRB.AddExplosionForce(bounceForce * forceBumper, transform.position, bounceRadius);
         }
