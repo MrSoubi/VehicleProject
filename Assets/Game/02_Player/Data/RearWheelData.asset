@@ -12,12 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab952e38fb07a34e88f8fca88e17892, type: 3}
   m_Name: RearWheelData
   m_EditorClassIdentifier: 
+  isMotorised: 0
   suspensionRestDir: 0.5
+  maxSuspensionDistance: 0.4
   springStrength: 8000
   springDamper: 100
   tireGripFactor: 0.6
+  tireDriftGripFactor: 0.1
   tireMass: 15
-  isMotorised: 0
-  isSteerable: 0
   wheelRadius: 0.3
-  maxSuspensionDistance: 0.4
+  isSteerable: 0
+  maxSteeringAngle: 0
+  steeringInputFactor:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  steeringSpeedFactor:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
