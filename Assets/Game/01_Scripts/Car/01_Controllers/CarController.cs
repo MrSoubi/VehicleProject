@@ -87,6 +87,7 @@ public class CarController : MonoBehaviour
 
         }
 
+        SetAngularDrag();
         rb.maxAngularVelocity = data.maxAngularVelocity;
 
         // On air (or flipped)
@@ -105,7 +106,7 @@ public class CarController : MonoBehaviour
             rb.AddTorque(transform.up * steerInput * data.airSteerForce);
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
 
-            SetAngularDrag();
+            
 
             // Check is returned
             if (IsFlipped())
@@ -130,7 +131,7 @@ public class CarController : MonoBehaviour
                     StartCoroutine(JumpReloadRoutine());
                 }
 
-                // A modifier ! Sert à redonner une bonne velo à la voiture lors de la réception
+                // A modifier ! Sert ï¿½ redonner une bonne velo ï¿½ la voiture lors de la rï¿½ception
                 // rb.velocity = Vector3.ProjectOnPlane(transform.forward, GetFloorNormal()) * lastSpeed;
 
                 OnLanding.Invoke();
@@ -158,6 +159,7 @@ public class CarController : MonoBehaviour
         {
             canRecover = true;
         }
+        Debug.Log(rb.angularDrag);
     }
 
     bool canRecover;
@@ -217,14 +219,18 @@ public class CarController : MonoBehaviour
 
     public void SetAngularDrag()
     {
-        // Angular drag setting depending on playerInput
-        if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
-        {
-            rb.angularDrag = data.angularDrag_NoInput;
-        }
-        else
-        {
-            rb.angularDrag = data.angularDrag_Input;
+        if (IsGrounded()){
+            rb.angularDrag = 0;
+        }else{
+            // Angular drag setting depending on playerInput
+            if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
+            {
+                rb.angularDrag = data.angularDrag_NoInput;
+            }
+            else
+            {
+                rb.angularDrag = data.angularDrag_Input;
+            }
         }
     }
 
@@ -270,6 +276,7 @@ public class CarController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position + rb.centerOfMass, 0.2f);
+        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + rb.velocity);
     }
 
     #region INPUT
@@ -302,11 +309,4 @@ public class CarController : MonoBehaviour
         reverseValue = 0f;
     }
     #endregion
-
-    public void OnWreckingBallEffect(float force)
-    {
-        Debug.Log("Hit");
-        rb.AddForce(-transform.forward *  force, ForceMode.Impulse);
-        rb.AddTorque(transform.up, ForceMode.Impulse);
-    }
 }
