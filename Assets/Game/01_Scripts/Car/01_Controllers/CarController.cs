@@ -87,6 +87,7 @@ public class CarController : MonoBehaviour
 
         }
 
+        SetAngularDrag();
         rb.maxAngularVelocity = data.maxAngularVelocity;
 
         // On air (or flipped)
@@ -105,7 +106,7 @@ public class CarController : MonoBehaviour
             rb.AddTorque(transform.up * steerInput * data.airSteerForce);
             rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
 
-            SetAngularDrag();
+            
 
             // Check is returned
             if (IsFlipped())
@@ -218,8 +219,8 @@ public class CarController : MonoBehaviour
 
     public void SetAngularDrag()
     {
-        if (IsGrounded){
-            rb.angularDrag = data.angularDrag_Input;
+        if (IsGrounded()){
+            rb.angularDrag = 0;
         }else{
             // Angular drag setting depending on playerInput
             if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
