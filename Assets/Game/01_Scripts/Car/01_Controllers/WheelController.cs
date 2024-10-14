@@ -13,6 +13,11 @@ public class WheelController : MonoBehaviour
     [SerializeField] private GameObject mesh;
     public int gamepadIndex;
 
+    private float _gripFactor => data.tireGripFactor;
+    private float _driftGripFactor => data.tireDriftGripFactor;
+    private bool _isDrifting = false;
+    
+
     float steerInput = 0.0f;
     float accelInput => accelValue - reverseValue;
 

@@ -123,7 +123,7 @@ public class ImpactManager : MonoBehaviour
 
             rb.AddForce(impactForce, ForceMode.Impulse);
 
-
+            rb.AddTorque(impactForce / 20, ForceMode.Impulse);
         }
 
 
