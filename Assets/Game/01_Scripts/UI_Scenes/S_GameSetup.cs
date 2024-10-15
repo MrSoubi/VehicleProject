@@ -24,6 +24,7 @@ public class S_GameSetup : MonoBehaviour
            
 
             S_CarInputEvent s_CarInputEvent = carInstance.GetComponent<S_CarInputEvent>();
+            S_RumbleManager s_RumbleManager = carInstance.GetComponent<S_RumbleManager>();
 
             S_CameraLayerSetup s_CameraLayerSetup = carInstance.GetComponentInChildren<S_CameraLayerSetup>();
             s_CameraLayerSetup.SetPlayerID(player.Value.playerId);
@@ -32,7 +33,7 @@ public class S_GameSetup : MonoBehaviour
             
 
             s_CarInputEvent.Initialize(playerInput); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
-
+            s_RumbleManager.Init(playerInput);
         }
         _displayManager.SetupCamera();
     }

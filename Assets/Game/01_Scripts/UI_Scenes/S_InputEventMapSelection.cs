@@ -20,6 +20,11 @@ public class S_InputEventMapSelection : MonoBehaviour
         
     }
 
+    void OnDisable()
+    {
+        DesableInputMapSelection();
+    }
+
     //Donne l'action seulementau joueur 0 pour choisir la map
     public void EnableInputMapSelection()
     {
@@ -28,5 +33,12 @@ public class S_InputEventMapSelection : MonoBehaviour
         _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Back"].performed += _mapSelection.CancelMapSelection;
     }
 
-    
+    public void DesableInputMapSelection()
+    {
+        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["MoveSelection"].performed -= _mapSelection.SelectMap;
+        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Select"].performed -= _mapSelection.ValidateSelection;
+        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Back"].performed -= _mapSelection.CancelMapSelection;
+    }
+
+
 }

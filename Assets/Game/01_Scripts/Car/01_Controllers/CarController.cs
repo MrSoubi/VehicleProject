@@ -159,7 +159,7 @@ public class CarController : MonoBehaviour
         {
             canRecover = true;
         }
-        Debug.Log(rb.angularDrag);
+        //Debug.Log(rb.angularDrag);
     }
 
     bool canRecover;

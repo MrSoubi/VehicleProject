@@ -63,8 +63,8 @@ public class WheelController : MonoBehaviour
             accelerationForce = Vector3.zero;
         }
 
-        Debug.Log("current gripFactor" + _currentGripFactor);
-        Debug.Log("current isDrifting" + _isDrifting);
+        //Debug.Log("current gripFactor" + _currentGripFactor);
+        //Debug.Log("current isDrifting" + _isDrifting);
     }
 
     Vector3 suspensionForce = Vector3.zero;

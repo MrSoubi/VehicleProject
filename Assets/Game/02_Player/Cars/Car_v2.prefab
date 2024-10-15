@@ -2446,6 +2446,7 @@ GameObject:
   - component: {fileID: 6449609951872305238}
   - component: {fileID: 3147236387546514896}
   - component: {fileID: 5448456866850363457}
+  - component: {fileID: 1125224820026259830}
   m_Layer: 6
   m_Name: Car_v2
   m_TagString: Untagged
@@ -2646,6 +2647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3245131661188073210}
   _playerLifeManager: {fileID: 8773577981862957742}
+  _rumbleManager: {fileID: 1125224820026259830}
   _baseImpactForceMultiplier: 4000
   _pourcentageMultiplier: 1
   _verticalBumpForce: 0.05
@@ -2832,6 +2834,124 @@ CapsuleCollider:
   m_Height: 1.9269612
   m_Direction: 0
   m_Center: {x: 0, y: 0.8307226, z: -1.71}
+--- !u!114 &1125224820026259830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362378131908343392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725d9da89909b4840ba8171157641dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInput: {fileID: 1086203780243686898}
+  _testVibrationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _lightVibrationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _mediumVibrationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _strongVibrationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _testVibrationDuration: 1
+  _lightVibrationDuration: 1
+  _mediumVibrationDuration: 1
+  _strongVibrationDuration: 1
+  _testVibrationPower: 3
+  _lightVibrationPower: 3
+  _mediumVibrationPower: 3
+  _strongVibrationPower: 3
+  _activateVibration: 0
 --- !u!1 &7789691986761638008
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public class ImpactManager : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] private PlayerLifeManager _playerLifeManager;
+    [SerializeField] private S_RumbleManager _rumbleManager;
     [SerializeField] private float _baseImpactForceMultiplier;
     [SerializeField] private float _pourcentageMultiplier;
     [SerializeField][Range(0, 0.1f)] private float _verticalBumpForce;
@@ -52,7 +53,8 @@ public class ImpactManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         ImpactManager otherCar;
-
+        _rumbleManager.InvokeTestVibration();
+        //_rumbleManager.InvokeStrongVibration();
         if (!collision.gameObject.TryGetComponent<ImpactManager>(out otherCar))
         {
             return;
@@ -117,7 +119,7 @@ public class ImpactManager : MonoBehaviour
 
             _playerLifeManager.ApplyDamage(Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
 
-            Debug.Log("Multiplier add to other car" + Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
+            //Debug.Log("Multiplier add to other car" + Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
 
             //impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
 
