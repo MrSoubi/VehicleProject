@@ -29,7 +29,7 @@ public class CarController : MonoBehaviour
     float drag;
     float flippedSince;
 
-    bool canJump;
+    bool canJump = true;
 
     Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
     float lastSpeed, speedOddFrame, speedEvenFrame;

@@ -240,6 +240,7 @@ MonoBehaviour:
   mesh: {fileID: 241557454590257710}
   gamepadIndex: 0
   debug: 1
+  debugVectorFactor: 1
 --- !u!114 &3099918841632551612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1145,6 +1146,7 @@ MonoBehaviour:
   mesh: {fileID: 3733994971683361306}
   gamepadIndex: 0
   debug: 1
+  debugVectorFactor: 1
 --- !u!114 &7195121864963525513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1494,6 +1496,7 @@ MonoBehaviour:
   mesh: {fileID: 6375212988659776996}
   gamepadIndex: 0
   debug: 1
+  debugVectorFactor: 1
 --- !u!114 &1648659187384373205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2030,6 +2033,7 @@ MonoBehaviour:
   mesh: {fileID: 8442604553204103767}
   gamepadIndex: 0
   debug: 1
+  debugVectorFactor: 1
 --- !u!114 &3142803188693823124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2856,8 +2860,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08133091, y: -0.63505876, z: 0.067498654, w: 0.76519907}
-  m_LocalPosition: {x: 8, y: 3.000001, z: -1.5}
+  m_LocalRotation: {x: 0.0865146, y: 0, z: 0, w: 0.99625057}
+  m_LocalPosition: {x: 0, y: 3.000001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3473,7 +3477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4843820536809372, guid: 3a16b32bf79fd14489d750c7e43eba9d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.159
+      value: -0.075
       objectReference: {fileID: 0}
     - target: {fileID: 4843820536809372, guid: 3a16b32bf79fd14489d750c7e43eba9d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3655,7 +3659,7 @@ PrefabInstance:
     - target: {fileID: 3791714451415019627, guid: 34fc9324e8fd31444b3fe57b80f31ffb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 3791714451415019627, guid: 34fc9324e8fd31444b3fe57b80f31ffb,
         type: 3}
@@ -3758,7 +3762,7 @@ PrefabInstance:
     - target: {fileID: 2952797213953550256, guid: 3c847a0436fdcd2409347b89b9ec0085,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.152
+      value: -0.06799941
       objectReference: {fileID: 0}
     - target: {fileID: 2952797213953550256, guid: 3c847a0436fdcd2409347b89b9ec0085,
         type: 3}

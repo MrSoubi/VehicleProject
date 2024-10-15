@@ -17,11 +17,12 @@ MonoBehaviour:
   maxSuspensionDistance: 0.7
   springStrength: 30000
   springDamper: 2000
-  tireGripFactor: 2
-  tireMass: 60
+  tireGripFactor: 1.2
+  tireDriftGripFactor: 0
+  tireMass: 20
   wheelRadius: 0.4
   isSteerable: 1
-  maxSteeringAngle: 27
+  maxSteeringAngle: 18
   steeringInputFactor:
     serializedVersion: 2
     m_Curve:
