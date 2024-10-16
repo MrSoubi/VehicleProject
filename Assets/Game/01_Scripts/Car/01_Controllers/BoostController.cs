@@ -19,13 +19,17 @@ public class BoostController : MonoBehaviour
 
     public float currentBoostAmount;
 
+    private bool isButtonHeld = false;
+
     private void Update()
     {
-        if (currentBoostAmount > 0 && isBoosting == true)
+        if (currentBoostAmount > 0 && isButtonHeld == true)
         {
             if (!isBoosting)
             {
                 OnBoostActivation.Invoke();
+                _rumbleManager.InvokeBoostVibration();
+                isBoosting = true;
             }
 
             if (carController.IsGrounded())
@@ -36,7 +40,7 @@ public class BoostController : MonoBehaviour
             {
                 carRigidBody.AddForce(carRigidBody.transform.forward * data.boostForceOnAir * Time.deltaTime);
             }
-            
+
             currentBoostAmount -= data.boostConsumptionPerSecond * Time.deltaTime;
             isBoosting = true;
         }
@@ -45,8 +49,9 @@ public class BoostController : MonoBehaviour
             if (isBoosting)
             {
                 OnBoostDeactivation.Invoke();
+                StopBoosting();
+
             }
-            isBoosting = false;
         }
     }
 
@@ -59,16 +64,27 @@ public class BoostController : MonoBehaviour
     {
         if (context.performed && currentBoostAmount > 0)
         {
-            isBoosting = true;
-            _rumbleManager.InvokeBoostVibration();
+            isButtonHeld = true;
         }
     }
 
     public void StopBoost(InputAction.CallbackContext context)
     {
+
         if (context.canceled)
         {
-            isBoosting = false;
+            isButtonHeld = false;
+
+            if (isBoosting)
+            {
+                StopBoosting();
+            }
         }
+    }
+    private void StopBoosting()
+    {
+        _rumbleManager.InvokeEndBoostVibration();
+        OnBoostDeactivation.Invoke();
+        isBoosting = false;
     }
 }
