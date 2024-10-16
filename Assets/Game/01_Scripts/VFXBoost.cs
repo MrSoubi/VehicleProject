@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class VFXBoost : MonoBehaviour
 {
     [SerializeField] private List<ParticleSystem> boost;
+    [SerializeField] private float emissionRate;
     [SerializeField] private BoostController boostController;
 
 
@@ -24,7 +25,7 @@ public class VFXBoost : MonoBehaviour
             for (int i = 0; i < boost.Count; i++)
             {
                 var em = boost[i].emission;
-                em.rateOverTime = 50;
+                em.rateOverTime = emissionRate;
             }
         }
         else
