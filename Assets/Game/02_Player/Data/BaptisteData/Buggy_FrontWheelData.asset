@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Buggy_FrontWheelData
   m_EditorClassIdentifier: 
   isMotorised: 1
-  suspensionRestDir: 0.6
+  suspensionRestDir: 0.55
   maxSuspensionDistance: 0.5
-  springStrength: 100000
-  springDamper: 10000
-  tireGripFactor: 1.5
-  tireDriftGripFactor: 0.1
-  tireMass: 15
+  springStrength: 50000
+  springDamper: 2000
+  tireGripFactor: 2
+  tireDriftGripFactor: 0.9
+  tireMass: 20
   wheelRadius: 0.52
   isSteerable: 1
-  maxSteeringAngle: 14
+  maxSteeringAngle: 16
   steeringInputFactor:
     serializedVersion: 2
     m_Curve:

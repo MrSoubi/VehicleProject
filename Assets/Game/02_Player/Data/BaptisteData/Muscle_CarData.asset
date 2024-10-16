@@ -54,14 +54,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxSpeed: 45
+  maxSpeed: 42
   enginePower: 33000
   jumpForce: 20000
-  airSteerForce: 17500
-  maxAngularVelocity: 7
+  airSteerForce: 25000
+  maxAngularVelocity: 6.8
   angularDrag_NoInput: 3.5
   angularDrag_Input: 0.5
-  boostForceOnGround: 5000000
-  boostForceOnAir: 5000000
+  boostForceOnGround: 4000000
+  boostForceOnAir: 3000000
   maxBoostAmount: 100
   boostConsumptionPerSecond: 25
