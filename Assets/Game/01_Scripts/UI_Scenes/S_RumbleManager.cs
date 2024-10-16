@@ -10,9 +10,13 @@ public class S_RumbleManager : MonoBehaviour
 {
     public delegate void VibrationEventHandler();
     public delegate void ImapctVibrationEventHandler(float ImpactForce);
+    public delegate void BoostVibrationEventHandler();
+
 
     public event VibrationEventHandler OnTestVibration;
     public event VibrationEventHandler OnBoostVibration;
+    public event BoostVibrationEventHandler OnEndBoostVibration;
+
     public event ImapctVibrationEventHandler OnImpactVibration;
     public event VibrationEventHandler OnDeathVibration;
 
@@ -72,6 +76,7 @@ public class S_RumbleManager : MonoBehaviour
         {
             OnTestVibration += TriggerTestVibration;
             OnBoostVibration += TriggerBoostVibration;
+            OnEndBoostVibration += TriggerEndBoostVibration;
             OnImpactVibration += TriggerImpactVibration;
             OnDeathVibration += TriggerDeathVibration;
         }
@@ -116,6 +121,11 @@ public class S_RumbleManager : MonoBehaviour
     }
     private void TriggerBoostVibration()
     {
+        StartVibration(_leftBoostVibrationPower, _rightBoostVibrationPower);
+    }
+
+    private void TriggerEndBoostVibration()
+    {
         StartVibration(_boostVibrationCurve, _boostVibrationDuration, _leftBoostVibrationPower, _rightBoostVibrationPower);
     }
 
@@ -132,15 +142,17 @@ public class S_RumbleManager : MonoBehaviour
 
     private void StartVibration(AnimationCurve curve, float duration, float leftIntensityMultiplier, float rightIntensityMultiplier)
     {
-        //Gamepad gamepad = Gamepad.current;
-        //if (gamepad != null && gamepad is IDualMotorRumble rumbleDevice)
-        //{
-        //    StartCoroutine(ApplyVibrationWithCurve(rumbleDevice, curve, duration, intensityMultiplier));
-        //}
-
         if (_gamepad != null && _gamepad is IDualMotorRumble rumbleDevice)
         {
             StartCoroutine(ApplyVibrationWithCurve(rumbleDevice, curve, duration, leftIntensityMultiplier, rightIntensityMultiplier));
+        }
+    }
+
+    private void StartVibration(float leftIntensityMultiplier, float rightIntensityMultiplier)
+    {
+        if (_gamepad != null && _gamepad is IDualMotorRumble rumbleDevice)
+        {
+            rumbleDevice.SetMotorSpeeds(leftIntensityMultiplier, rightIntensityMultiplier);
         }
     }
 
@@ -168,10 +180,12 @@ public class S_RumbleManager : MonoBehaviour
         OnBoostVibration -= TriggerBoostVibration;
         OnImpactVibration -= TriggerImpactVibration;
         OnDeathVibration -= TriggerDeathVibration;
+        OnEndBoostVibration -= TriggerEndBoostVibration;
     }
 
     public void InvokeTestVibration() => OnTestVibration?.Invoke();
     public void InvokeBoostVibration() => OnBoostVibration?.Invoke();
+    public void InvokeEndBoostVibration() => OnEndBoostVibration?.Invoke();
     public void InvokeImpactVibration(float ImpactForce) => OnImpactVibration?.Invoke(ImpactForce);
     public void InvokeDeathVibration() => OnDeathVibration?.Invoke();
 }
