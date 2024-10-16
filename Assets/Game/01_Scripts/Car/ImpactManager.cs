@@ -53,10 +53,13 @@ public class ImpactManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         ImpactManager otherCar;
-        _rumbleManager.InvokeTestVibration();
-        //_rumbleManager.InvokeStrongVibration();
+
+        float ImpactVibrationValue = lastSpeed;
+        _rumbleManager.InvokeImpactVibration(ImpactVibrationValue / 10); //for test
+
         if (!collision.gameObject.TryGetComponent<ImpactManager>(out otherCar))
         {
+            
             return;
         }
 
@@ -72,10 +75,16 @@ public class ImpactManager : MonoBehaviour
 
     private void HandleImpact(ImpactManager otherCar, Collision collision)
     {
+        
+
+
         // Determination de l'avantage
         // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
         // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
         Vector3 impactVelocity = lastVelocity + otherCar.lastVelocity;
+
+        float ImpactVibrationValue = otherCar.lastSpeed;
+        _rumbleManager.InvokeImpactVibration(ImpactVibrationValue / 10);
 
         float LastSpeedOtherCar = otherCar.lastSpeed; //On recupere la derniere vitesse de l'autre voiture
 

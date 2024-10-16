@@ -110,8 +110,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 64318951196058032}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14142144, y: -0, z: -0, w: 0.9899495}
-  m_LocalPosition: {x: 0, y: 3.000001, z: -6}
+  m_LocalRotation: {x: 0.14142135, y: -0, z: -0, w: 0.9899495}
+  m_LocalPosition: {x: 0, y: 3, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -659,8 +659,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660562871341422033}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0865146, y: -0, z: -0, w: 0.99625057}
-  m_LocalPosition: {x: 0, y: 3.000001, z: -10}
+  m_LocalRotation: {x: 0.08651456, y: -0, z: -0, w: 0.9962506}
+  m_LocalPosition: {x: 0, y: 3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1188,8 +1188,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3319720032405248726}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0865146, y: -0, z: -0, w: 0.99625057}
-  m_LocalPosition: {x: 0, y: 3.000001, z: -10}
+  m_LocalRotation: {x: 0.08651456, y: -0, z: -0, w: 0.9962506}
+  m_LocalPosition: {x: 0, y: 3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1748,8 +1748,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5227491585460611822}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9894004, z: -0.14521323, w: 0}
-  m_LocalPosition: {x: 0, y: 3.000001, z: 6}
+  m_LocalRotation: {x: -0, y: 0.98940045, z: -0.14521314, w: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2075,8 +2075,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6566413925754724755}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08133091, y: -0.63505876, z: 0.067498654, w: 0.76519907}
-  m_LocalPosition: {x: 8, y: 3.000001, z: -1.5}
+  m_LocalRotation: {x: 0.081330866, y: -0.63505876, z: 0.06749862, w: 0.76519907}
+  m_LocalPosition: {x: 8, y: 3, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2273,8 +2273,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6953207021691387022}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08133091, y: 0.63505876, z: -0.067498654, w: 0.76519907}
-  m_LocalPosition: {x: -8, y: 3.000001, z: -1.5}
+  m_LocalRotation: {x: 0.081330866, y: 0.63505876, z: -0.06749862, w: 0.76519907}
+  m_LocalPosition: {x: -8, y: 3, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2403,6 +2403,7 @@ MonoBehaviour:
   boost:
   - {fileID: 3488446058197646155}
   - {fileID: 7045505996172756212}
+  emissionRate: 0
   boostController: {fileID: 1813608260909903539}
 --- !u!114 &8599671841511892163
 MonoBehaviour:
@@ -2631,6 +2632,7 @@ MonoBehaviour:
   carController: {fileID: 9108510379657322759}
   data: {fileID: 11400000, guid: 839c1a5a80553bb4a87cd4ce51c2169b, type: 2}
   gamepadIndex: 0
+  _rumbleManager: {fileID: 1125224820026259830}
   isBoosting: 0
   currentBoostAmount: 100
 --- !u!114 &1472218681921628560
@@ -2871,7 +2873,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _lightVibrationCurve:
+  _boostVibrationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -2895,31 +2897,49 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _mediumVibrationCurve:
+  _impactVibrationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      time: -0.000667572
+      value: 1.0023193
+      inSlope: -0.4525011
+      outSlope: -0.4525011
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.46600524
+      value: 0.7911494
+      inSlope: -1.283588
+      outSlope: -1.283588
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7936559
+      value: 0.09827475
+      inSlope: -1.294232
+      outSlope: -1.294232
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      value: 0.00051116943
+      inSlope: -0.47378904
+      outSlope: -0.47378904
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _strongVibrationCurve:
+  _deathVibrationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -2944,13 +2964,15 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _testVibrationDuration: 1
-  _lightVibrationDuration: 1
-  _mediumVibrationDuration: 1
-  _strongVibrationDuration: 1
-  _testVibrationPower: 3
-  _lightVibrationPower: 3
-  _mediumVibrationPower: 3
-  _strongVibrationPower: 3
+  _boostVibrationDuration: 1
+  _impactVibrationDuration: 0.5
+  _deathVibrationDuration: 1
+  _leftTestVibrationPower: 1
+  _rightTestVibrationPower: 1
+  _leftBoostVibrationPower: 1
+  _rightBoostVibrationPower: 1
+  _leftDeathVibrationPower: 1
+  _rightDeathVibrationPower: 1
   _activateVibration: 0
 --- !u!1 &7789691986761638008
 GameObject:
@@ -2980,8 +3002,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0865146, y: 0, z: 0, w: 0.99625057}
-  m_LocalPosition: {x: 0, y: 3.000001, z: -10}
+  m_LocalRotation: {x: 0.081330866, y: -0.63505876, z: 0.06749862, w: 0.76519907}
+  m_LocalPosition: {x: 19.673351, y: 3.5, z: -30.392738}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

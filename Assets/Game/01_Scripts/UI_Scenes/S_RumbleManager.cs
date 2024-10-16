@@ -9,11 +9,12 @@ using UnityEngine.InputSystem.Haptics;
 public class S_RumbleManager : MonoBehaviour
 {
     public delegate void VibrationEventHandler();
+    public delegate void ImapctVibrationEventHandler(float ImpactForce);
 
-    public event VibrationEventHandler OnLightVibration;
-    public event VibrationEventHandler OnMediumVibration;
-    public event VibrationEventHandler OnStrongVibration;
     public event VibrationEventHandler OnTestVibration;
+    public event VibrationEventHandler OnBoostVibration;
+    public event ImapctVibrationEventHandler OnImpactVibration;
+    public event VibrationEventHandler OnDeathVibration;
 
     [SerializeField] private PlayerInput _playerInput;
     private Gamepad _gamepad;
@@ -21,29 +22,44 @@ public class S_RumbleManager : MonoBehaviour
     [FoldoutGroup("Curve Vibration")]
     [SerializeField] private AnimationCurve _testVibrationCurve;
     [FoldoutGroup("Curve Vibration")]
-    [SerializeField] private AnimationCurve _lightVibrationCurve;
+    [SerializeField] private AnimationCurve _boostVibrationCurve;
     [FoldoutGroup("Curve Vibration")]
-    [SerializeField] private AnimationCurve _mediumVibrationCurve;
+    [SerializeField] private AnimationCurve _impactVibrationCurve;
     [FoldoutGroup("Curve Vibration")]
-    [SerializeField] private AnimationCurve _strongVibrationCurve;
+    [SerializeField] private AnimationCurve _deathVibrationCurve;
 
     [FoldoutGroup("Vibration Duration")]
     [SerializeField] private float _testVibrationDuration;
     [FoldoutGroup("Vibration Duration")]
-    [SerializeField] private float _lightVibrationDuration;
+    [SerializeField] private float _boostVibrationDuration;
     [FoldoutGroup("Vibration Duration")]
-    [SerializeField] private float _mediumVibrationDuration;
+    [SerializeField] private float _impactVibrationDuration;
     [FoldoutGroup("Vibration Duration")]
-    [SerializeField] private float _strongVibrationDuration;
+    [SerializeField] private float _deathVibrationDuration;
 
     [FoldoutGroup("Vibration Power")]
-    [SerializeField] private float _testVibrationPower;
+    [Title("Test")]
+    [SerializeField] private float _leftTestVibrationPower;
     [FoldoutGroup("Vibration Power")]
-    [SerializeField] private float _lightVibrationPower;
+    [SerializeField] private float _rightTestVibrationPower;
+
     [FoldoutGroup("Vibration Power")]
-    [SerializeField] private float _mediumVibrationPower;
+    [Title("Boost")]
+    [SerializeField] private float _leftBoostVibrationPower;
     [FoldoutGroup("Vibration Power")]
-    [SerializeField] private float _strongVibrationPower;
+    [SerializeField] private float _rightBoostVibrationPower;
+
+    //[FoldoutGroup("Vibration Power")]
+    //[Title("Impact")]
+    //[SerializeField] private float _leftImpactVibrationPower;
+    //[FoldoutGroup("Vibration Power")]
+    //[SerializeField] private float _rightImpactVibrationPower;
+
+    [FoldoutGroup("Vibration Power")]
+    [Title("Death")]
+    [SerializeField] private float _leftDeathVibrationPower;
+    [FoldoutGroup("Vibration Power")]
+    [SerializeField] private float _rightDeathVibrationPower;
 
 
     [SerializeField]
@@ -55,9 +71,9 @@ public class S_RumbleManager : MonoBehaviour
         if (_activateVibration == true)
         {
             OnTestVibration += TriggerTestVibration;
-            OnLightVibration += TriggerLightVibration;
-            OnMediumVibration += TriggerMediumVibration;
-            OnStrongVibration += TriggerStrongVibration;
+            OnBoostVibration += TriggerBoostVibration;
+            OnImpactVibration += TriggerImpactVibration;
+            OnDeathVibration += TriggerDeathVibration;
         }
 
         
@@ -84,41 +100,37 @@ public class S_RumbleManager : MonoBehaviour
     }
     public void GetPlayerInput()
     {
-        Debug.Log("second");
         if (_playerInput.devices.Count > 0)
         {
-            Debug.Log("second");
             _gamepad = _playerInput.devices[0] as Gamepad;
         }
         else
         {
             _gamepad = _playerInput.devices[0] as Gamepad;
-            Debug.Log("second");
-
         }
     }
 
     private void TriggerTestVibration()
     {
-        StartVibration(_testVibrationCurve, _testVibrationDuration, _testVibrationPower);
+        StartVibration(_testVibrationCurve, _testVibrationDuration, _leftTestVibrationPower, _rightTestVibrationPower);
     }
-    private void TriggerLightVibration()
+    private void TriggerBoostVibration()
     {
-        StartVibration(_lightVibrationCurve, _lightVibrationDuration, _lightVibrationPower);
+        StartVibration(_boostVibrationCurve, _boostVibrationDuration, _leftBoostVibrationPower, _rightBoostVibrationPower);
     }
 
 
-    private void TriggerMediumVibration()
+    private void TriggerImpactVibration(float ImpactForce)
     {
-        StartVibration(_mediumVibrationCurve, _mediumVibrationDuration, _mediumVibrationPower);
+        StartVibration(_impactVibrationCurve, _impactVibrationDuration, ImpactForce, ImpactForce);
     }
 
-    private void TriggerStrongVibration()
+    private void TriggerDeathVibration()
     {
-        StartVibration(_strongVibrationCurve, _strongVibrationDuration, _strongVibrationPower);
+        StartVibration(_deathVibrationCurve, _deathVibrationDuration, _leftDeathVibrationPower, _rightDeathVibrationPower);
     }
 
-    private void StartVibration(AnimationCurve curve, float duration, float intensityMultiplier)
+    private void StartVibration(AnimationCurve curve, float duration, float leftIntensityMultiplier, float rightIntensityMultiplier)
     {
         //Gamepad gamepad = Gamepad.current;
         //if (gamepad != null && gamepad is IDualMotorRumble rumbleDevice)
@@ -128,22 +140,21 @@ public class S_RumbleManager : MonoBehaviour
 
         if (_gamepad != null && _gamepad is IDualMotorRumble rumbleDevice)
         {
-            StartCoroutine(ApplyVibrationWithCurve(rumbleDevice, curve, duration, intensityMultiplier));
+            StartCoroutine(ApplyVibrationWithCurve(rumbleDevice, curve, duration, leftIntensityMultiplier, rightIntensityMultiplier));
         }
     }
 
-    private IEnumerator ApplyVibrationWithCurve(IDualMotorRumble rumbleDevice, AnimationCurve curve, float duration, float intensityMultiplier)
+    private IEnumerator ApplyVibrationWithCurve(IDualMotorRumble rumbleDevice, AnimationCurve curve, float duration, float leftIntensityMultiplier, float rightIntensityMultiplier)
     {
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
             float curveValue = curve.Evaluate(elapsed / duration);
-            float leftIntensity = curveValue * intensityMultiplier;
-            float rightIntensity = curveValue * intensityMultiplier;
+            float leftIntensity = curveValue * leftIntensityMultiplier;
+            float rightIntensity = curveValue * rightIntensityMultiplier;
 
             rumbleDevice.SetMotorSpeeds(leftIntensity, rightIntensity);
-
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -154,13 +165,13 @@ public class S_RumbleManager : MonoBehaviour
     private void OnDisable()
     {
         OnTestVibration -= TriggerTestVibration;
-        OnLightVibration -= TriggerLightVibration;
-        OnMediumVibration -= TriggerMediumVibration;
-        OnStrongVibration -= TriggerStrongVibration;
+        OnBoostVibration -= TriggerBoostVibration;
+        OnImpactVibration -= TriggerImpactVibration;
+        OnDeathVibration -= TriggerDeathVibration;
     }
 
     public void InvokeTestVibration() => OnTestVibration?.Invoke();
-    public void InvokeLightVibration() => OnLightVibration?.Invoke();
-    public void InvokeMediumVibration() => OnMediumVibration?.Invoke();
-    public void InvokeStrongVibration() => OnStrongVibration?.Invoke();
+    public void InvokeBoostVibration() => OnBoostVibration?.Invoke();
+    public void InvokeImpactVibration(float ImpactForce) => OnImpactVibration?.Invoke(ImpactForce);
+    public void InvokeDeathVibration() => OnDeathVibration?.Invoke();
 }

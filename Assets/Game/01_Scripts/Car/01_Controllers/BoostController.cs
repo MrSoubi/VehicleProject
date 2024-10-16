@@ -13,10 +13,11 @@ public class BoostController : MonoBehaviour
     [SerializeField] CarController carController;
     [SerializeField] SO_Car data;
     [SerializeField] int gamepadIndex;
+    [SerializeField] private S_RumbleManager _rumbleManager;
 
     public bool isBoosting = false;
 
-    public float currentBoostAmount = 100;
+    public float currentBoostAmount;
 
     private void Update()
     {
@@ -59,6 +60,7 @@ public class BoostController : MonoBehaviour
         if (context.performed && currentBoostAmount > 0)
         {
             isBoosting = true;
+            _rumbleManager.InvokeBoostVibration();
         }
     }
 
