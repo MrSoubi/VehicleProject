@@ -26,7 +26,7 @@ public class S_RumbleManager : MonoBehaviour
     [FoldoutGroup("Curve Vibration")]
     [SerializeField] private AnimationCurve _testVibrationCurve;
     [FoldoutGroup("Curve Vibration")]
-    [SerializeField] private AnimationCurve _boostVibrationCurve;
+    [SerializeField] private AnimationCurve _boostEndVibrationCurve;
     [FoldoutGroup("Curve Vibration")]
     [SerializeField] private AnimationCurve _impactVibrationCurve;
     [FoldoutGroup("Curve Vibration")]
@@ -35,7 +35,7 @@ public class S_RumbleManager : MonoBehaviour
     [FoldoutGroup("Vibration Duration")]
     [SerializeField] private float _testVibrationDuration;
     [FoldoutGroup("Vibration Duration")]
-    [SerializeField] private float _boostVibrationDuration;
+    [SerializeField] private float _boostEndVibrationDuration;
     [FoldoutGroup("Vibration Duration")]
     [SerializeField] private float _impactVibrationDuration;
     [FoldoutGroup("Vibration Duration")]
@@ -53,11 +53,11 @@ public class S_RumbleManager : MonoBehaviour
     [FoldoutGroup("Vibration Power")]
     [SerializeField] private float _rightBoostVibrationPower;
 
-    //[FoldoutGroup("Vibration Power")]
-    //[Title("Impact")]
-    //[SerializeField] private float _leftImpactVibrationPower;
-    //[FoldoutGroup("Vibration Power")]
-    //[SerializeField] private float _rightImpactVibrationPower;
+    [FoldoutGroup("Vibration Power")]
+    [Title("Impact")]
+    [SerializeField] private float _leftImpactVibrationPower;
+    [FoldoutGroup("Vibration Power")]
+    [SerializeField] private float _rightImpactVibrationPower;
 
     [FoldoutGroup("Vibration Power")]
     [Title("Death")]
@@ -126,13 +126,13 @@ public class S_RumbleManager : MonoBehaviour
 
     private void TriggerEndBoostVibration()
     {
-        StartVibration(_boostVibrationCurve, _boostVibrationDuration, _leftBoostVibrationPower, _rightBoostVibrationPower);
+        StartVibration(_boostEndVibrationCurve, _boostEndVibrationDuration, _leftBoostVibrationPower, _rightBoostVibrationPower);
     }
 
 
     private void TriggerImpactVibration(float ImpactForce)
     {
-        StartVibration(_impactVibrationCurve, _impactVibrationDuration, ImpactForce, ImpactForce);
+        StartVibration(_impactVibrationCurve, _impactVibrationDuration, ImpactForce * _leftImpactVibrationPower, ImpactForce * _rightBoostVibrationPower);
     }
 
     private void TriggerDeathVibration()
