@@ -2707,7 +2707,7 @@ MonoBehaviour:
   - {fileID: 2609179987102727170}
   - {fileID: 2277738968251553282}
   _boostController: {fileID: 1813608260909903539}
-  _isForTest: 1
+  _isForTest: 0
 --- !u!114 &8435232517217570574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2720,7 +2720,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35cb3473ac92dfd43866f84673a4d286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _virtualCamera: {fileID: 3319720032405248726}
+  _virtualCameras:
+  - {fileID: 3319720032405248726}
+  - {fileID: 1660562871341422033}
+  - {fileID: 64318951196058032}
+  - {fileID: 5227491585460611822}
+  - {fileID: 6953207021691387022}
+  - {fileID: 6566413925754724755}
   _Camera: {fileID: 2277449805725508259}
   _firstPlayerLayerIndex: 7
 --- !u!136 &1215469184039305378
