@@ -2581,6 +2581,7 @@ MonoBehaviour:
   - {fileID: 2277738968251553282}
   data: {fileID: 11400000, guid: 839c1a5a80553bb4a87cd4ce51c2169b, type: 2}
   rb: {fileID: 3245131661188073210}
+  _rumbleManager: {fileID: 1125224820026259830}
   gamepadIndex: 0
   jumpDelay: 5
 --- !u!114 &8773577981862957742
@@ -2879,26 +2880,44 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _boostVibrationCurve:
+  _boostEndVibrationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      time: -0.000667572
+      value: 1.0023193
+      inSlope: -0.4525011
+      outSlope: -0.4525011
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.46600524
+      value: 0.7911494
+      inSlope: -1.283588
+      outSlope: -1.283588
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7936559
+      value: 0.09827475
+      inSlope: -1.294232
+      outSlope: -1.294232
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      value: 0.00051116943
+      inSlope: -0.47378904
+      outSlope: -0.47378904
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -2950,19 +2969,19 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -2970,16 +2989,18 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _testVibrationDuration: 1
-  _boostVibrationDuration: 0.5
+  _boostEndVibrationDuration: 0.5
   _impactVibrationDuration: 0.5
   _deathVibrationDuration: 1
   _leftTestVibrationPower: 1
   _rightTestVibrationPower: 1
   _leftBoostVibrationPower: 0
-  _rightBoostVibrationPower: 0.3
+  _rightBoostVibrationPower: 0.5
+  _leftImpactVibrationPower: 0.1
+  _rightImpactVibrationPower: 0.1
   _leftDeathVibrationPower: 1
   _rightDeathVibrationPower: 1
-  _activateVibration: 0
+  _activateVibration: 1
 --- !u!1 &7789691986761638008
 GameObject:
   m_ObjectHideFlags: 0

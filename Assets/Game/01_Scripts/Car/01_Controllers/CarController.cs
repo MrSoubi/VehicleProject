@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private S_RumbleManager _rumbleManager;
 
     public int gamepadIndex;
 
@@ -249,6 +250,7 @@ public class CarController : MonoBehaviour
 
     public void Kill()
     {
+        _rumbleManager.InvokeDeathVibration();
         transform.position = spawnTransform.position;
         transform.rotation = spawnTransform.rotation;
         rb.velocity = Vector3.zero;

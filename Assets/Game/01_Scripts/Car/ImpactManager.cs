@@ -54,8 +54,8 @@ public class ImpactManager : MonoBehaviour
     {
         ImpactManager otherCar;
 
-        float ImpactVibrationValue = lastSpeed;
-        _rumbleManager.InvokeImpactVibration(ImpactVibrationValue / 10); //for test
+        //float ImpactVibrationValue = lastSpeed;
+        //_rumbleManager.InvokeImpactVibration(ImpactVibrationValue); //for test
 
         if (!collision.gameObject.TryGetComponent<ImpactManager>(out otherCar))
         {
@@ -84,7 +84,7 @@ public class ImpactManager : MonoBehaviour
         Vector3 impactVelocity = lastVelocity + otherCar.lastVelocity;
 
         float ImpactVibrationValue = otherCar.lastSpeed;
-        _rumbleManager.InvokeImpactVibration(ImpactVibrationValue / 10);
+        _rumbleManager.InvokeImpactVibration(ImpactVibrationValue);
 
         float LastSpeedOtherCar = otherCar.lastSpeed; //On recupere la derniere vitesse de l'autre voiture
 
