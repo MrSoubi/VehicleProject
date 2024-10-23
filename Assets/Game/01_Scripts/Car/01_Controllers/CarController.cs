@@ -14,6 +14,8 @@ public class CarController : MonoBehaviour
     public UnityEvent OnLanding;
     public UnityEvent OnReverse;
     public UnityEvent OnForward;
+    public UnityEvent OnJumpEnabled;
+    public UnityEvent OnJumpDisabled;
 
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
     [SerializeField] private SO_Car data;
@@ -191,6 +193,7 @@ public class CarController : MonoBehaviour
             rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
             OnJump.Invoke();
             canJump = false;
+            OnJumpDisabled.Invoke();
             return;
         }
     }
@@ -199,6 +202,7 @@ public class CarController : MonoBehaviour
     {
         yield return new WaitForSeconds(jumpDelay);
         canJump = true;
+        OnJumpEnabled.Invoke();
     }
 
     // TODO : Make the forces applied more effective to untilt the car

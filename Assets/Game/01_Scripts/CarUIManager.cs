@@ -7,15 +7,19 @@ public class CarUIManager : MonoBehaviour
 {
     [SerializeField] BoostController boostController;
     [SerializeField] PlayerLifeManager playerLifeManager;
+    [SerializeField] CarController carController;
 
     [SerializeField] GameObject boostGauge;
     [SerializeField] TextMeshProUGUI percentageText;
+    [SerializeField] TextMeshProUGUI jumpText;
 
     // Start is called before the first frame update
     void Start()
     {
         boostController.OnBoostValueChanged.AddListener(UpdateBoostUI);
         playerLifeManager.OnPercentageValueChanged.AddListener(UpdateDamageUI);
+        carController.OnJumpEnabled.AddListener(SetJumpIndicatorEnabled);
+        carController.OnJumpDisabled.AddListener(SetJumpIndicatorDisabled);
     }
 
     // Update is called once per frame
@@ -32,5 +36,15 @@ public class CarUIManager : MonoBehaviour
     void UpdateDamageUI()
     {
         percentageText.text = playerLifeManager.percentage.ToString();
+    }
+
+    void SetJumpIndicatorEnabled()
+    {
+        jumpText.color = Color.white;
+    }
+
+    void SetJumpIndicatorDisabled()
+    {
+        jumpText.color = Color.grey;
     }
 }
