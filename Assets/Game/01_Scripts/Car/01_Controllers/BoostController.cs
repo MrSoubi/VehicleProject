@@ -9,6 +9,8 @@ public class BoostController : MonoBehaviour
 {
     public UnityEvent OnBoostActivation;
     public UnityEvent OnBoostDeactivation;
+    public UnityEvent OnBoostValueChanged;
+
     [SerializeField] Rigidbody carRigidBody;
     [SerializeField] CarController carController;
     [SerializeField] SO_Car data;
@@ -18,6 +20,7 @@ public class BoostController : MonoBehaviour
     public bool isBoosting = false;
 
     public float currentBoostAmount;
+    public float maxBoostAmount => data.maxBoostAmount;
 
     private bool isButtonHeld = false;
 
@@ -42,6 +45,7 @@ public class BoostController : MonoBehaviour
             }
 
             currentBoostAmount -= data.boostConsumptionPerSecond * Time.deltaTime;
+            OnBoostValueChanged.Invoke();
             isBoosting = true;
         }
         else
@@ -58,6 +62,7 @@ public class BoostController : MonoBehaviour
     public void AddBoost(float amount)
     {
         currentBoostAmount = Mathf.Min(currentBoostAmount + amount, data.maxBoostAmount);
+        OnBoostValueChanged.Invoke();
     }
 
     public void StartBoost(InputAction.CallbackContext context)
