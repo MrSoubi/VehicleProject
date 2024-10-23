@@ -10,6 +10,8 @@ public class TrickManager : MonoBehaviour
 
     [SerializeField] GameObject VFX;
 
+    [SerializeField] float minXRotation = 360, minYRotation = 180, minZRotation = 180;
+
     float xRotation, yRotation, zRotation;
 
     Vector3 lastForward;
@@ -104,20 +106,20 @@ public class TrickManager : MonoBehaviour
 
     private void HandleTricks()
     {
-        if (Mathf.Abs(xRotation) > 360)
+        if (Mathf.Abs(xRotation) > minXRotation)
         {
-            if (xRotation > 360)
+            if (xRotation > minXRotation)
             {
-                xRotation -= 360;
+                xRotation -= minXRotation;
                 currentTricks.Add(BaseTricks.FRONTFLIP);
                 
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("FRONTFLIP");
             }
 
-            if (xRotation < -360)
+            if (xRotation < -minXRotation)
             {
-                xRotation += 360;
+                xRotation += minXRotation;
                 currentTricks.Add(BaseTricks.BACKFLIP);
 
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
@@ -125,11 +127,11 @@ public class TrickManager : MonoBehaviour
             }
         }
 
-        if (Mathf.Abs(yRotation) > 180)
+        if (Mathf.Abs(yRotation) > minYRotation)
         {
-            if (yRotation > 180)
+            if (yRotation > minYRotation)
             {
-                yRotation -= 180;
+                yRotation -= minYRotation;
                 currentTricks.Add(BaseTricks.SHOVEIT);
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("SHOVE IT");
 
@@ -137,9 +139,9 @@ public class TrickManager : MonoBehaviour
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("SHOVE IT");
             }
 
-            if (yRotation < -180)
+            if (yRotation < -minYRotation)
             {
-                yRotation += 180;
+                yRotation += minYRotation;
                 currentTricks.Add(BaseTricks.SHOVEIT);
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("SHOVE IT");
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
@@ -147,20 +149,20 @@ public class TrickManager : MonoBehaviour
             }
         }
 
-        if (Mathf.Abs(zRotation) > 180)
+        if (Mathf.Abs(zRotation) > minZRotation)
         {
-            if (zRotation > 180)
+            if (zRotation > minZRotation)
             {
-                zRotation -= 180;
+                zRotation -= minZRotation;
                 currentTricks.Add(BaseTricks.FLIP);
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("FLIP");
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("FLIP");
             }
 
-            if (zRotation < -180)
+            if (zRotation < -minZRotation)
             {
-                zRotation += 180;
+                zRotation += minZRotation;
                 currentTricks.Add(BaseTricks.FLIP);
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("FLIP");
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
