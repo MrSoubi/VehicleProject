@@ -107,7 +107,7 @@ public class CarController : MonoBehaviour
 
             // Air control
             rb.AddTorque(transform.up * steerInput * data.airSteerForce);
-            rb.AddTorque(transform.right * -pitchInput * data.airSteerForce);
+            rb.AddTorque(transform.right * pitchInput * data.airSteerForce);
 
             
 
