@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEditor;
 
 // TODO: See Baptiste for the boost behaviour. Boost limit ? Boost max speed ? Boost quantity ?
 public class BoostController : MonoBehaviour
@@ -16,6 +17,10 @@ public class BoostController : MonoBehaviour
     [SerializeField] SO_Car data;
     [SerializeField] int gamepadIndex;
     [SerializeField] private S_RumbleManager _rumbleManager;
+    [SerializeField] TrickManager trickManager;
+
+
+    [SerializeField] float flipBonus = 10, backFlipBonus = 10, frontFlipBonus = 10, shoveItBonus = 10;
 
     public bool isBoosting = false;
 
@@ -23,6 +28,14 @@ public class BoostController : MonoBehaviour
     public float maxBoostAmount => data.maxBoostAmount;
 
     private bool isButtonHeld = false;
+
+    private void Start()
+    {
+        trickManager.OnBackFlipCompleted.AddListener(OnBackFlip);
+        trickManager.OnFrontFlipCompleted.AddListener(OnFrontFlip);
+        trickManager.OnShoveItCompleted.AddListener(OnShoveIt);
+        trickManager.OnFlipCompleted.AddListener(OnFlip);
+    }
 
     private void Update()
     {
@@ -57,6 +70,26 @@ public class BoostController : MonoBehaviour
 
             }
         }
+    }
+
+    void OnBackFlip()
+    {
+        AddBoost(backFlipBonus);
+    }
+
+    void OnFrontFlip()
+    {
+        AddBoost(frontFlipBonus);
+    }
+
+    void OnFlip()
+    {
+        AddBoost(flipBonus);
+    }
+
+    void OnShoveIt()
+    {
+        AddBoost(shoveItBonus);
     }
 
     public void AddBoost(float amount)

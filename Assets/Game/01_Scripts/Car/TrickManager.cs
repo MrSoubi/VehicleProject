@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class TrickManager : MonoBehaviour
 {
+    public UnityEvent OnFlipCompleted, OnShoveItCompleted, OnFrontFlipCompleted, OnBackFlipCompleted;
+
     [SerializeField] Rigidbody carRigidbody;
     [SerializeField] CarController carController;
 
@@ -112,7 +114,9 @@ public class TrickManager : MonoBehaviour
             {
                 xRotation -= minXRotation;
                 currentTricks.Add(BaseTricks.FRONTFLIP);
-                
+
+                OnFrontFlipCompleted.Invoke();
+
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("FRONTFLIP");
             }
@@ -121,6 +125,8 @@ public class TrickManager : MonoBehaviour
             {
                 xRotation += minXRotation;
                 currentTricks.Add(BaseTricks.BACKFLIP);
+
+                OnBackFlipCompleted.Invoke();
 
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("BACKFLIP");
@@ -133,6 +139,9 @@ public class TrickManager : MonoBehaviour
             {
                 yRotation -= minYRotation;
                 currentTricks.Add(BaseTricks.SHOVEIT);
+
+                OnShoveItCompleted.Invoke();
+
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("SHOVE IT");
 
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
@@ -143,6 +152,9 @@ public class TrickManager : MonoBehaviour
             {
                 yRotation += minYRotation;
                 currentTricks.Add(BaseTricks.SHOVEIT);
+
+                OnShoveItCompleted.Invoke();
+
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("SHOVE IT");
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("SHOVE IT");
@@ -155,6 +167,9 @@ public class TrickManager : MonoBehaviour
             {
                 zRotation -= minZRotation;
                 currentTricks.Add(BaseTricks.FLIP);
+
+                OnFlipCompleted.Invoke();
+
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("FLIP");
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("FLIP");
@@ -164,6 +179,9 @@ public class TrickManager : MonoBehaviour
             {
                 zRotation += minZRotation;
                 currentTricks.Add(BaseTricks.FLIP);
+
+                OnFlipCompleted.Invoke();
+
                 VFX.GetComponent<CFXR_ParticleText>().UpdateText("FLIP");
                 GameObject localVFX = Instantiate(VFX, transform.position + Vector3.up * 3, Quaternion.identity);
                 localVFX.GetComponent<CFXR_ParticleText>().UpdateText("FLIP");

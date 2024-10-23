@@ -3115,6 +3115,11 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 839c1a5a80553bb4a87cd4ce51c2169b, type: 2}
   gamepadIndex: 0
   _rumbleManager: {fileID: 1125224820026259830}
+  trickManager: {fileID: 4507584013580382973}
+  flipBonus: 10
+  backFlipBonus: 10
+  frontFlipBonus: 10
+  shoveItBonus: 10
   isBoosting: 0
   currentBoostAmount: 100
 --- !u!114 &1472218681921628560
@@ -3526,8 +3531,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.081330866, y: -0.63505876, z: 0.06749862, w: 0.76519907}
-  m_LocalPosition: {x: 8, y: 3, z: -1.5}
+  m_LocalRotation: {x: 0.08651458, y: 0, z: 0, w: 0.9962506}
+  m_LocalPosition: {x: 0, y: 3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4218,6 +4223,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 152cfcef92eab164ab1f5f0f7d4a672c, type: 3}
+--- !u!114 &4507584013580382973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4119526395003546719, guid: 152cfcef92eab164ab1f5f0f7d4a672c,
+    type: 3}
+  m_PrefabInstance: {fileID: 550944013062512290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d713b2c9535d5044da917f0d51c11e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5516515231962321871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5416636045919604077, guid: 152cfcef92eab164ab1f5f0f7d4a672c,
