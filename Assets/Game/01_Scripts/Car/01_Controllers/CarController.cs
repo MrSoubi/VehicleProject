@@ -26,7 +26,8 @@ public class CarController : MonoBehaviour
 
     [SerializeField] float jumpDelay = 5;
 
-    Transform spawnTransform;
+    Vector3 spawnPosition;
+    Quaternion spawnRotation;
 
     // TODO: Serialize or set these parameters in the SO_Car
     float drag;
@@ -39,7 +40,8 @@ public class CarController : MonoBehaviour
 
     private void Start()
     {
-        spawnTransform = transform;
+        spawnPosition = transform.position;
+        spawnRotation = transform.rotation;
 
         if (rb == null)
         {
@@ -255,8 +257,8 @@ public class CarController : MonoBehaviour
     public void Kill()
     {
         _rumbleManager.InvokeDeathVibration();
-        transform.position = spawnTransform.position;
-        transform.rotation = spawnTransform.rotation;
+        transform.position = spawnPosition;
+        transform.rotation = spawnRotation;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
