@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4069088738499943627}
   - component: {fileID: 3794255785425029660}
   - component: {fileID: 5750445143124086997}
+  - component: {fileID: 6366981545089196778}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   - {fileID: 288234635222584252, guid: b9043f51072dafd4da37e2b01d1b0a15, type: 3}
   _playerSpawnTransforms: []
   _displayManager: {fileID: 5750445143124086997}
+  playerInputToTestFromMapSelection: {fileID: 6366981545089196778}
 --- !u!114 &5750445143124086997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,3 +69,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayCount: 1
   _playersData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
+--- !u!114 &6366981545089196778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586780737609506727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9f492ef5af10a7b47b0e99de4be5423f,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: CarControl
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

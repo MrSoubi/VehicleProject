@@ -11,30 +11,55 @@ public class S_GameSetup : MonoBehaviour
 
     [SerializeField] private List<Transform> _playerSpawnTransforms;
     [SerializeField] private DisplayManager _displayManager;
+
+
+    [SerializeField] private PlayerInput playerInputToTestFromMapSelection;
+
     private Dictionary<InputDevice, PlayerInfo> players => _playersData.players;
     void Start()
     {
-        //Creer tous les voitures des players dans le players data en focntion de son carIDSelected selectioné dans la scene CarSelction et setup les cameras du splitscreen
-        foreach (var player in players)
+        if (players.Count == 0)
         {
-            GameObject carPrefab = GetCarPrefabID(player.Value.carIDSelected);
-            GameObject carInstance = Instantiate(carPrefab, GetSpawnPosition(player.Value.playerId), GetSpawnRotation(player.Value.playerId));
-
-            PlayerInput playerInput = player.Value._playerInput; //Assigne le player input du PlayerData au player assigné
-           
+            GameObject carPrefab = GetCarPrefabID(0);
+            GameObject carInstance = Instantiate(carPrefab, GetSpawnPosition(0), GetSpawnRotation(0));
 
             S_CarInputEvent s_CarInputEvent = carInstance.GetComponent<S_CarInputEvent>();
             S_RumbleManager s_RumbleManager = carInstance.GetComponent<S_RumbleManager>();
 
             S_CameraLayerSetup s_CameraLayerSetup = carInstance.GetComponentInChildren<S_CameraLayerSetup>();
-            s_CameraLayerSetup.SetPlayerID(player.Value.playerId);
+            s_CameraLayerSetup.SetPlayerID(0);
             //CarController carController = carInstance.GetComponent<CarController>();
             //_displayManager.ReturnCarControllerList().Add(carController);
-            
 
-            s_CarInputEvent.Initialize(playerInput); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
-            s_RumbleManager.Init(playerInput);
+
+            s_CarInputEvent.Initialize(playerInputToTestFromMapSelection); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
+            s_RumbleManager.Init(playerInputToTestFromMapSelection);
         }
+        else
+        {
+            foreach (var player in players)
+            {
+                GameObject carPrefab = GetCarPrefabID(player.Value.carIDSelected);
+                GameObject carInstance = Instantiate(carPrefab, GetSpawnPosition(player.Value.playerId), GetSpawnRotation(player.Value.playerId));
+
+                PlayerInput playerInput = player.Value._playerInput; //Assigne le player input du PlayerData au player assigné
+
+
+                S_CarInputEvent s_CarInputEvent = carInstance.GetComponent<S_CarInputEvent>();
+                S_RumbleManager s_RumbleManager = carInstance.GetComponent<S_RumbleManager>();
+
+                S_CameraLayerSetup s_CameraLayerSetup = carInstance.GetComponentInChildren<S_CameraLayerSetup>();
+                s_CameraLayerSetup.SetPlayerID(player.Value.playerId);
+                //CarController carController = carInstance.GetComponent<CarController>();
+                //_displayManager.ReturnCarControllerList().Add(carController);
+
+
+                s_CarInputEvent.Initialize(playerInput); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
+                s_RumbleManager.Init(playerInput);
+            }
+        }
+        //Creer tous les voitures des players dans le players data en focntion de son carIDSelected selectioné dans la scene CarSelction et setup les cameras du splitscreen
+       
         _displayManager.SetupCamera();
     }
 

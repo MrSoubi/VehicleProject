@@ -1,5 +1,7 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -8,8 +10,15 @@ using UnityEngine.UIElements;
 
 public class S_MapSelection : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _maps;
+    [Title("MapData")]
+    [Tooltip("Mettre ici tous les MapData créer dans l'ordre voulu d'apparition lord de la selection.")]
+    [SerializeField] private List<MapsData> _mapsData;
+
+    [SerializeField] private GameObject _defaultMapObject;
+
     [SerializeField] private PlayersData _playerData;
+    [SerializeField] private TMP_Text _textMapName;
+
     private Vector3 _firstMapPosition = new Vector3(-5f, -1, -10f);
     private Vector3 _secondMapPosition = new Vector3(7.5f, -1f, 5.5f);
     private Vector3 _mapBeforeposition = new Vector3(-17.5f, -1f, 5.5f);
@@ -19,16 +28,49 @@ public class S_MapSelection : MonoBehaviour
 
     private int _currentMapIndex = 0;
 
+    private void Awake()
+    {
+        foreach (var mapData in _mapsData)
+        {
+            if (mapData.MapObject == null)
+            {
+                var mapObject = Instantiate(_defaultMapObject);
+                mapData.MapObject = mapObject;
+            }
+        }
+    }
     private void Start()
     {
-        _maps[0].transform.position = _firstMapPosition;
-        _maps[1].transform.position = _secondMapPosition;
-        for (int i = 2; i < _maps.Length; i++)
-        {
-            _maps[i].transform.position = new Vector3 (_secondMapPosition.x + _distanceXBetweenMap * (i - 1), _secondMapPosition.y, _secondMapPosition.z);
-        }
+        MapObjectSetup();
+    }
 
-        Debug.Log(_maps.Length);
+    private void MapObjectSetup()
+    {
+        _textMapName.text = _mapsData[_currentMapIndex].MapName;
+        Debug.Log("Map index" + _currentMapIndex);
+
+        Debug.Log(_mapsData.Count);
+
+        if (_mapsData != null)
+        {
+            _mapsData[0].MapObject.transform.position = _firstMapPosition;
+
+            if (_mapsData.Count > 1)
+            {
+                _mapsData[1].MapObject.transform.position = _secondMapPosition;
+                if (_mapsData.Count > 2)
+                {
+                    for (int i = 2; i < _mapsData.Count; i++)
+                    {
+                        _mapsData[i].MapObject.transform.position = new Vector3(_secondMapPosition.x + _distanceXBetweenMap * (i - 1), _secondMapPosition.y, _secondMapPosition.z);
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("There is no MapData, go create MapData via sciptableObject and put it in it");
+        }
     }
 
     //Switch sur la prochaine map en deplacant leur position tant qu'on ne sort pas de l'index
@@ -37,17 +79,18 @@ public class S_MapSelection : MonoBehaviour
         
         _currentMapIndex++;
        
+        _textMapName.text = _mapsData[_currentMapIndex].MapName;
 
-        foreach (var map in _maps)
+        foreach (var mapData in _mapsData)
         {
-            map.transform.position = new Vector3(map.transform.position.x - _distanceXBetweenMap, map.transform.position.y);
+            mapData.MapObject.transform.position = new Vector3(mapData.MapObject.transform.position.x - _distanceXBetweenMap, mapData.MapObject.transform.position.y);
         }
 
-        _maps[_currentMapIndex].transform.position = _firstMapPosition;
+        _mapsData[_currentMapIndex].MapObject.transform.position = _firstMapPosition;
 
-        if (_currentMapIndex < _maps.Length - 1)
+        if (_currentMapIndex < _mapsData.Count - 1)
         {
-            _maps[_currentMapIndex + 1].transform.position = _secondMapPosition;
+            _mapsData[_currentMapIndex + 1].MapObject.transform.position = _secondMapPosition;
         }
         else
         {
@@ -59,17 +102,19 @@ public class S_MapSelection : MonoBehaviour
     private void PreviousMap()
     {
         _currentMapIndex--;
-        
-        foreach (var map in _maps)
+
+        _textMapName.text = _mapsData[_currentMapIndex].MapName;
+
+        foreach (var mapData in _mapsData)
         {
-            map.transform.position = new Vector3(map.transform.position.x + _distanceXBetweenMap, map.transform.position.y);
+            mapData.MapObject.transform.position = new Vector3(mapData.MapObject.transform.position.x + _distanceXBetweenMap, mapData.MapObject.transform.position.y);
         }
 
-        _maps[_currentMapIndex].transform.position = _firstMapPosition;
+        _mapsData[_currentMapIndex].MapObject.transform.position = _firstMapPosition;
 
         if (_currentMapIndex - 1 >= 0)
         {
-            _maps[_currentMapIndex - 1].transform.position = _mapBeforeposition;
+            _mapsData[_currentMapIndex - 1].MapObject.transform.position = _mapBeforeposition;
         }
         else
         {
@@ -78,19 +123,6 @@ public class S_MapSelection : MonoBehaviour
         
     }
 
-    
-
-    //private void DisableOtherPlayersControls()
-    //{
-    //    foreach (var player in _players.Values)
-    //    {
-    //        if (player.playerId != 0)
-    //        {
-    //            var input = player._playerInput;
-    //            input.actions.Disable();
-    //        }
-    //    }
-    //}
 
 
     //Recupere l'action du oystick gauche du joueur
@@ -99,7 +131,7 @@ public class S_MapSelection : MonoBehaviour
         if (context.performed)
         {
             float input = context.ReadValue<float>();
-            if (input > 0 && _currentMapIndex < _maps.Length - 1)
+            if (input > 0 && _currentMapIndex < _mapsData.Count - 1)
             {
                 NextMap();
                 Debug.Log("current map: " + _currentMapIndex);
@@ -119,7 +151,7 @@ public class S_MapSelection : MonoBehaviour
         if (context.performed)
         {
             ChangeActionMap();
-            SceneManager.LoadScene(arenas[_currentMapIndex]);
+            SceneManager.LoadScene(_mapsData[_currentMapIndex].MapName);
         }
     }
 

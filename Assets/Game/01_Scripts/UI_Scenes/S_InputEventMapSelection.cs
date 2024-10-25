@@ -11,9 +11,21 @@ public class S_InputEventMapSelection : MonoBehaviour
     [SerializeField] private PlayersData _playerData;
     private Dictionary<InputDevice, PlayerInfo> _players => _playerData.players;
 
+
+    [SerializeField] private PlayerInput _playerInput;
     private void Awake()
     {
-        EnableInputMapSelection();
+        Debug.Log(_players.Count);
+
+        if (_players.Count == 0)
+        {
+            Debug.Log("NoPlayerInput");
+            EnableInputMapSelectionForTest();
+        }
+        else
+        {
+            EnableInputMapSelection();
+        }
     }
     void Update()
     {
@@ -22,7 +34,28 @@ public class S_InputEventMapSelection : MonoBehaviour
 
     void OnDisable()
     {
-        DesableInputMapSelection();
+        if (_players.Count == 0)
+        {
+            Debug.Log("NoPlayerInput");
+            DesableInputMapSelectionForTest();
+        }
+        else
+        {
+            DesableInputMapSelection();
+        }
+    }
+
+    public void EnableInputMapSelectionForTest()
+    {
+        _playerInput.actions["MoveSelection"].performed += _mapSelection.SelectMap;
+        _playerInput.actions["Select"].performed += _mapSelection.ValidateSelection;
+        _playerInput.actions["Back"].performed += _mapSelection.CancelMapSelection;
+    }
+    public void DesableInputMapSelectionForTest()
+    {
+        _playerInput.actions["MoveSelection"].performed -= _mapSelection.SelectMap;
+        _playerInput.actions["Select"].performed -= _mapSelection.ValidateSelection;
+        _playerInput.actions["Back"].performed -= _mapSelection.CancelMapSelection;
     }
 
     //Donne l'action seulementau joueur 0 pour choisir la map
