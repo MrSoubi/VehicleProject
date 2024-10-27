@@ -9,7 +9,15 @@ public class DeathZone : MonoBehaviour
     {
         if (other.GetComponent<CarController>() != null)
         {
-            other.GetComponent<CarController>().Kill();
+            CarController carController = other.GetComponent<CarController>();
+
+            if (carController.HasTeleported == false)
+            {
+                carController.HasTeleported = true;
+                carController.Kill();
+
+            }
+
         }
     }
 }

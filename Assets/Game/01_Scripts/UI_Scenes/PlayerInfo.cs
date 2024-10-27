@@ -12,5 +12,7 @@ public class PlayerInfo
     public bool isRotating;
     public bool isValidateSelection = false;
     public PlayerInput _playerInput;
+    public bool isAlive = true;
+    public Rect rect;
 
 }

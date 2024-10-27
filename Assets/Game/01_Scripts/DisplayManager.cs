@@ -103,6 +103,11 @@ public class DisplayManager : MonoBehaviour
             playerInfos[i].camera.rect = settings[i];
             playerInfos[i].camera.targetDisplay = playerDisplays[i];
         }
+
+        foreach (var player in _playersData.players)
+        {
+            player.Value.rect = playerInfos[player.Value.playerId].camera.rect;
+        }
     }
 
     public List<CarController> ReturnCarControllerList()
@@ -139,4 +144,5 @@ public class DisplayManager : MonoBehaviour
         public Camera camera;
         public Gamepad gamepad;
     }
+    
 }

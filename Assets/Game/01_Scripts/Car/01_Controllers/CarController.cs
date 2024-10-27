@@ -21,6 +21,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private S_RumbleManager _rumbleManager;
+    [SerializeField] private EventChannel _deathEvent;
+
 
     public int gamepadIndex;
 
@@ -34,6 +36,7 @@ public class CarController : MonoBehaviour
     float flippedSince;
 
     bool canJump = true;
+    public bool HasTeleported { get; set; }
 
     Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
     float lastSpeed, speedOddFrame, speedEvenFrame;
@@ -256,15 +259,25 @@ public class CarController : MonoBehaviour
 
     public void Kill()
     {
-        _rumbleManager.InvokeDeathVibration();
         transform.position = spawnPosition;
+
+        _deathEvent.onEventTriggered.Invoke();
+
         transform.rotation = spawnRotation;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        OnKilled.Invoke();
-    }
 
+        _rumbleManager.InvokeDeathVibration();
+
+        OnKilled.Invoke();
+
+        Invoke(nameof(ResetTeleport), 0.5f);
+    }
+    private void ResetTeleport()
+    {
+        HasTeleported = false;
+    }
     // Still in use ?
     public void setGamepadIndex(int gamepadIndex)
     {
@@ -287,6 +300,7 @@ public class CarController : MonoBehaviour
         Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + rb.velocity);
     }
 
+    
     #region INPUT
     public void SteerInAir(InputAction.CallbackContext context)
     {

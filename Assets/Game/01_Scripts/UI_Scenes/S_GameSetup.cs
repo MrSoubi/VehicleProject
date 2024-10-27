@@ -32,7 +32,7 @@ public class S_GameSetup : MonoBehaviour
             //_displayManager.ReturnCarControllerList().Add(carController);
 
 
-            s_CarInputEvent.Initialize(playerInputToTestFromMapSelection); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
+            s_CarInputEvent.Initialize(playerInputToTestFromMapSelection,0); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
             s_RumbleManager.Init(playerInputToTestFromMapSelection);
         }
         else
@@ -54,7 +54,7 @@ public class S_GameSetup : MonoBehaviour
                 //_displayManager.ReturnCarControllerList().Add(carController);
 
 
-                s_CarInputEvent.Initialize(playerInput); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
+                s_CarInputEvent.Initialize(playerInput, player.Value.playerId); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
                 s_RumbleManager.Init(playerInput);
             }
         }

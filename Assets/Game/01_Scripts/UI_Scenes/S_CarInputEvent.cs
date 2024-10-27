@@ -10,32 +10,41 @@ public class S_CarInputEvent : MonoBehaviour
     [SerializeField] private CarController _carController;
     [SerializeField] private WheelController[] _wheelCollider;
     [SerializeField] private BoostController _boostController;
-
+    [SerializeField] private MultipleEventChannel _playerIdEvent;
     [SerializeField] private bool _isForTest;
+    public int PlayerID { get; private set; }
 
     private void Awake()
     {
 
         if (_isForTest == true)
         {
-            Initialize(GetComponent<PlayerInput>());
+            Initialize(GetComponent<PlayerInput>(),0);
         }
     }
-    void Start()
+    private void OnEnable()
     {
-        
+        if (_playerIdEvent != null)
+        {
+            _playerIdEvent.OnIntEventReturnRaised += GetPlayerID;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        // Désabonne la méthode
+        if (_playerIdEvent != null)
+        {
+            _playerIdEvent.OnIntEventReturnRaised -= GetPlayerID;
+        }
     }
 
-    public void Initialize(PlayerInput playerInput)
+    public void Initialize(PlayerInput playerInput, int playerID)
     {
 
         _playerInput = playerInput;
+        PlayerID = playerID;
+
 
 
         _playerInput.actions["Jump"].performed += _carController.Jump;
@@ -81,5 +90,15 @@ public class S_CarInputEvent : MonoBehaviour
 
         _playerInput.actions["Boost"].performed -= _boostController.StartBoost;
         _playerInput.actions["Boost"].canceled -= _boostController.StopBoost;
+    }
+
+    public PlayerInput GetPlayerInput()
+    {
+        return _playerInput;
+    }
+
+    public int GetPlayerID()
+    {
+        return PlayerID;
     }
 }
