@@ -18,23 +18,39 @@ public class BoostController : MonoBehaviour
     [SerializeField] int gamepadIndex;
     [SerializeField] private S_RumbleManager _rumbleManager;
     [SerializeField] TrickManager trickManager;
+    [SerializeField] private EventChannel _deathEvent;
+
 
 
     [SerializeField] float flipBonus = 10, backFlipBonus = 10, frontFlipBonus = 10, shoveItBonus = 10;
 
     public bool isBoosting = false;
 
-    public float currentBoostAmount;
+    private float currentBoostAmount;
     public float maxBoostAmount => data.maxBoostAmount;
 
     private bool isButtonHeld = false;
 
+    private void Awake()
+    {
+        BoostFullRecuperation();
+    }
     private void Start()
     {
         trickManager.OnBackFlipCompleted.AddListener(OnBackFlip);
         trickManager.OnFrontFlipCompleted.AddListener(OnFrontFlip);
         trickManager.OnShoveItCompleted.AddListener(OnShoveIt);
         trickManager.OnFlipCompleted.AddListener(OnFlip);
+    }
+
+    private void OnEnable()
+    {
+        _deathEvent.onEventTriggered.AddListener(BoostFullRecuperation);
+    }
+
+    private void OnDisable()
+    {
+        _deathEvent.onEventTriggered.RemoveListener(BoostFullRecuperation);
     }
 
     private void Update()
@@ -124,5 +140,15 @@ public class BoostController : MonoBehaviour
         _rumbleManager.InvokeEndBoostVibration();
         OnBoostDeactivation.Invoke();
         isBoosting = false;
+    }
+
+    private void BoostFullRecuperation()
+    {
+        currentBoostAmount = maxBoostAmount;
+    }
+
+    public float GetCurrentBoost()
+    {
+        return currentBoostAmount;
     }
 }
