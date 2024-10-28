@@ -29,8 +29,27 @@ public class DamageDisplay : SerializedMonoBehaviour
         value_100 = (value / 100) % 10;
 
         image1.sprite = numericSprites[value_1];
-        image10.sprite = numericSprites[value_10];
-        image100.sprite = numericSprites[value_100];
+
+        if (value_100 > 0)
+        {
+            image100.enabled = true;
+            image10.enabled = true;
+            image100.sprite = numericSprites[value_100];
+            image10.sprite = numericSprites[value_10];
+        }
+        else
+        {
+            image100.enabled = false;
+            if (value_10 > 0)
+            {
+                image10.enabled = true;
+                image10.sprite = numericSprites[value_10];
+            }
+            else
+            {
+                image10.enabled = false;
+            }
+        }
 
         image1.transform.DOShakeRotation(0.3f, strength: 45, randomnessMode: ShakeRandomnessMode.Harmonic);
         image10.transform.DOShakeRotation(0.3f, strength: 45, randomnessMode: ShakeRandomnessMode.Harmonic);
