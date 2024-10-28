@@ -10,6 +10,6 @@ public class BoostDebug : MonoBehaviour
 
     void Update()
     {
-        textMeshPro.text = controller.currentBoostAmount.ToString();
+        textMeshPro.text = controller.GetCurrentBoost().ToString();
     }
 }

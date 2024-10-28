@@ -152,15 +152,15 @@ public class WheelController : MonoBehaviour
     }
 
     public void Reverse(InputAction.CallbackContext context)
-    {
+    {        
         
-        
-        reverseValue = context.ReadValue<float>();
         _isReverse = true;
-
-
         if (_isDrifting == true){
-            _currentGripFactor = SetDriftGriptFactor();
+            _currentGripFactor = GetDriftGriptFactor();
+        }
+        else
+        {
+            reverseValue = context.ReadValue<float>();
         }
     }
 
@@ -173,30 +173,30 @@ public class WheelController : MonoBehaviour
     public void OnReverseCancel(InputAction.CallbackContext context)
     {
         if (_isDrifting == true){
-            _currentGripFactor = Mathf.Lerp(SetDriftGriptFactor(), SetGripFactor(), 1f);
+            _currentGripFactor = Mathf.Lerp(GetDriftGriptFactor(), GetGripFactor(), 1f);
         }
         else{
-            _currentGripFactor = SetGripFactor();
+            _currentGripFactor = GetGripFactor();
         }
         _isReverse = false;
         reverseValue = 0f;
     }
 
-    private float SetGripFactor(){
+    private float GetGripFactor(){
         return _gripFactor;
     }
 
-    private float SetDriftGriptFactor(){
+    private float GetDriftGriptFactor(){
         return _driftGripFactor;
     }
 
-    private float SetFactor(){
+    private float GetFactor(){
         if (_isDrifting == true)
         {
-            return SetDriftGriptFactor();
+            return GetDriftGriptFactor();
         }
         else{
-            return SetGripFactor();
+            return GetGripFactor();
         }
     }
 

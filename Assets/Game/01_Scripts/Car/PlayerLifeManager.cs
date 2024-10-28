@@ -25,11 +25,15 @@ public class PlayerLifeManager : MonoBehaviour
     void OnEnable()
     {
         _deathEvent.onEventTriggered.AddListener(Death);
+        _deathEvent.onEventTriggered.AddListener(ResetBumpPourcentage);
+
     }
 
     void OnDisable()
     {
         _deathEvent.onEventTriggered.RemoveListener(Death);
+        _deathEvent.onEventTriggered.RemoveListener(ResetBumpPourcentage);
+
     }
 
     public void ApplyDamage(float amount)
@@ -63,5 +67,15 @@ public class PlayerLifeManager : MonoBehaviour
             //_gameOverEvent.onEventTriggered.Invoke();
             _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.isAlive = false;
         }
+    }
+
+    private void ResetBumpPourcentage()
+    {
+        _bumpLifeMultiplierPourcentage = 0f;
+    }
+
+    private void Update()
+    {
+        Debug.Log(_bumpLifeMultiplierPourcentage);
     }
 }
