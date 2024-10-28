@@ -44,7 +44,7 @@ public class CarUIManager : MonoBehaviour
 
     void UpdateBoostUI()
     {
-        boostGauge.transform.localScale = new Vector3(boostController.currentBoostAmount / boostController.maxBoostAmount, 1, 1);
+        boostGauge.transform.localScale = new Vector3(boostController.GetCurrentBoost() / boostController.maxBoostAmount, 1, 1);
     }
 
     void UpdateDamageUI()
