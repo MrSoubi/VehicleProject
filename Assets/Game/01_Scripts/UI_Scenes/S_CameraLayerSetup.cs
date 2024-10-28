@@ -32,11 +32,11 @@ public class S_CameraLayerSetup : MonoBehaviour
         _Camera.cullingMask &= ~((1 << 7) | (1 << 8) | (1 << 9) | (1 << 10)); //Enleve les layers des joueurs sur le culling mask de la camera
         _Camera.cullingMask |= LayerMask.GetMask($"PlayerCam{_playerID + 1}"); //Rajoute le layer du joueur
 
-        _Canvas.gameObject.layer = _layerMask;
+/*        _Canvas.gameObject.layer = _layerMask;
         foreach(Transform t in _Canvas.transform)
         {
             t.gameObject.layer = _layerMask;
-        }
+        }*/
     }
 
 }
