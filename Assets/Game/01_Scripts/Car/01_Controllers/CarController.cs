@@ -77,6 +77,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // TODO : change to a different frame count !!!
         if (Time.frameCount % 2 == 0)
         {
             velocityEvenFrame = rb.velocity;

@@ -9,6 +9,7 @@ public class ImpactManager : MonoBehaviour
     [SerializeField] private float _baseImpactForceMultiplier;
     [SerializeField] private float _pourcentageMultiplier;
     [SerializeField][Range(0, 0.1f)] private float _verticalBumpForce;
+    [SerializeField] private GameObject _impactSFX;
 
     [SerializeField][Range(0, 1)] private float _advantageMultiplier; //Le multiplicateur pour le joueur qui a l avantage dans la collision
 
@@ -135,6 +136,8 @@ public class ImpactManager : MonoBehaviour
             rb.AddForce(impactForce, ForceMode.Impulse);
 
             rb.AddTorque(impactForce / 20, ForceMode.Impulse);
+
+            Instantiate(_impactSFX, collision.transform.position, Quaternion.identity);
         }
 
 
