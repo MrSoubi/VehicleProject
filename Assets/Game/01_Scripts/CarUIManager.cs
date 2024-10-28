@@ -15,7 +15,7 @@ public class CarUIManager : MonoBehaviour
 
 
     [SerializeField] GameObject boostGauge;
-    [SerializeField] TextMeshProUGUI percentageText;
+    [SerializeField] DamageDisplay percentageText;
     [SerializeField] TextMeshProUGUI jumpText;
     [SerializeField] GameObject _gameOverPanel; 
 
@@ -49,7 +49,7 @@ public class CarUIManager : MonoBehaviour
 
     void UpdateDamageUI()
     {
-        percentageText.text = playerLifeManager.percentage.ToString();
+        percentageText.UpdateText((int)playerLifeManager.percentage);
     }
 
     void SetJumpIndicatorEnabled()

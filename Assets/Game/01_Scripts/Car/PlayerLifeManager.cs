@@ -76,6 +76,6 @@ public class PlayerLifeManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_bumpLifeMultiplierPourcentage);
+        //Debug.Log(_bumpLifeMultiplierPourcentage);
     }
 }
