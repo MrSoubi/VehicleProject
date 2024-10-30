@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEditor;
+using System;
 
 // TODO: See Baptiste for the boost behaviour. Boost limit ? Boost max speed ? Boost quantity ?
 public class BoostController : MonoBehaviour
@@ -19,10 +20,10 @@ public class BoostController : MonoBehaviour
     [SerializeField] private S_RumbleManager _rumbleManager;
     [SerializeField] TrickManager trickManager;
     [SerializeField] private EventChannel _deathEvent;
+    [SerializeField] ImpactManager impactManager;
 
 
-
-    [SerializeField] float flipBonus = 10, backFlipBonus = 10, frontFlipBonus = 10, shoveItBonus = 10;
+    [SerializeField] float flipBonus = 10, backFlipBonus = 10, frontFlipBonus = 10, shoveItBonus = 10, impactBonus = 10;
 
     public bool isBoosting = false;
 
@@ -41,6 +42,12 @@ public class BoostController : MonoBehaviour
         trickManager.OnFrontFlipCompleted.AddListener(OnFrontFlip);
         trickManager.OnShoveItCompleted.AddListener(OnShoveIt);
         trickManager.OnFlipCompleted.AddListener(OnFlip);
+        impactManager.OnImpactWithAdvantage.AddListener(OnImpact);
+    }
+
+    private void OnImpact()
+    {
+        AddBoost(impactBonus);
     }
 
     private void OnEnable()
