@@ -3264,6 +3264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carController: {fileID: 9108510379657322759}
+  impactManager: {fileID: 1472218681921628560}
 --- !u!114 &1813608260909903539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3321,6 +3322,9 @@ MonoBehaviour:
   velocityOddFrame: {x: 0, y: 0, z: 0}
   velocityEvenFrame: {x: 0, y: 0, z: 0}
   lastVelocity: {x: 0, y: 0, z: 0}
+  OnImpactAsAVictim:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1086203780243686898
 MonoBehaviour:
   m_ObjectHideFlags: 0

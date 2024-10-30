@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ImpactManager : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class ImpactManager : MonoBehaviour
     bool isInvicible = false;
 
     private float lastSpeed, _speedOddFrame, _speedEvenFrame;
-    
+
+    public UnityEvent OnImpactAsAVictim;
 
 
     private void Start()
@@ -55,9 +57,6 @@ public class ImpactManager : MonoBehaviour
     {
         ImpactManager otherCar;
 
-        //float ImpactVibrationValue = lastSpeed;
-        //_rumbleManager.InvokeImpactVibration(ImpactVibrationValue); //for test
-
         if (!collision.gameObject.TryGetComponent<ImpactManager>(out otherCar))
         {
             
@@ -76,9 +75,6 @@ public class ImpactManager : MonoBehaviour
 
     private void HandleImpact(ImpactManager otherCar, Collision collision)
     {
-        
-
-
         // Determination de l'avantage
         // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
         // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
@@ -97,27 +93,6 @@ public class ImpactManager : MonoBehaviour
         // On lance une invincibilité après chaque impact
         StartCoroutine(nameof(InvicibilityRoutine));
 
-        // Sans avantage, on prend des dégâts et une force d'impact sur le RB
-        //if (!hasAdvantage)
-        //{
-        //    Vector3 impactForce = rb.velocity - lastVelocity;
-
-        //    // On applique des dégâts équivalents à la force de l'impact
-        //    // La force d'impact est calculée en retirant la vélocité de la dernière frame à la vélocité actuelle
-        //    _playerLifeManager.ApplyDamage(impactForce.magnitude);
-
-        //    // La force d'impact appliquée au RB est multipliée par le pourcentage de dégâts
-        //    impactForce *= _playerLifeManager.GetDamageMultiplier() * 4000;
-
-        //    rb.AddForce(impactForce, ForceMode.Impulse);
-
-        //    // Ajout d'une légère force vers le haut
-        //    rb.AddForce(Vector3.up * impactForce.magnitude / 10, ForceMode.Impulse);
-
-        //    // Ajout d'un léger torque
-        //    rb.AddTorque(impactForce / 20, ForceMode.Impulse);
-        //}
-
         if (!hasAdvantage)
         {
             Vector3 impactForce = rb.velocity - lastVelocity;
@@ -129,18 +104,14 @@ public class ImpactManager : MonoBehaviour
 
             _playerLifeManager.ApplyDamage(Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
 
-            //Debug.Log("Multiplier add to other car" + Mathf.Abs(lastSpeed - LastSpeedOtherCar) * _pourcentageMultiplier);
-
-            //impactForce.y += _verticalBumpForce * LastSpeedOtherCar;
-
             rb.AddForce(impactForce, ForceMode.Impulse);
 
             rb.AddTorque(impactForce / 20, ForceMode.Impulse);
 
             Instantiate(_impactSFX, collision.transform.position, Quaternion.identity);
+
+            OnImpactAsAVictim.Invoke();
         }
-
-
         // Avec l'avantage on ne subit rien du tout
     }
 
