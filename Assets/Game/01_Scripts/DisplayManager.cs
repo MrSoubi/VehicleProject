@@ -127,11 +127,10 @@ public class DisplayManager : MonoBehaviour
             Debug.LogError("Number of cars should be at least 1");
         }
 
-        for (int i = 0; i < /*Camera.allCamerasCount*/ _playersData.players.Count; i++)
+        for (int i = 0; i < _playersData.players.Count; i++)
         {
             PlayerInfo localPlayerInfo = new PlayerInfo();
-            localPlayerInfo.camera = Camera.allCameras[i];
-            //localPlayerInfo.gamepad = Gamepad.all[i];
+            localPlayerInfo.camera = Camera.allCameras[i*2]; // i*2 because there is now two cameras for each player, one basic and one for the ui
 
             playerInfos.Add(localPlayerInfo);
         }
