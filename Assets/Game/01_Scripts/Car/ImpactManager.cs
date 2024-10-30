@@ -20,6 +20,7 @@ public class ImpactManager : MonoBehaviour
     private float lastSpeed, _speedOddFrame, _speedEvenFrame;
 
     public UnityEvent OnImpactAsAVictim;
+    public UnityEvent OnImpactWithAdvantage;
 
 
     private void Start()
@@ -112,7 +113,11 @@ public class ImpactManager : MonoBehaviour
 
             OnImpactAsAVictim.Invoke();
         }
-        // Avec l'avantage on ne subit rien du tout
+        else // Avec l'avantage on ne subit rien du tout
+        {
+            OnImpactWithAdvantage.Invoke();
+        }
+        
     }
 
     private IEnumerator InvicibilityRoutine()

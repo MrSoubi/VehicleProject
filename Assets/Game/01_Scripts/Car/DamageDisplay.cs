@@ -13,13 +13,10 @@ public class DamageDisplay : SerializedMonoBehaviour
     int value_1, value_10, value_100;
     int localValue = 0;
     public bool debugMode = false;
-    private void Update()
+
+    private void Start()
     {
-        if (debugMode && Input.GetMouseButtonDown(0))
-        {
-            localValue++;
-            UpdateText(localValue);
-        }
+        UpdateText(0);
     }
 
     public void UpdateText(int value)
@@ -32,22 +29,29 @@ public class DamageDisplay : SerializedMonoBehaviour
 
         if (value_100 > 0)
         {
-            image100.enabled = true;
-            image10.enabled = true;
+            //image100.enabled = true;
+            //image10.enabled = true;
+
+            image10.color = new Color(image10.color.r, image10.color.g, image10.color.b, 1);
+            image100.color = new Color(image100.color.r, image100.color.g, image100.color.b, 1);
+
             image100.sprite = numericSprites[value_100];
             image10.sprite = numericSprites[value_10];
         }
         else
         {
-            image100.enabled = false;
+            //image100.enabled = false;
+            image100.color = new Color(image100.color.r, image100.color.g, image100.color.b, 0);
             if (value_10 > 0)
             {
-                image10.enabled = true;
+                //image10.enabled = true;
+                image10.color = new Color(image10.color.r, image10.color.g, image10.color.b, 1);
                 image10.sprite = numericSprites[value_10];
             }
             else
             {
-                image10.enabled = false;
+                //image10.enabled = false;
+                image10.color = new Color(image10.color.r, image10.color.g, image10.color.b, 0);
             }
         }
 

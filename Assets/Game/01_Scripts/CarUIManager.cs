@@ -1,8 +1,10 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarUIManager : MonoBehaviour
 {
@@ -17,7 +19,9 @@ public class CarUIManager : MonoBehaviour
     [SerializeField] GameObject boostGauge;
     [SerializeField] DamageDisplay percentageText;
     [SerializeField] TextMeshProUGUI jumpText;
-    [SerializeField] GameObject _gameOverPanel; 
+    [SerializeField] GameObject _gameOverPanel;
+
+    Vector3 boostGaugeInitialPosition;
 
     void OnEnable()
     {
@@ -34,17 +38,15 @@ public class CarUIManager : MonoBehaviour
         playerLifeManager.OnPercentageValueChanged.AddListener(UpdateDamageUI);
         carController.OnJumpEnabled.AddListener(SetJumpIndicatorEnabled);
         carController.OnJumpDisabled.AddListener(SetJumpIndicatorDisabled);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        boostGaugeInitialPosition = boostGauge.transform.localPosition;
     }
 
     void UpdateBoostUI()
     {
         boostGauge.transform.localScale = new Vector3(boostController.GetCurrentBoost() / boostController.maxBoostAmount, 1, 1);
+        boostGauge.GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, boostController.GetCurrentBoost() / boostController.maxBoostAmount);
+        boostGauge.transform.DOShakePosition(0.03f, strength: .5f, randomnessMode: ShakeRandomnessMode.Harmonic).OnComplete(() => { boostGauge.transform.localPosition = boostGaugeInitialPosition; });
     }
 
     void UpdateDamageUI()
