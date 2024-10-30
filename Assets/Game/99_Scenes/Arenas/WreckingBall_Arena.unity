@@ -35608,6 +35608,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1655468491}
     m_Modifications:
+    - target: {fileID: 3424588019372366317, guid: f02000413571bb246b70db04254d8a63,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5026350306549086607, guid: f02000413571bb246b70db04254d8a63,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -35677,6 +35682,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SM_Bld_Bridge_End_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659615524921336629, guid: f02000413571bb246b70db04254d8a63,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36827,7 +36837,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.868036, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -36965,6 +36975,106 @@ Transform:
   - {fileID: 419858457}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1788964501
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1680093481652488, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_Name
+      value: FX_Fire_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 37.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948187264311908, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199354578178017814, guid: d80749e682e1b2347ad32a1189b66577,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199696073401071728, guid: d80749e682e1b2347ad32a1189b66577,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1027867726443364, guid: d80749e682e1b2347ad32a1189b66577,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1788964503}
+  m_SourcePrefab: {fileID: 100100000, guid: d80749e682e1b2347ad32a1189b66577, type: 3}
+--- !u!1 &1788964502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1027867726443364, guid: d80749e682e1b2347ad32a1189b66577,
+    type: 3}
+  m_PrefabInstance: {fileID: 1788964501}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1788964503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788964502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1001 &1812569756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36973,6 +37083,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1655468491}
     m_Modifications:
+    - target: {fileID: 3424588019372366317, guid: f02000413571bb246b70db04254d8a63,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5026350306549086607, guid: f02000413571bb246b70db04254d8a63,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -37042,6 +37157,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SM_Bld_Bridge_End_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659615524921336629, guid: f02000413571bb246b70db04254d8a63,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -37214,6 +37334,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SM_Bld_Bridge_Debris_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1067680063378775568, guid: 4a0bac77a28a75249a17a1156f69e17c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -37418,6 +37543,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Bridge_End_01
       objectReference: {fileID: 0}
+    - target: {fileID: 5081717012694031097, guid: bce2232d88f02854f91865a105068b8f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5606473692501475395, guid: bce2232d88f02854f91865a105068b8f,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -37582,3 +37712,4 @@ SceneRoots:
   - {fileID: 1655468491}
   - {fileID: 1509775626}
   - {fileID: 1062302203}
+  - {fileID: 1788964501}
