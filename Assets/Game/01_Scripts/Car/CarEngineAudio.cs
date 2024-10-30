@@ -15,7 +15,7 @@ public class CarEngineAudio : MonoBehaviour
     private void Awake()
     {
         CarEngine = FMODUnity.RuntimeManager.CreateInstance("event:/Car/Engine");
-        CarEngine = FMODUnity.RuntimeManager.CreateInstance("event:/FX/Crash");
+        CarCrash = FMODUnity.RuntimeManager.CreateInstance("event:/FX/Crash");
     }
 
     private void Start()
@@ -25,12 +25,18 @@ public class CarEngineAudio : MonoBehaviour
 
         CarEngine.start();
 
-        impactManager.OnImpactAsAVictim.AddListener(() => { CarCrash.start(); });
+        impactManager.OnImpactAsAVictim.AddListener(Crash);
     }
 
     // TODO: utiliser l'event on ground pour faire diminuer le rpm si on ne touche pas le sol
     void Update()
     {
         CarEngine.setParameterByName("RPM", Mathf.Min(1, carController.GetSpeedRatio()) * 8500);
+        CarEngine.setVolume(Mathf.Max(0.5f, RPM / 8500));
+    }
+
+    void Crash()
+    {
+        CarCrash.start();
     }
 }
