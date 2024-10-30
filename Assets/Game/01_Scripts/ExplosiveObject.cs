@@ -8,13 +8,14 @@ public class ExplosiveObject : MonoBehaviour
     [SerializeField] private float delayBeforeExplosion;
     [SerializeField] private float forceOfExplosion;
     [SerializeField] private float upForce;
-
-    private Material material;
+    [SerializeField] private ParticleSystem particleExplosion;
+    [SerializeField] private Animator animBomb;
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.GetComponent<CarController>() != null)
         {
+            animBomb.SetBool("isContact", true);
             StartCoroutine(DelayExplosion(delayBeforeExplosion));
         }
     }
@@ -36,12 +37,16 @@ public class ExplosiveObject : MonoBehaviour
                 rb.AddExplosionForce(forceOfExplosion, explosionPosition, rangeOfExplosion, upForce, ForceMode.Impulse);
             }
         }
-
+        Instantiate(particleExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
-
+    void AnimBomb()
+    {
+        animBomb.Play("anim_Bomb_Idle", 0, 0.0f);
+    }
     IEnumerator DelayExplosion(float delay)
     {
+        AnimBomb();
         yield return new WaitForSeconds(delay);
         Detonate();
     }
