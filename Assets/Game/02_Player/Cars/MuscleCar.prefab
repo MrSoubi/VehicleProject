@@ -229,7 +229,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e84abf46d5bf5da4b8d191d25007a2f4, type: 2}
+  - {fileID: 2100000, guid: 5e0faf8512a1abb48a96db6d7198b8aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -941,7 +941,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e84abf46d5bf5da4b8d191d25007a2f4, type: 2}
+  - {fileID: 2100000, guid: 5e0faf8512a1abb48a96db6d7198b8aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1356,7 +1356,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e84abf46d5bf5da4b8d191d25007a2f4, type: 2}
+  - {fileID: 2100000, guid: 5e0faf8512a1abb48a96db6d7198b8aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2204,6 +2204,26 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.23728454
       objectReference: {fileID: 0}
+    - target: {fileID: 2381477994357017178, guid: e4d1955a74a5cb64592ba78e258cdd06,
+        type: 3}
+      propertyPath: renderers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381477994357017178, guid: e4d1955a74a5cb64592ba78e258cdd06,
+        type: 3}
+      propertyPath: renderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 6539984248452877323}
+    - target: {fileID: 2381477994357017178, guid: e4d1955a74a5cb64592ba78e258cdd06,
+        type: 3}
+      propertyPath: renderers.Array.data[1]
+      value: 
+      objectReference: {fileID: 2929114590408599270}
+    - target: {fileID: 2381477994357017178, guid: e4d1955a74a5cb64592ba78e258cdd06,
+        type: 3}
+      propertyPath: renderers.Array.data[2]
+      value: 
+      objectReference: {fileID: 4799388571233887854}
     - target: {fileID: 2421001973378216291, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2306,6 +2326,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3309298421097135141, guid: e4d1955a74a5cb64592ba78e258cdd06,
+        type: 3}
+      propertyPath: _carColorManager
+      value: 
+      objectReference: {fileID: 8767785331530348883}
     - target: {fileID: 3488446058211708461, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2476,7 +2501,7 @@ PrefabInstance:
     - target: {fileID: 5040958920771064272, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5040958920771064272, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
@@ -2486,22 +2511,22 @@ PrefabInstance:
     - target: {fileID: 5040958920771064272, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9998639
+      value: 0.9899495
       objectReference: {fileID: 0}
     - target: {fileID: 5040958920771064272, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.016349072
+      value: 0.14142135
       objectReference: {fileID: 0}
     - target: {fileID: 5040958920771064272, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0022052247
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5040958920771064272, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00003605828
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5448456866850363457, guid: e4d1955a74a5cb64592ba78e258cdd06,
         type: 3}
@@ -2816,6 +2841,18 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 6386627434844812041}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8767785331530348883 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2381477994357017178, guid: e4d1955a74a5cb64592ba78e258cdd06,
+    type: 3}
+  m_PrefabInstance: {fileID: 6386627434844812041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b44720d3878bdb488b4b979b3322d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6897016743824882332
 PrefabInstance:
   m_ObjectHideFlags: 0
