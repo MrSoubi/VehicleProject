@@ -46,7 +46,7 @@ public class DisplayManager : MonoBehaviour
         List<Rect> settings = new List<Rect>();
         List<int> playerDisplays = new List<int>();
 
-        if (displayCount == 1 &&  /*carControllers*/_playersData.players.Count == 2) // 1 screen 2 players
+        if (displayCount == 1 && _playersData.players.Count == 2) // 1 screen 2 players
         {
             settings.Add(new Rect(0, 0, 1, 0.5f));
             playerDisplays.Add(0);
@@ -54,19 +54,19 @@ public class DisplayManager : MonoBehaviour
             playerDisplays.Add(0);
         }
 
-        if (displayCount == 1 &&  /*carControllers */_playersData.players.Count == 4) // 1 screen 4 players
+        if (displayCount == 1 && _playersData.players.Count == 4) // 1 screen 4 players
         {
-            settings.Add(new Rect(0   , 0   , 0.5f, 0.5f));
+            settings.Add(new Rect(0      , 0.5f   , 0.5f, 0.5f));
             playerDisplays.Add(0);
-            settings.Add(new Rect(0   , 0.5f, 0.5f, 0.5f));
+            settings.Add(new Rect(0.5f   , 0.5f   , 0.5f, 0.5f));
             playerDisplays.Add(0);
-            settings.Add(new Rect(0.5f, 0   , 0.5f, 0.5f));
+            settings.Add(new Rect(0      , 0      , 0.5f, 0.5f));
             playerDisplays.Add(0);
-            settings.Add(new Rect(0.5f, 0.5f, 0.5f, 0.5f));
+            settings.Add(new Rect(0.5f   , 0      , 0.5f, 0.5f));
             playerDisplays.Add(0);
         }
 
-        if (displayCount == 2 &&  /*carControllers */_playersData.players.Count == 2) // 2 screens 2 players
+        if (displayCount == 2 && _playersData.players.Count == 2) // 2 screens 2 players
         {
             settings.Add(new Rect(0, 0, 1, 1));
             playerDisplays.Add(0);
@@ -74,7 +74,7 @@ public class DisplayManager : MonoBehaviour
             playerDisplays.Add(1);
         }
 
-        if (displayCount == 2 &&  /*carControllers */_playersData.players.Count == 4) // 2 screens 4 players
+        if (displayCount == 2 && _playersData.players.Count == 4) // 2 screens 4 players
         {
             settings.Add(new Rect(0, 0, 1, 0.5f));
             playerDisplays.Add(0);
@@ -86,7 +86,7 @@ public class DisplayManager : MonoBehaviour
             playerDisplays.Add(1);
         }
 
-        if (displayCount == 4 &&  /*carControllers */_playersData.players.Count == 4) // 4 screens 4 players
+        if (displayCount == 4 && _playersData.players.Count == 4) // 4 screens 4 players
         {
             settings.Add(new Rect(0, 0, 1, 1));
             playerDisplays.Add(0);
@@ -132,7 +132,7 @@ public class DisplayManager : MonoBehaviour
         for (int i = 0; i < _playersData.players.Count; i++)
         {
             PlayerInfo localPlayerInfo = new PlayerInfo();
-            localPlayerInfo.camera = baseCams[i]; // i*2 because there is now two cameras for each player, one basic and one for the ui
+            localPlayerInfo.camera = baseCams[i];
 
             playerInfos.Add(localPlayerInfo);
         }
