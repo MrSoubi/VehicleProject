@@ -38,8 +38,8 @@ public class FOVBoxVolume : MonoBehaviour
             LensDistortion localLens;
             volume.profile.TryGet(out localLens);
 
-            localLens.intensity.value = standardValueLens;
-            StartCoroutine(LerpDistortion(localLens, standardValueLens, boostValueLens));
+            //localLens.intensity.value = standardValueLens;
+            StartCoroutine(LerpDistortion(localLens, localLens.intensity.value, boostValueLens));
         }
     }
 
@@ -52,18 +52,19 @@ public class FOVBoxVolume : MonoBehaviour
             LensDistortion localLens;
             volume.profile.TryGet(out localLens);
 
-            localLens.intensity.value = boostValueLens;
-            StartCoroutine(LerpDistortion(localLens, boostValueLens, standardValueLens));
+            //localLens.intensity.value = boostValueLens;
+            StartCoroutine(LerpDistortion(localLens, localLens.intensity.value, standardValueLens));
         }
     }
 
     IEnumerator LerpDistortion(LensDistortion lense, float from, float to)
     {
         float time = 0;
+        float localDuration = duration * Mathf.Abs(from - to);
         while (time < duration)
         {
             yield return new WaitForEndOfFrame();
-            lense.intensity.value = Mathf.Lerp(from, to, time / duration);
+            lense.intensity.value = Mathf.Lerp(from, to, time / localDuration);
             time += Time.deltaTime;
         }
         yield return null;
