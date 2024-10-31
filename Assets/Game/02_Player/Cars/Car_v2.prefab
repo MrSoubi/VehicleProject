@@ -4354,8 +4354,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05803819, y: 0, z: 0, w: 0.9983144}
-  m_LocalPosition: {x: 0, y: 3, z: -15}
+  m_LocalRotation: {x: 0.016349068, y: -0.0022057332, z: 0.000036066584, w: 0.9998639}
+  m_LocalPosition: {x: 0, y: 2, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5359,6 +5359,11 @@ PrefabInstance:
       propertyPath: carController
       value: 
       objectReference: {fileID: 9108510379657322759}
+    - target: {fileID: 4119526395003546719, guid: 152cfcef92eab164ab1f5f0f7d4a672c,
+        type: 3}
+      propertyPath: impactManager
+      value: 
+      objectReference: {fileID: 1472218681921628560}
     - target: {fileID: 5416636045919604077, guid: 152cfcef92eab164ab1f5f0f7d4a672c,
         type: 3}
       propertyPath: m_LocalPosition.x
