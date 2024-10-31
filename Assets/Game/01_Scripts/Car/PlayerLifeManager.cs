@@ -11,7 +11,6 @@ public class PlayerLifeManager : MonoBehaviour
     public UnityEvent OnPercentageValueChanged;
     public UnityEvent OnGameOver;
 
-
     private float _bumpLifeMultiplierPourcentage = 0f;
     [SerializeField] private float _mutiplierByBumpPourcentage;
     [SerializeField] private int _playerLife;
@@ -19,6 +18,8 @@ public class PlayerLifeManager : MonoBehaviour
     [SerializeField] private PlayersData _playersData;
     [SerializeField] private EventChannel _deathEvent;
     [SerializeField] private EventChannel _gameOverEvent;
+
+    [SerializeField] private List<GameObject> thingsToDeactivateOnDeath;
 
     public bool debugActive;
 
@@ -51,7 +52,6 @@ public class PlayerLifeManager : MonoBehaviour
         if (debugActive)
         {
             Debug.Log("PourcentageMultiplier after: " + Mathf.RoundToInt(_bumpLifeMultiplierPourcentage));
-
         }
 
     }
@@ -72,6 +72,11 @@ public class PlayerLifeManager : MonoBehaviour
             OnGameOver.Invoke();
 
             _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.isAlive = false;
+
+            foreach (GameObject go in thingsToDeactivateOnDeath)
+            {
+                go.SetActive(false);
+            }
         }
     }
 

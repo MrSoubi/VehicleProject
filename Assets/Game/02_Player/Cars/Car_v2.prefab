@@ -3615,6 +3615,12 @@ MonoBehaviour:
   _playersData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
   _deathEvent: {fileID: 11400000, guid: 0433c27c5e2853449bf017f5fc825855, type: 2}
   _gameOverEvent: {fileID: 11400000, guid: 40365e21d23e14440aec85e08d04e9fe, type: 2}
+  thingsToDeactivateOnDeath:
+  - {fileID: 4350828753540230361}
+  - {fileID: 6230061110090627266}
+  - {fileID: 7234175137850902008}
+  - {fileID: 917939132777649591}
+  - {fileID: 2544661682796341791}
   debugActive: 0
 --- !u!114 &7739667518235963434
 MonoBehaviour:
@@ -4109,8 +4115,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.081330866, y: -0.63505876, z: 0.06749862, w: 0.76519907}
-  m_LocalPosition: {x: 8, y: 3, z: -1.5}
+  m_LocalRotation: {x: 0.016349064, y: -0.0022057341, z: 0.000036066587, w: 0.9998639}
+  m_LocalPosition: {x: 0, y: 2, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
