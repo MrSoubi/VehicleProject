@@ -12,28 +12,36 @@ public class WreckingBall : MonoBehaviour
 
     [SerializeField] LayerMask layerMask;
 
-    private Transform target;
+    private Transform target, lastTarget;
     private int targetIndex;
 
     private void Start()
     {
         targetIndex = 0;
         target = ballPointDirection[targetIndex];
+        lastTarget = target;
         targetIndex++;
+        target = ballPointDirection[targetIndex];
         transform.position = target.position;
         SetPositionOnGround();
-        target = ballPointDirection[targetIndex];
     }
-
+    Vector3 midPoint;
+    public float magicNumber = 10;
     private void Update()
     {
         Vector3 direction = (target.position - transform.position).normalized.ProjectOntoPlane(GetFloorNormal());
-        transform.position += ballSpeed * Time.deltaTime * direction;
 
-        Debug.Log(transform.position + " / " + target.position);
-        if ((transform.position.x - target.position.x) < 0.1f && (transform.position.y - target.position.y) < 0.1f)
+        midPoint = lastTarget.position + (target.position - lastTarget.position) / 2;
+        float distanceToCenter = (transform.position - midPoint).magnitude;
+        float speedFactor = (magicNumber/distanceToCenter);
+
+        transform.position += ballSpeed * speedFactor * Time.deltaTime * direction;
+
+        if ((transform.position - target.position).magnitude < 15)
         {
             targetIndex = (targetIndex + 1) % ballPointDirection.Count;
+            lastTarget = target;
+            target = ballPointDirection[targetIndex];
         }
     }
 
