@@ -78,6 +78,7 @@ public class PlayerLifeManager : MonoBehaviour
     private void ResetBumpPourcentage()
     {
         _bumpLifeMultiplierPourcentage = 0f;
+        OnPercentageValueChanged?.Invoke();
     }
 
    

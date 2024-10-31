@@ -152,6 +152,7 @@ public class BoostController : MonoBehaviour
     public void BoostFullRecuperation()
     {
         currentBoostAmount = maxBoostAmount;
+        OnBoostValueChanged.Invoke();
     }
 
     public float GetCurrentBoost()
