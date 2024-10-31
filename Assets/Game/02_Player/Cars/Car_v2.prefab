@@ -331,6 +331,7 @@ MonoBehaviour:
   trail: {fileID: 5999664167858147311}
   carRB: {fileID: 3245131661188073210}
   driftLimit: 0.9
+  carController: {fileID: 9108510379657322759}
 --- !u!1 &241557454590257710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1596,6 +1597,7 @@ MonoBehaviour:
   trail: {fileID: 889014891675335097}
   carRB: {fileID: 3245131661188073210}
   driftLimit: 0.8
+  carController: {fileID: 9108510379657322759}
 --- !u!1 &3319720032405248726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,6 +1988,7 @@ MonoBehaviour:
   trail: {fileID: 6270462660547856229}
   carRB: {fileID: 3245131661188073210}
   driftLimit: 0.9
+  carController: {fileID: 9108510379657322759}
 --- !u!1 &4350828753540230361
 GameObject:
   m_ObjectHideFlags: 0
@@ -3011,6 +3014,7 @@ MonoBehaviour:
   trail: {fileID: 4585300140541467336}
   carRB: {fileID: 3245131661188073210}
   driftLimit: 0.8
+  carController: {fileID: 9108510379657322759}
 --- !u!1 &6566413925754724755
 GameObject:
   m_ObjectHideFlags: 0
@@ -3459,6 +3463,7 @@ MonoBehaviour:
   - {fileID: 4766058780022797756}
   - {fileID: 1616903169628983514}
   rb: {fileID: 3245131661188073210}
+  carController: {fileID: 9108510379657322759}
   emissionFactor: 30
 --- !u!114 &8798531700489331754
 MonoBehaviour:
@@ -4268,8 +4273,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.016349064, y: -0.0022057341, z: 0.000036066587, w: 0.9998639}
-  m_LocalPosition: {x: 0, y: 2, z: -6}
+  m_LocalRotation: {x: 0.081330866, y: -0.63505876, z: 0.06749862, w: 0.76519907}
+  m_LocalPosition: {x: 8, y: 3, z: -36.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
