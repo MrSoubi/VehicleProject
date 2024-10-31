@@ -9,6 +9,7 @@ public class TrickManager : MonoBehaviour
 
     [SerializeField] Rigidbody carRigidbody;
     [SerializeField] CarController carController;
+    [SerializeField] ImpactManager impactManager;
 
     [SerializeField] GameObject VFX;
 
@@ -34,6 +35,7 @@ public class TrickManager : MonoBehaviour
     {
         carController.OnJump.AddListener(HandleTakeOff);
         carController.OnLanding.AddListener(HandleLanding);
+        impactManager.OnImpactAsAVictim.AddListener(HandleImpact);
 
         lastForward = transform.forward;
         lastUpward = transform.up;
@@ -88,6 +90,17 @@ public class TrickManager : MonoBehaviour
     }
 
     private void HandleLanding()
+    {
+        canDoTricks = false;
+
+        currentTricks.Clear();
+
+        xRotation = 0;
+        yRotation = 0;
+        zRotation = 0;
+    }
+
+    private void HandleImpact()
     {
         canDoTricks = false;
 
