@@ -3734,6 +3734,13 @@ MonoBehaviour:
   _playersData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
   _deathEvent: {fileID: 11400000, guid: 0433c27c5e2853449bf017f5fc825855, type: 2}
   _gameOverEvent: {fileID: 11400000, guid: 40365e21d23e14440aec85e08d04e9fe, type: 2}
+  thingsToDeactivateOnDeath:
+  - {fileID: 4350828753540230361}
+  - {fileID: 6230061110090627266}
+  - {fileID: 7234175137850902008}
+  - {fileID: 2338000893994340731}
+  - {fileID: 917939132777649591}
+  - {fileID: 2544661682796341791}
   debugActive: 0
 --- !u!114 &7739667518235963434
 MonoBehaviour:
@@ -4261,8 +4268,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.019220224, y: 0.96098953, z: -0.06914891, w: -0.2671109}
-  m_LocalPosition: {x: -8.390575, y: 66.340706, z: -135.57666}
+  m_LocalRotation: {x: 0.016349064, y: -0.0022057341, z: 0.000036066587, w: 0.9998639}
+  m_LocalPosition: {x: 0, y: 2, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5230,13 +5237,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 152cfcef92eab164ab1f5f0f7d4a672c, type: 3}
+--- !u!1 &2338000893994340731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2870877379766259673, guid: 152cfcef92eab164ab1f5f0f7d4a672c,
+    type: 3}
+  m_PrefabInstance: {fileID: 550944013062512290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4507584013580382973 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4119526395003546719, guid: 152cfcef92eab164ab1f5f0f7d4a672c,
     type: 3}
   m_PrefabInstance: {fileID: 550944013062512290}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2338000893994340731}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d713b2c9535d5044da917f0d51c11e50, type: 3}
@@ -5689,21 +5702,22 @@ PrefabInstance:
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1636080887834276446, guid: 7b16fa7b8cc678f4286e917087799e3d,
+        type: 3}
     - target: {fileID: 1636080887834276446, guid: 7b16fa7b8cc678f4286e917087799e3d,
         type: 3}
       propertyPath: serializationData.SerializedFormat
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1636080887834276446, guid: 7b16fa7b8cc678f4286e917087799e3d,
         type: 3}
       propertyPath: serializationData.SerializedBytes.Array.size
-      value: 822
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1636080887834276446, guid: 7b16fa7b8cc678f4286e917087799e3d,
         type: 3}
       propertyPath: serializationData.SerializationNodes.Array.size
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1636080887834276446, guid: 7b16fa7b8cc678f4286e917087799e3d,
         type: 3}
