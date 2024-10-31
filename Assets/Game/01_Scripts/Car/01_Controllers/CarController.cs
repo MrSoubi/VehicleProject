@@ -36,7 +36,7 @@ public class CarController : MonoBehaviour
     float drag;
     float flippedSince;
 
-    bool canJump = true;
+    public bool canJump = true;
     public bool HasTeleported { get; set; }
 
     Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
