@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 public class PlayerLifeManager : MonoBehaviour
 {
     public UnityEvent OnPercentageValueChanged;
+    public UnityEvent OnGameOver;
+
 
     private float _bumpLifeMultiplierPourcentage = 0f;
     [SerializeField] private float _mutiplierByBumpPourcentage;
@@ -24,15 +26,15 @@ public class PlayerLifeManager : MonoBehaviour
 
     void OnEnable()
     {
-        _deathEvent.onEventTriggered.AddListener(Death);
-        _deathEvent.onEventTriggered.AddListener(ResetBumpPourcentage);
+        //_deathEvent.onEventTriggered.AddListener(Death);
+        //_deathEvent.onEventTriggered.AddListener(ResetBumpPourcentage);
 
     }
 
     void OnDisable()
     {
-        _deathEvent.onEventTriggered.RemoveListener(Death);
-        _deathEvent.onEventTriggered.RemoveListener(ResetBumpPourcentage);
+        //_deathEvent.onEventTriggered.RemoveListener(Death);
+        //_deathEvent.onEventTriggered.RemoveListener(ResetBumpPourcentage);
 
     }
 
@@ -59,12 +61,16 @@ public class PlayerLifeManager : MonoBehaviour
         return 1.0f + (_bumpLifeMultiplierPourcentage * _mutiplierByBumpPourcentage);
     }
 
-    private void Death()
+    public void Death()
     {
         _playerLife--;
+
+        ResetBumpPourcentage();
         if (_playerLife <= 0)
         {
             //_gameOverEvent.onEventTriggered.Invoke();
+            OnGameOver.Invoke();
+
             _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.isAlive = false;
         }
     }
@@ -74,8 +80,5 @@ public class PlayerLifeManager : MonoBehaviour
         _bumpLifeMultiplierPourcentage = 0f;
     }
 
-    private void Update()
-    {
-        //Debug.Log(_bumpLifeMultiplierPourcentage);
-    }
+   
 }

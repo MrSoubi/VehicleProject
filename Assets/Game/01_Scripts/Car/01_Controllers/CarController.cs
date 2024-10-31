@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class CarController : MonoBehaviour
 {
+    public UnityEvent OnDeath;
     public UnityEvent OnKilled;
     public UnityEvent OnJump;
     public UnityEvent OnTakeOff;
@@ -262,7 +263,8 @@ public class CarController : MonoBehaviour
     {
         transform.position = spawnPosition;
 
-        _deathEvent.onEventTriggered.Invoke();
+        //_deathEvent.onEventTriggered.Invoke();
+        OnDeath.Invoke();
 
         transform.rotation = spawnRotation;
         rb.velocity = Vector3.zero;

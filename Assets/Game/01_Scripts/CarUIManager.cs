@@ -64,13 +64,8 @@ public class CarUIManager : MonoBehaviour
         jumpText.color = Color.grey;
     }
 
-    void GameOver()
+    public void GameOver()
     {
-        //Destroy(gameObject);
-        int id = _getPlayerId.RaiseIntEventReturn();
-        RectTransform panelRectTransform = _gameOverPanel.GetComponent<RectTransform>();
-        Rect rect = _playersData.players.FirstOrDefault(x => x.Value.playerId == id).Value.rect;
-        rect = panelRectTransform.rect;
         _gameOverPanel.SetActive(true);
         Debug.Log("DeathGameOver");
     }
