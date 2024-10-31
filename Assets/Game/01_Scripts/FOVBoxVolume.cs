@@ -7,34 +7,65 @@ using UnityEngine.Rendering.Universal;
 
 public class FOVBoxVolume : MonoBehaviour
 {
-    [SerializeField] private List<Volume> volume;
+    [SerializeField] private List<Volume> volumes;
     [SerializeField] private BoostController boostController;
-    [SerializeField] private float maxValueLens;
-    [SerializeField] private float minValueLens;
+    [SerializeField] private float boostValueLens;
+    [SerializeField] private float standardValueLens;
+    [SerializeField] private float duration = 0.5f;
 
-    private LensDistortion lensDistortion;
-    private float time = 0f;
-    void Update()
+    List<LensDistortion> lensesDistortion = new List<LensDistortion>();
+
+    private void Start()
     {
-        if (boostController.isBoosting)
-        {
-            for (int i = 0; i < volume.Count; i++)
-            {
-                volume[i].profile.TryGet(out lensDistortion);
- 
-                lensDistortion.intensity.value = Mathf.Lerp(maxValueLens, minValueLens, time / 1f);
-                time += Time.deltaTime;
-            }
+        boostController.OnBoostActivation.AddListener(ActivateDistortion);
+        boostController.OnBoostDeactivation.AddListener(DeactivateDistortion);
 
-        }
-        else
+        foreach(Volume volume in volumes)
         {
-            for (int i = 0; i < volume.Count; i++)
-            {
-                volume[i].profile.TryGet(out lensDistortion);
-                lensDistortion.intensity.value = 0;
-                time = 0;
-            }
+            LensDistortion localLense;
+            volume.profile.TryGet(out localLense);
+            lensesDistortion.Add(localLense);
+            lensesDistortion[^1] = localLense;
         }
+    }
+
+    void ActivateDistortion()
+    {
+        //StopAllCoroutines();
+
+        foreach (Volume volume in volumes)
+        {
+            LensDistortion localLens;
+            volume.profile.TryGet(out localLens);
+
+            localLens.intensity.value = standardValueLens;
+            StartCoroutine(LerpDistortion(localLens, standardValueLens, boostValueLens));
+        }
+    }
+
+    void DeactivateDistortion()
+    {
+        //StopAllCoroutines();
+
+        foreach (Volume volume in volumes)
+        {
+            LensDistortion localLens;
+            volume.profile.TryGet(out localLens);
+
+            localLens.intensity.value = boostValueLens;
+            StartCoroutine(LerpDistortion(localLens, boostValueLens, standardValueLens));
+        }
+    }
+
+    IEnumerator LerpDistortion(LensDistortion lense, float from, float to)
+    {
+        float time = 0;
+        while (time < duration)
+        {
+            yield return new WaitForEndOfFrame();
+            lense.intensity.value = Mathf.Lerp(from, to, time / duration);
+            time += Time.deltaTime;
+        }
+        yield return null;
     }
 }
