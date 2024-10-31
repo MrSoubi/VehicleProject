@@ -51,4 +51,9 @@ public class ExplosiveObject : MonoBehaviour
         Detonate();
     }
 
+    public void SpawnDetonate()
+    {
+        animBomb.SetBool("isContact", true);
+        StartCoroutine(DelayExplosion(delayBeforeExplosion));
+    }
 }

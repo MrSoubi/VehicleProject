@@ -8,6 +8,9 @@ public class VFXWheelMud : MonoBehaviour
 {
     [SerializeField] private List<ParticleSystem> mud;
     [SerializeField] private Rigidbody rb;
+
+    [SerializeField] CarController carController;
+
     public float emissionFactor;
 
     private void Start()
@@ -16,14 +19,28 @@ public class VFXWheelMud : MonoBehaviour
         {
             mud[i].Play();
         }
+
+        carController.OnLanding.AddListener(ActiveVFXMud);
+        carController.OnJump.AddListener(DeactivateVFXMud);
+        carController.OnTakeOff.AddListener(DeactivateVFXMud);
     }
 
-    void Update()
+
+    public void ActiveVFXMud()
     {
         for (int i = 0; i < mud.Count; i++)
         {
             var em = mud[i].emission;
             em.rateOverTime = rb.velocity.magnitude * emissionFactor;
+        }
+    }
+
+    public void DeactivateVFXMud()
+    {
+        for (int i = 0; i < mud.Count; i++)
+        {
+            var em = mud[i].emission;
+            em.rateOverTime = 0;
         }
     }
 }
