@@ -62,6 +62,7 @@ public class S_GameSetup : MonoBehaviour
                 s_CarInputEvent.Initialize(playerInput, player.Value.playerId); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
                 s_RumbleManager.Init(playerInput);
 
+
                 player.Value._playerInput.DeactivateInput();
             }
         }

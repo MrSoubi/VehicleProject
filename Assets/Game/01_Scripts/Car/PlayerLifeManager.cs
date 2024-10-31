@@ -68,10 +68,11 @@ public class PlayerLifeManager : MonoBehaviour
         ResetBumpPourcentage();
         if (_playerLife <= 0)
         {
-            //_gameOverEvent.onEventTriggered.Invoke();
-            OnGameOver.Invoke();
-
             _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.isAlive = false;
+
+            _gameOverEvent.onEventTriggered.Invoke();
+
+            OnGameOver.Invoke();
 
             foreach (GameObject go in thingsToDeactivateOnDeath)
             {

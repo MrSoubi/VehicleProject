@@ -11,8 +11,6 @@ public class CarUIManager : MonoBehaviour
     [SerializeField] BoostController boostController;
     [SerializeField] PlayerLifeManager playerLifeManager;
     [SerializeField] CarController carController;
-    [SerializeField] private EventChannel _gameOverEvent;
-    [SerializeField] MultipleEventChannel _getPlayerId;
     [SerializeField] PlayersData _playersData;
 
 
@@ -25,12 +23,10 @@ public class CarUIManager : MonoBehaviour
 
     void OnEnable()
     {
-        _gameOverEvent.onEventTriggered.AddListener(GameOver);
     }
 
     void OnDisable()
     {
-        _gameOverEvent.onEventTriggered.RemoveListener(GameOver);
     }
     void Start()
     {
