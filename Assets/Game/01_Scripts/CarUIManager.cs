@@ -42,7 +42,7 @@ public class CarUIManager : MonoBehaviour
         boostGaugeInitialPosition = boostGauge.transform.localPosition;
     }
 
-    void UpdateBoostUI()
+    public void UpdateBoostUI()
     {
         boostGauge.transform.localScale = new Vector3(boostController.GetCurrentBoost() / boostController.maxBoostAmount, 1, 1);
         boostGauge.GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, boostController.GetCurrentBoost() / boostController.maxBoostAmount);

@@ -1622,7 +1622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3319720032405248726}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.016349073, y: -0.002205734, z: 0.00003606662, w: 0.9998639}
+  m_LocalRotation: {x: 0.01634906, y: -0.002205734, z: 0.000036066584, w: 0.9998639}
   m_LocalPosition: {x: 0, y: 2, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3520,6 +3520,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4472490514178082089}
+        m_TargetAssemblyTypeName: CarUIManager, Assembly-CSharp
+        m_MethodName: UpdateBoostUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnKilled:
     m_PersistentCalls:
       m_Calls: []
@@ -5192,7 +5204,7 @@ PrefabInstance:
     - target: {fileID: 8664644387546971115, guid: 53e552298332b6a46b427f6fc21636c5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
