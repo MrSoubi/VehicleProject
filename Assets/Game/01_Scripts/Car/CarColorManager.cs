@@ -14,16 +14,16 @@ public class CarColorManager : MonoBehaviour
         switch (playerID)
         {
             case 0:
-                material = redMaterial;
-                break;
-            case 1:
-                material = blueMaterial;
-                break;
-            case 2:
                 material = greenMaterial;
                 break;
-            case 3:
+            case 1:
+                material = redMaterial;
+                break;
+            case 2:
                 material = yellowMaterial;
+                break;
+            case 3:
+                material = blueMaterial;
                 break;
             default:
                 material = redMaterial;
