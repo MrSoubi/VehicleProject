@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,10 @@ public class S_GameSetup : MonoBehaviour
     [SerializeField] private PlayerInput playerInputToTestFromMapSelection;
 
     private Dictionary<InputDevice, PlayerInfo> players => _playersData.players;
+
+    [SerializeField] EventChannel _onGameStart;
+    [SerializeField] EventChannel _onTimerEnd;
+
     void Start()
     {
         if (players.Count == 0)
@@ -56,14 +61,34 @@ public class S_GameSetup : MonoBehaviour
 
                 s_CarInputEvent.Initialize(playerInput, player.Value.playerId); //Donne le player input a la voiture assigner au joueur et lui donne ses actions
                 s_RumbleManager.Init(playerInput);
+
+                player.Value._playerInput.DeactivateInput();
             }
         }
         //Creer tous les voitures des players dans le players data en focntion de son carIDSelected selectioné dans la scene CarSelction et setup les cameras du splitscreen
        
         _displayManager.SetupCamera();
+
+        _onGameStart.onEventTriggered.Invoke();
     }
 
-    
+    private void OnEnable()
+    {
+        _onTimerEnd.onEventTriggered.AddListener(ActivAtePlayersInput);
+    }
+
+    private void OnDisable()
+    {
+        _onTimerEnd.onEventTriggered.RemoveListener(ActivAtePlayersInput);
+    }
+
+    public void ActivAtePlayersInput()
+    {
+        foreach (var player in players)
+        {
+            player.Value._playerInput.ActivateInput();
+        }
+    }
 
     GameObject GetCarPrefabID(int carID)
     {
