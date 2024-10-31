@@ -127,15 +127,31 @@ public class DisplayManager : MonoBehaviour
             Debug.LogError("Number of cars should be at least 1");
         }
 
+        List<Camera> baseCams = GetBaseCameras();
+
         for (int i = 0; i < _playersData.players.Count; i++)
         {
             PlayerInfo localPlayerInfo = new PlayerInfo();
-            localPlayerInfo.camera = Camera.allCameras[i*2]; // i*2 because there is now two cameras for each player, one basic and one for the ui
+            localPlayerInfo.camera = baseCams[i]; // i*2 because there is now two cameras for each player, one basic and one for the ui
 
             playerInfos.Add(localPlayerInfo);
         }
 
         SetCameras();
+    }
+
+    List<Camera> GetBaseCameras()
+    {
+        List<Camera> cameras = new List<Camera>();
+
+        foreach (Camera cam in Camera.allCameras)
+        {
+            if (cam.CompareTag("MainCamera"))
+            {
+                cameras.Add(cam);
+            }
+        }
+        return cameras;
     }
 
     public struct PlayerInfo
