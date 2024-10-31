@@ -2700,6 +2700,8 @@ MonoBehaviour:
   volume:
   - {fileID: 8648280376565263690}
   boostController: {fileID: 1813608260909903539}
+  maxValueLens: 0
+  minValueLens: -0.4
 --- !u!1 &6087394200310011943
 GameObject:
   m_ObjectHideFlags: 0
@@ -4349,8 +4351,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.058038186, y: 0, z: 0, w: 0.9983144}
-  m_LocalPosition: {x: 0, y: 3, z: -15}
+  m_LocalRotation: {x: 0.016349072, y: -0.0022057332, z: 0.000036066594, w: 0.9998639}
+  m_LocalPosition: {x: 0, y: 2, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8237,6 +8239,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 225823819551902176}
     m_Modifications:
+    - target: {fileID: 3054977574802785345, guid: ca22ae9fb091f1247a3087c5443349d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4029154915676531372, guid: ca22ae9fb091f1247a3087c5443349d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8310,7 +8317,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 5936211350157060363}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
