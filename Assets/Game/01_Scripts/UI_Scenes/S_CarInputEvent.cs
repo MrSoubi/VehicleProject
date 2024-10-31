@@ -10,7 +10,6 @@ public class S_CarInputEvent : MonoBehaviour
     [SerializeField] private CarController _carController;
     [SerializeField] private WheelController[] _wheelCollider;
     [SerializeField] private BoostController _boostController;
-    [SerializeField] private MultipleEventChannel _playerIdEvent;
     [SerializeField] private bool _isForTest;
     [SerializeField] private CarColorManager _carColorManager;
     public int PlayerID { get; private set; }
@@ -23,22 +22,7 @@ public class S_CarInputEvent : MonoBehaviour
             Initialize(GetComponent<PlayerInput>(),0);
         }
     }
-    private void OnEnable()
-    {
-        if (_playerIdEvent != null)
-        {
-            _playerIdEvent.OnIntEventReturnRaised += GetPlayerID;
-        }
-    }
-
-    private void OnDisable()
-    {
-        // Désabonne la méthode
-        if (_playerIdEvent != null)
-        {
-            _playerIdEvent.OnIntEventReturnRaised -= GetPlayerID;
-        }
-    }
+   
 
     public void Initialize(PlayerInput playerInput, int playerID)
     {
@@ -98,8 +82,9 @@ public class S_CarInputEvent : MonoBehaviour
         return _playerInput;
     }
 
-    public int GetPlayerID()
+    public void PlayerInputDisable()
     {
-        return PlayerID;
+        _playerInput.DeactivateInput();
     }
+    
 }

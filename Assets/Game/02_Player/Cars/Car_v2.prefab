@@ -1622,7 +1622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3319720032405248726}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.016348947, y: -0.0022052245, z: 0.000036058005, w: 0.9998639}
+  m_LocalRotation: {x: 0.01634906, y: -0.002205734, z: 0.000036066584, w: 0.9998639}
   m_LocalPosition: {x: 0, y: 2, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3493,6 +3493,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d3351868cfe9c46863f9b2c74e062a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1813608260909903539}
+        m_TargetAssemblyTypeName: BoostController, Assembly-CSharp
+        m_MethodName: BoostFullRecuperation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8773577981862957742}
+        m_TargetAssemblyTypeName: PlayerLifeManager, Assembly-CSharp
+        m_MethodName: Death
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4472490514178082089}
+        m_TargetAssemblyTypeName: CarUIManager, Assembly-CSharp
+        m_MethodName: UpdateBoostUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnKilled:
     m_PersistentCalls:
       m_Calls: []
@@ -3543,6 +3582,33 @@ MonoBehaviour:
   OnPercentageValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4472490514178082089}
+        m_TargetAssemblyTypeName: CarUIManager, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3309298421097135141}
+        m_TargetAssemblyTypeName: S_CarInputEvent, Assembly-CSharp
+        m_MethodName: PlayerInputDisable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _mutiplierByBumpPourcentage: 0.01
   _playerLife: 3
   _carInputEvent: {fileID: 3309298421097135141}
@@ -3679,7 +3745,6 @@ MonoBehaviour:
   - {fileID: 2609179987102727170}
   - {fileID: 2277738968251553282}
   _boostController: {fileID: 1813608260909903539}
-  _playerIdEvent: {fileID: 11400000, guid: 06ad0526227a46542a2e7defbfe37364, type: 2}
   _isForTest: 0
   _carColorManager: {fileID: 0}
 --- !u!114 &8435232517217570574
@@ -4044,8 +4109,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.016348949, y: -0.0022052245, z: 0.00003605801, w: 0.9998639}
-  m_LocalPosition: {x: 0, y: 2, z: -6}
+  m_LocalRotation: {x: 0.081330866, y: -0.63505876, z: 0.06749862, w: 0.76519907}
+  m_LocalPosition: {x: 8, y: 3, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5043,6 +5108,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 47194182744406286, guid: 53e552298332b6a46b427f6fc21636c5,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 47194182744406286, guid: 53e552298332b6a46b427f6fc21636c5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 47194182744406286, guid: 53e552298332b6a46b427f6fc21636c5,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 47194182744406286, guid: 53e552298332b6a46b427f6fc21636c5,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -5100,6 +5180,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 47194182744406286, guid: 53e552298332b6a46b427f6fc21636c5,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3663976256395199703, guid: 53e552298332b6a46b427f6fc21636c5,
         type: 3}

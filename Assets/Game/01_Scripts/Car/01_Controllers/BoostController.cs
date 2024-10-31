@@ -149,7 +149,7 @@ public class BoostController : MonoBehaviour
         isBoosting = false;
     }
 
-    private void BoostFullRecuperation()
+    public void BoostFullRecuperation()
     {
         currentBoostAmount = maxBoostAmount;
     }

@@ -42,7 +42,7 @@ public class CarUIManager : MonoBehaviour
         boostGaugeInitialPosition = boostGauge.transform.localPosition;
     }
 
-    void UpdateBoostUI()
+    public void UpdateBoostUI()
     {
         boostGauge.transform.localScale = new Vector3(boostController.GetCurrentBoost() / boostController.maxBoostAmount, 1, 1);
         boostGauge.GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, boostController.GetCurrentBoost() / boostController.maxBoostAmount);
@@ -64,13 +64,8 @@ public class CarUIManager : MonoBehaviour
         jumpText.color = Color.grey;
     }
 
-    void GameOver()
+    public void GameOver()
     {
-        //Destroy(gameObject);
-        int id = _getPlayerId.RaiseIntEventReturn();
-        RectTransform panelRectTransform = _gameOverPanel.GetComponent<RectTransform>();
-        Rect rect = _playersData.players.FirstOrDefault(x => x.Value.playerId == id).Value.rect;
-        rect = panelRectTransform.rect;
         _gameOverPanel.SetActive(true);
         Debug.Log("DeathGameOver");
     }
