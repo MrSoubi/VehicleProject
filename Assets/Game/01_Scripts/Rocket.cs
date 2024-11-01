@@ -1,20 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Rocket : MonoBehaviour
 {
     [SerializeField] private float rocketForceHorizontal;
     [SerializeField] private float rocketForceUp;
 
-    [SerializeField] private Transform startPosition;
-    [SerializeField] private Transform endPosition;
-    [SerializeField] private float duration;
+    [SerializeField] private float endPosition;
+    [SerializeField] private float moveDuration;
 
-    private void Update()
-    {
-        RocketMovement();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<CarController>() != null)
@@ -29,12 +25,11 @@ public class Rocket : MonoBehaviour
 
     public void RocketMovement()
     {
-        float timeDuration = Time.time / duration;
-        transform.position = Vector3.Lerp(startPosition.position, endPosition.position, timeDuration);
+        transform.DOMoveY(endPosition, moveDuration).OnComplete(DestroyRocket);
+    }
 
-        if(Vector3.Distance(transform.position, endPosition.position) <= 0.1f)
-        {
-            Destroy(gameObject);
-        }
+    void DestroyRocket()
+    {
+        Destroy(gameObject);
     }
 }
