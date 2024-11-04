@@ -106,8 +106,8 @@ public class S_GameManager : MonoBehaviour
         if (_aliveCount  == 1)
         {
             _isOnePlayerAlive = true;
+            StopCoroutine(_coroutine);
         }
-        StopCoroutine(_coroutine);
     }
     public void GameFinish()
     {
