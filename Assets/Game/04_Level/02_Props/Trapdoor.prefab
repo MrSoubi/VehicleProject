@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594660204165567328}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.5, y: 5.5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3234243439630793144}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &3802052932161448340
 Light:
   m_ObjectHideFlags: 0
@@ -45,8 +45,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 150
-  m_Range: 12
+  m_Intensity: 200
+  m_Range: 25
   m_SpotAngle: 21.802078
   m_InnerSpotAngle: 21.802078
   m_CookieSize: 10
@@ -143,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 4080869394380390576}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -9, z: 0}
+  m_LocalPosition: {x: -12, y: -12, z: 10}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,12 +175,11 @@ Transform:
   m_GameObject: {fileID: 6087850046507251788}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 17, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6874733095111402466}
-  - {fileID: 6863278067704751915}
   - {fileID: 8468936690160620384}
   - {fileID: 6801394527828836793}
   - {fileID: 9166860520963394491}
@@ -201,122 +200,13 @@ MonoBehaviour:
   rocketPrefabs: {fileID: 3216467577460489286, guid: 5f9e3e5342d0e10438f589a40ec45059,
     type: 3}
   spawnRocket: {fileID: 8468936690160620384}
-  leftTrapdoor: {fileID: 9137826565540719806}
-  openPosistionLeft: {x: 7.5, y: 17, z: -13}
-  rightTrapdoor: {fileID: 7323877093182490066}
-  openPosistionRight: {x: 7.5, y: 17, z: 5.5}
+  trapdoor: {fileID: 9137826565540719806}
   lightTrapdoor: {fileID: 3802052932161448340}
   smoke: {fileID: 9166860520949239547}
   delay: 2
   warningTime: 5
   openingTime: 2
   warningForce: 10
---- !u!1 &7323877093182490066
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6863278067704751915}
-  - component: {fileID: 7819715846914638774}
-  - component: {fileID: 8562800662748229659}
-  - component: {fileID: 8984328621217960056}
-  m_Layer: 3
-  m_Name: RightTrapdoor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6863278067704751915
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323877093182490066}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 7.5}
-  m_LocalScale: {x: 3, y: 5, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3234243439630793144}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!33 &7819715846914638774
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323877093182490066}
-  m_Mesh: {fileID: 4300000, guid: 38cf949f2186012409682d8b96de092b, type: 3}
---- !u!23 &8562800662748229659
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323877093182490066}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8984328621217960056
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323877093182490066}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 38cf949f2186012409682d8b96de092b, type: 3}
 --- !u!1 &9137826565540719806
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +220,7 @@ GameObject:
   - component: {fileID: 5403665039905301943}
   - component: {fileID: 8189137799619893496}
   m_Layer: 3
-  m_Name: LeftTrapdoor
+  m_Name: Trapdoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,13 +234,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9137826565540719806}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 7.5, y: 0, z: 7.5}
-  m_LocalScale: {x: 3, y: 5, z: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3234243439630793144}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &410969519147719117
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -358,7 +248,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9137826565540719806}
-  m_Mesh: {fileID: 4300000, guid: 38cf949f2186012409682d8b96de092b, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 5954683456d406a44abdf55e73d7147a, type: 3}
 --- !u!23 &5403665039905301943
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -422,7 +312,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 38cf949f2186012409682d8b96de092b, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 5954683456d406a44abdf55e73d7147a, type: 3}
 --- !u!1001 &8536762024427227198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -431,11 +321,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3234243439630793144}
     m_Modifications:
-    - target: {fileID: 670914057074427589, guid: a7dafd73ef18113419818eddfd4e792f,
-        type: 3}
-      propertyPath: EmissionModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 670914057088491429, guid: a7dafd73ef18113419818eddfd4e792f,
         type: 3}
       propertyPath: m_Name
@@ -444,7 +329,7 @@ PrefabInstance:
     - target: {fileID: 670914057088582533, guid: a7dafd73ef18113419818eddfd4e792f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 670914057088582533, guid: a7dafd73ef18113419818eddfd4e792f,
         type: 3}
@@ -454,7 +339,7 @@ PrefabInstance:
     - target: {fileID: 670914057088582533, guid: a7dafd73ef18113419818eddfd4e792f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 670914057088582533, guid: a7dafd73ef18113419818eddfd4e792f,
         type: 3}
