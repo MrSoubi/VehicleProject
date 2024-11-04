@@ -7,10 +7,7 @@ public class TrapDoor : MonoBehaviour
 {
     [SerializeField] private GameObject rocketPrefabs;
     [SerializeField] private Transform spawnRocket;
-    [SerializeField] private GameObject leftTrapdoor;
-    [SerializeField] private Vector3 openPosistionLeft;
-    [SerializeField] private GameObject rightTrapdoor;
-    [SerializeField] private Vector3 openPosistionRight;
+    [SerializeField] private GameObject trapdoor;
     [SerializeField] private Light lightTrapdoor;
     [SerializeField] private ParticleSystem smoke;
     [SerializeField] private float delay;
@@ -18,15 +15,6 @@ public class TrapDoor : MonoBehaviour
     [SerializeField] float openingTime;
     [SerializeField] float warningForce;
 
-    private Vector3 closePosistionLeft;
-    private Vector3 closePosistionRight;
-
-    void Start()
-    {
-        smoke.Play();
-        closePosistionLeft = leftTrapdoor.transform.position;
-        closePosistionRight = rightTrapdoor.transform.position;
-    }
 
     public void StartShake()
     {
@@ -39,13 +27,11 @@ public class TrapDoor : MonoBehaviour
     {
         var em = smoke.emission;
         em.enabled = false;
-        leftTrapdoor.transform.DOMove(openPosistionLeft, openingTime);
-        rightTrapdoor.transform.DOMove(openPosistionRight, openingTime).OnComplete(StartDelay);
+        trapdoor.transform.DORotate(new Vector3(90, 0, 0), openingTime).OnComplete(StartDelay);
     }
     void CloseTrapdoor()
     {
-        leftTrapdoor.transform.DOMove(closePosistionLeft, openingTime);
-        rightTrapdoor.transform.DOMove(closePosistionRight, openingTime);
+        trapdoor.transform.DORotate(new Vector3(0, 0, 0), openingTime);
         lightTrapdoor.enabled = false;
         
     }
