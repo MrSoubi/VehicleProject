@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 
 public class S_GameManager : MonoBehaviour
@@ -17,7 +19,7 @@ public class S_GameManager : MonoBehaviour
     [SerializeField] private EventChannel _gameOverEvent;
 
     [SerializeField] GameObject _panelGameStats;
-
+    [SerializeField] EventChannel _gameLoopEnd;
 
     private bool _isOnePlayerAlive = false;
     private int _aliveCount = 0;
@@ -126,8 +128,35 @@ public class S_GameManager : MonoBehaviour
         foreach (var player in _players)
         {
             player.Value._playerInput.DeactivateInput();
-        }
-        
+            player.Value._playerInput.SwitchCurrentActionMap("MenuSelection");
+            player.Value._playerInput.actions["Select"].performed += ValidateCheckStats;
 
+        }
+    }
+
+    private void ValidateCheckStats(InputAction.CallbackContext context)
+    {
+        _players.FirstOrDefault(x => x.Key == context.control.device).Value.isCheckStats = true;
+        CheckStatsValidation();
+
+    }
+
+    private void CheckStatsValidation()
+    {
+        int count = 0;
+        foreach (var player in _players)
+        {
+            if(player.Value.isCheckStats == true)
+            {
+                count++;
+            }
+
+        }
+
+        if (count == _players.Count())
+        {
+            _gameLoopEnd.onEventTriggered.Invoke();
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

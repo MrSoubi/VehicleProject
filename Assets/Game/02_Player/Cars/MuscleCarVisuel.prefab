@@ -1405,6 +1405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 920078185169774520}
+  - component: {fileID: 2954202040880348576}
   m_Layer: 12
   m_Name: MuscleCarVisuel
   m_TagString: Untagged
@@ -1429,6 +1430,26 @@ Transform:
   - {fileID: 5899099243759162692}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2954202040880348576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414518165261778531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b44720d3878bdb488b4b979b3322d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yellowMaterial: {fileID: 2100000, guid: 5e0faf8512a1abb48a96db6d7198b8aa, type: 2}
+  greenMaterial: {fileID: 2100000, guid: ef35b9e3f9d2297478dc162ed561d8a4, type: 2}
+  blueMaterial: {fileID: 2100000, guid: 9f16e4332b7880c4cbefdb834ff50fe8, type: 2}
+  redMaterial: {fileID: 2100000, guid: e84abf46d5bf5da4b8d191d25007a2f4, type: 2}
+  renderers:
+  - {fileID: 3078832521587169395}
+  - {fileID: 3994293019747571605}
+  - {fileID: 190531687483900936}
 --- !u!1 &8239181426120219117
 GameObject:
   m_ObjectHideFlags: 0

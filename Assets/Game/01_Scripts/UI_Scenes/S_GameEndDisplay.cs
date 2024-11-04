@@ -38,6 +38,9 @@ public class S_GameEndDisplay : MonoBehaviour
             int carID = player.Value.carIDSelected;
             int playerID = player.Value.playerId;
             var carVisuel = Instantiate(_playersCarsByID[carID], _visuelsPosition[playerID]);
+            var carColorManager = carVisuel.GetComponent<CarColorManager>();
+            carColorManager.SetColor(carID);
+
             _playersCars.Add(carVisuel);
             carVisuel.transform.SetPositionAndRotation(_visuelsPosition[playerID].position, _visuelsPosition[playerID].rotation);
 
