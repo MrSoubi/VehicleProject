@@ -16,6 +16,8 @@ public class S_GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _textPlayTimeTimer;
     [SerializeField] private EventChannel _gameOverEvent;
 
+    [SerializeField] GameObject _panelGameStats;
+
 
     private bool _isOnePlayerAlive = false;
     private int _aliveCount = 0;
@@ -103,7 +105,7 @@ public class S_GameManager : MonoBehaviour
 
     public void CheckAliveCondition()
     {
-        if (_aliveCount  == 1)
+        if (_aliveCount  <= 1)
         {
             _isOnePlayerAlive = true;
             StopCoroutine(_coroutine);
@@ -115,6 +117,7 @@ public class S_GameManager : MonoBehaviour
         {
             Debug.Log("GameFinish: ");
             DisablePlayersInput();
+            _panelGameStats.SetActive(true);
         }
     }
 

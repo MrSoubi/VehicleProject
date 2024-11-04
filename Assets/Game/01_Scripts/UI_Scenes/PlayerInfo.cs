@@ -14,5 +14,6 @@ public class PlayerInfo
     public PlayerInput _playerInput;
     public bool isAlive = true;
     public Rect rect;
+    public int rank;
 
 }

@@ -68,7 +68,17 @@ public class PlayerLifeManager : MonoBehaviour
         ResetBumpPourcentage();
         if (_playerLife <= 0)
         {
+            int playerAliveCount = _playersData.players.Count;
+            foreach(var players in _playersData.players)
+            {
+                if (players.Value.isAlive == false) {
+                    playerAliveCount--;
+                }
+                    
+            }
             _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.isAlive = false;
+            _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.rank = playerAliveCount;
+
 
             _gameOverEvent.onEventTriggered.Invoke();
 
