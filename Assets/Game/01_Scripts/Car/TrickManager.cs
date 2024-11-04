@@ -84,6 +84,8 @@ public class TrickManager : MonoBehaviour
     {
         canDoTricks = true;
 
+        currentTricks.Clear();
+
         xRotation = 0;
         yRotation = 0;
         zRotation = 0;
