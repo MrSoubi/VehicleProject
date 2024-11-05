@@ -984,8 +984,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660562871341422033}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26097998, y: -0.00000015817402, z: 0.000000042762206, w: 0.96534425}
-  m_LocalPosition: {x: 0, y: 10, z: -15}
+  m_LocalRotation: {x: 0.058038186, y: 0.0000000026837128, z: -1.5602361e-10, w: 0.9983144}
+  m_LocalPosition: {x: 0, y: 3, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3770,6 +3770,7 @@ MonoBehaviour:
   rb: {fileID: 3245131661188073210}
   _rumbleManager: {fileID: 1125224820026259830}
   _deathEvent: {fileID: 11400000, guid: 0433c27c5e2853449bf017f5fc825855, type: 2}
+  _gameLoopEnd: {fileID: 11400000, guid: 1a63e449b3b265d48aa307bb635ae854, type: 2}
   gamepadIndex: 0
   jumpDelay: 1
   canJump: 1
@@ -3816,7 +3817,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _mutiplierByBumpPourcentage: 0.01
-  _playerLife: 3
   _carInputEvent: {fileID: 3309298421097135141}
   _playersData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
   _deathEvent: {fileID: 11400000, guid: 0433c27c5e2853449bf017f5fc825855, type: 2}

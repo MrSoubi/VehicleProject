@@ -22,6 +22,8 @@ public class S_GameManager : MonoBehaviour
     [SerializeField] GameObject _panelGameStats;
     [SerializeField] EventChannel _gameLoopEnd;
     [SerializeField] UnityEvent OnEndGame;
+    [SerializeField] List<TextMeshProUGUI> _textOk = new List<TextMeshProUGUI>();
+
 
     private bool _isOnePlayerAlive = false;
     private int _aliveCount = 0;
@@ -119,6 +121,7 @@ public class S_GameManager : MonoBehaviour
         if (_endGameCondition == true)
         {
             Debug.Log("GameFinish: ");
+            _gameLoopEnd.onEventTriggered?.Invoke();
             StartCoroutine(ActiveGameStats());
         }
     }
@@ -151,7 +154,7 @@ public class S_GameManager : MonoBehaviour
         {
             Debug.Log("Tcheck");
         }
-       
+        _textOk[_players.FirstOrDefault(x => x.Key == context.control.device).Value.playerId].gameObject.SetActive(true);
         CheckStatsValidation();
 
     }

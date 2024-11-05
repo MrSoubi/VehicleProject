@@ -13,7 +13,6 @@ public class S_GameEndDisplay : MonoBehaviour
     [SerializeField] List<Transform> _cameraPosition = new List<Transform>();
     [SerializeField] List<Transform> _visuelsPosition = new List<Transform>();
     [SerializeField] List<TextMeshProUGUI> _textRank = new List<TextMeshProUGUI>();
-    //[SerializeField] private EventChannel _gameOverEvent;
 
 
 
@@ -25,12 +24,10 @@ public class S_GameEndDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        //_gameOverEvent.onEventTriggered.AddListener(TextRankUpdate);
 
     }
     void OnDisable()
     {
-        //_gameOverEvent.onEventTriggered.RemoveListener(TextRankUpdate);
     }
 
     void Start()

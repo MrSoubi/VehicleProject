@@ -23,6 +23,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private S_RumbleManager _rumbleManager;
     [SerializeField] private EventChannel _deathEvent;
+    [SerializeField] EventChannel _gameLoopEnd;
+
 
 
     public int gamepadIndex;
@@ -281,6 +283,15 @@ public class CarController : MonoBehaviour
     {
         HasTeleported = false;
     }
+
+    private void StopTheCar()
+    {     
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.useGravity = false;
+        rb.isKinematic = true;
+
+    }
     // Still in use ?
     public void setGamepadIndex(int gamepadIndex)
     {
@@ -303,7 +314,15 @@ public class CarController : MonoBehaviour
         Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + rb.velocity);
     }
 
-    
+    private void OnEnable()
+    {
+        _gameLoopEnd.onEventTriggered.AddListener(StopTheCar);
+    }
+
+    private void OnDisable()
+    {
+        _gameLoopEnd.onEventTriggered.RemoveListener(StopTheCar);
+    }
     #region INPUT
     public void SteerInAir(InputAction.CallbackContext context)
     {
