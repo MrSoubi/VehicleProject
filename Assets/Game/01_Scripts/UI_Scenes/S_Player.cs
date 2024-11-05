@@ -10,9 +10,17 @@ public class S_Player : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
+
+    public void OnDestroy()
+    {
+        input.SwitchCurrentActionMap(null);
+
+        input.DeactivateInput();
+
+    }
     void Start()
     {
-        
+        input.SwitchCurrentActionMap("MenuSelection");
     }
 
     // Update is called once per frame

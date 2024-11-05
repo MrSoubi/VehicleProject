@@ -10,7 +10,8 @@ public class S_InputEventCarSelection : MonoBehaviour
     [SerializeField] private S_CarSelection _carSelectionManager;
     [SerializeField] private S_CarSwitch carSwitchManager;
     [SerializeField] private PlayerInputManager playerInputManager;
-    private Dictionary<InputDevice, PlayerInfo> _players => _carSelectionManager.ReturnPlayerInfo();
+    [SerializeField] PlayersData playerData;
+    private Dictionary<InputDevice, PlayerInfo> _players => playerData.players;
 
     private void Awake()
     {
@@ -21,6 +22,11 @@ public class S_InputEventCarSelection : MonoBehaviour
 
     public void OnDestroy()
     {
+    }
+
+    private void OnDisable()
+    {
+        DisableAllInputCarSelection();
     }
 
     //Quand le joueur rejoint avec le boutton sud de la manette lui assigne ses touches disponible avec leurs actions

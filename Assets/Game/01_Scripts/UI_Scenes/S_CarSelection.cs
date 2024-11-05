@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.Windows;
 
 
 public class S_CarSelection : MonoBehaviour
@@ -46,7 +47,15 @@ public class S_CarSelection : MonoBehaviour
     }
     private void Awake()
     {
+        var playerinput = GameObject.FindGameObjectsWithTag("Player");
 
+        foreach (var player in playerinput)
+        {
+            PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
+            PlayerInput.DeactivateInput();
+            //PlayerInput.SwitchCurrentActionMap(null);
+            Destroy(player);
+        }
     }
 
     //Quand le joueur appuie sur le bouton sud et rejoint la partie puis lui assigne un panel de l'ecran pour selectionnaer sa voiture
@@ -60,6 +69,9 @@ public class S_CarSelection : MonoBehaviour
             {
                 int assignedPanel = _availablePanels[0];
                 _availablePanels.RemoveAt(0);
+
+                playerInput.SwitchCurrentActionMap("MenuSelection");
+
                 PlayerInfo newPlayer = new PlayerInfo
                 {
                     playerId = _nextPlayerId++,
@@ -140,7 +152,7 @@ public class S_CarSelection : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             _countdownTimer -= 0.1f;
         }
-
+        
         _inputEvent.DisableAllInputCarSelection();
         SceneManager.LoadScene("ArenaSelection");
         
