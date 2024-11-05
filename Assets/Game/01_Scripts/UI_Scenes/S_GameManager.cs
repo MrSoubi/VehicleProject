@@ -176,7 +176,7 @@ public class S_GameManager : MonoBehaviour
                 //player.Value._playerInput.SwitchCurrentActionMap(null);
                 //player.Value._playerInput.DeactivateInput();
             }
-            _players.Clear();
+            //_players.Clear();
 
             var playerinput = GameObject.FindGameObjectsWithTag("Player");
             //foreach (var player in playerinput)

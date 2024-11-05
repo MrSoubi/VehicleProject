@@ -104,7 +104,10 @@ public class S_CarSwitch : MonoBehaviour
     {
         if (context.performed && _players.FirstOrDefault(x => x.Key == context.control.device).Value.isValidateSelection == false)
         {
+ 
             InputDevice currentDevice = context.control.device;
+            Debug.Log("Validate" + _players.FirstOrDefault(x => x.Key == currentDevice).Value.playerId);
+
             _players.FirstOrDefault(x => x.Key == currentDevice).Value.isValidateSelection = true;
             _inputEvent.DisablePlayerInputEndSelection(playerInput);
             _textReady[_players.FirstOrDefault(x => x.Key == currentDevice).Value.playerId].gameObject.SetActive(true);

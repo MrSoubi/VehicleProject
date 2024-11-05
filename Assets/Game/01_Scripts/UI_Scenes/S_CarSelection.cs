@@ -47,15 +47,7 @@ public class S_CarSelection : MonoBehaviour
     }
     private void Awake()
     {
-        var playerinput = GameObject.FindGameObjectsWithTag("Player");
-
-        foreach (var player in playerinput)
-        {
-            PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
-            PlayerInput.DeactivateInput();
-            //PlayerInput.SwitchCurrentActionMap(null);
-            Destroy(player);
-        }
+       
     }
 
     //Quand le joueur appuie sur le bouton sud et rejoint la partie puis lui assigne un panel de l'ecran pour selectionnaer sa voiture
@@ -80,7 +72,6 @@ public class S_CarSelection : MonoBehaviour
                 };
 
                 _players.Add(playerDevice, newPlayer);
-                Debug.Log(playerInput.ToString());
                 _carSelectionPanels[assignedPanel].SetActive(true);
                 _textPressATojoin[assignedPanel].SetActive(false);
 
@@ -148,7 +139,7 @@ public class S_CarSelection : MonoBehaviour
         while (_countdownTimer > 0)
         {
             _timerText.text = Mathf.CeilToInt(_countdownTimer).ToString();
-            Debug.Log($"Chargement dans {_countdownTimer:F1} secondes...");
+            //Debug.Log($"Chargement dans {_countdownTimer:F1} secondes...");
             yield return new WaitForSeconds(0.1f);
             _countdownTimer -= 0.1f;
         }

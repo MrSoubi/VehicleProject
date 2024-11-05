@@ -24,9 +24,32 @@ public class S_InputEventCarSelection : MonoBehaviour
     {
     }
 
+    public void Start()
+    {
+        DisableAllInputCarSelection();
+        ClearExistingPlayers();
+        var playerinput = GameObject.FindGameObjectsWithTag("Player");
+        _players.Clear();
+
+        foreach (var player in playerinput)
+        {
+            PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
+            PlayerInput.DeactivateInput();
+            //PlayerInput.SwitchCurrentActionMap(null);
+            Destroy(player);
+        }
+
+    }
+    private void OnEnable()
+    {
+        playerInputManager.onPlayerJoined += OnPlayerJoined;
+    }
+
+   
     private void OnDisable()
     {
         DisableAllInputCarSelection();
+        playerInputManager.onPlayerJoined -= OnPlayerJoined;
     }
 
     //Quand le joueur rejoint avec le boutton sud de la manette lui assigne ses touches disponible avec leurs actions
@@ -74,14 +97,34 @@ public class S_InputEventCarSelection : MonoBehaviour
         foreach (var player in _players)
         {
             player.Value._playerInput.actions["MoveSelection"].performed -= carSwitchManager.SwitchCar;
+            player.Value._playerInput.actions["MoveSelection"].Disable();
+
             player.Value._playerInput.actions["Select"].performed -= context => carSwitchManager.OnValidateButtonPress(player.Value._playerInput, context);
+            player.Value._playerInput.actions["Select"].Disable();
+
             player.Value._playerInput.actions["Back"].performed -= context => _carSelectionManager.BackToSelection(player.Value._playerInput, context);
+            player.Value._playerInput.actions["Back"].Disable();
+
         }
 
     }
 
-    
 
+    public void RemovePlayer(PlayerInput playerInput)
+    {
+        if (playerInput != null)
+        {
+            playerInput.actions["Select"].performed -= context => carSwitchManager.OnValidateButtonPress(playerInput, context);
 
+            Destroy(playerInput.gameObject);
+        }
+    }
+    public void ClearExistingPlayers()
+    {
+        foreach (PlayerInput playerInput in FindObjectsOfType<PlayerInput>())
+        {
+            RemovePlayer(playerInput);
+        }
+    }
 }
 
