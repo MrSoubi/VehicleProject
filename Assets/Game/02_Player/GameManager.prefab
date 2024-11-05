@@ -3025,6 +3025,22 @@ MonoBehaviour:
   _textPlayTimeTimer: {fileID: 5965507369828234578}
   _gameOverEvent: {fileID: 11400000, guid: 40365e21d23e14440aec85e08d04e9fe, type: 2}
   _panelGameStats: {fileID: 821137637763401596}
+  _gameLoopEnd: {fileID: 0}
+  OnEndGame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4493125245188413974}
+        m_TargetAssemblyTypeName: S_GameEndDisplay, Assembly-CSharp
+        m_MethodName: TextRankUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4493125245188413974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3062,7 +3078,6 @@ MonoBehaviour:
   - {fileID: 3295430027268259774}
   - {fileID: 2228681062640637500}
   - {fileID: 5919099913089120926}
-  _gameOverEvent: {fileID: 11400000, guid: 40365e21d23e14440aec85e08d04e9fe, type: 2}
   _playersData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
 --- !u!1 &8804252975376812952
 GameObject:

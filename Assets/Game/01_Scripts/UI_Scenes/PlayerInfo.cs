@@ -15,6 +15,8 @@ public class PlayerInfo
     public bool isAlive = true;
     public Rect rect;
     public int rank;
+    public int playerLife = 3;
+    public float bumpPourcentage = 0;
     public bool isCheckStats;
 
 }

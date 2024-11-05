@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class S_GameEndDisplay : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class S_GameEndDisplay : MonoBehaviour
     [SerializeField] List<Transform> _cameraPosition = new List<Transform>();
     [SerializeField] List<Transform> _visuelsPosition = new List<Transform>();
     [SerializeField] List<TextMeshProUGUI> _textRank = new List<TextMeshProUGUI>();
-    [SerializeField] private EventChannel _gameOverEvent;
+    //[SerializeField] private EventChannel _gameOverEvent;
 
 
 
@@ -23,12 +25,12 @@ public class S_GameEndDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameOverEvent.onEventTriggered.AddListener(TextRankUpdate);
+        //_gameOverEvent.onEventTriggered.AddListener(TextRankUpdate);
 
     }
     void OnDisable()
     {
-        _gameOverEvent.onEventTriggered.RemoveListener(TextRankUpdate);
+        //_gameOverEvent.onEventTriggered.RemoveListener(TextRankUpdate);
     }
 
     void Start()
@@ -39,7 +41,7 @@ public class S_GameEndDisplay : MonoBehaviour
             int playerID = player.Value.playerId;
             var carVisuel = Instantiate(_playersCarsByID[carID], _visuelsPosition[playerID]);
             var carColorManager = carVisuel.GetComponent<CarColorManager>();
-            carColorManager.SetColor(carID);
+            carColorManager.SetColor(playerID);
 
             _playersCars.Add(carVisuel);
             carVisuel.transform.SetPositionAndRotation(_visuelsPosition[playerID].position, _visuelsPosition[playerID].rotation);
@@ -55,14 +57,43 @@ public class S_GameEndDisplay : MonoBehaviour
         
     }
 
-    private void TextRankUpdate()
+    public void TextRankUpdate()
     {
-        foreach(var player in _players)
+        AssignRanks();
+        foreach (var player in _players)
         {
             _textRank[player.Value.playerId].text = "#" + player.Value.rank;
 
         }
     }
+
+    private void AssignRanks()
+    {
+        var alivePlayers = _players.Values
+            .Where(x => x.isAlive == true)
+            .OrderBy(x => x.playerLife)
+            .ThenByDescending(x => x.bumpPourcentage)
+            .ToList();
+
+        int playerAliveCount = _playersData.players.Count;
+        foreach (var players in _playersData.players)
+        {
+            if (players.Value.isAlive == false)
+            {
+                playerAliveCount--;
+            }
+
+        }
+
+        int nextRank = playerAliveCount;
+
+        foreach (var player in alivePlayers)
+        {
+            player.rank = nextRank;
+            nextRank--;
+        }
+    }
+
 
     void FixedUpdate()
     {

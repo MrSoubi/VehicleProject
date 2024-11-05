@@ -13,7 +13,7 @@ public class PlayerLifeManager : MonoBehaviour
 
     private float _bumpLifeMultiplierPourcentage = 0f;
     [SerializeField] private float _mutiplierByBumpPourcentage;
-    [SerializeField] private int _playerLife;
+    private int _playerLife;
     [SerializeField] private S_CarInputEvent _carInputEvent;
     [SerializeField] private PlayersData _playersData;
     [SerializeField] private EventChannel _deathEvent;
@@ -25,6 +25,11 @@ public class PlayerLifeManager : MonoBehaviour
 
     public float percentage => _bumpLifeMultiplierPourcentage;
 
+    private void Start()
+    {
+        _playerLife = _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.playerLife;
+
+    }
     void OnEnable()
     {
         //_deathEvent.onEventTriggered.AddListener(Death);
@@ -47,6 +52,7 @@ public class PlayerLifeManager : MonoBehaviour
         }
 
         _bumpLifeMultiplierPourcentage += amount;
+        _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.bumpPourcentage = _bumpLifeMultiplierPourcentage;
         OnPercentageValueChanged.Invoke();
 
         if (debugActive)
@@ -94,6 +100,7 @@ public class PlayerLifeManager : MonoBehaviour
     private void ResetBumpPourcentage()
     {
         _bumpLifeMultiplierPourcentage = 0f;
+        _playersData.players.FirstOrDefault(x => x.Value._playerInput == _carInputEvent.GetPlayerInput()).Value.bumpPourcentage = _bumpLifeMultiplierPourcentage;
         OnPercentageValueChanged?.Invoke();
     }
 

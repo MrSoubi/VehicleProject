@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 
 public class S_GameManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class S_GameManager : MonoBehaviour
 
     [SerializeField] GameObject _panelGameStats;
     [SerializeField] EventChannel _gameLoopEnd;
+    [SerializeField] UnityEvent OnEndGame;
 
     private bool _isOnePlayerAlive = false;
     private int _aliveCount = 0;
@@ -123,6 +125,7 @@ public class S_GameManager : MonoBehaviour
 
     public IEnumerator ActiveGameStats()
     {
+        OnEndGame.Invoke();
         yield return new WaitForSeconds(0.5f);
         _panelGameStats.SetActive(true);
         DisablePlayersInput();
