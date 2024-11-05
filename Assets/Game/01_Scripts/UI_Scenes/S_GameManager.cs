@@ -118,9 +118,16 @@ public class S_GameManager : MonoBehaviour
         if (_endGameCondition == true)
         {
             Debug.Log("GameFinish: ");
-            DisablePlayersInput();
-            _panelGameStats.SetActive(true);
+            StartCoroutine(ActiveGameStats());
         }
+    }
+
+    public IEnumerator ActiveGameStats()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _panelGameStats.SetActive(true);
+        DisablePlayersInput();
+
     }
 
     private void DisablePlayersInput()
@@ -155,7 +162,13 @@ public class S_GameManager : MonoBehaviour
 
         if (count == _players.Count())
         {
-            _gameLoopEnd.onEventTriggered.Invoke();
+            //_gameLoopEnd.onEventTriggered.Invoke();
+            var playerinput = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var player in playerinput)
+            {
+                Destroy(player);
+            }
+            _players.Clear();
             SceneManager.LoadScene("MainMenu");
         }
     }
