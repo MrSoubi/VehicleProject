@@ -185,13 +185,13 @@ public class S_GameManager : MonoBehaviour
             //_players.Clear();
 
             var playerinput = GameObject.FindGameObjectsWithTag("Player");
-            //foreach (var player in playerinput)
-            //{
-            //    PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
-            //    PlayerInput.DeactivateInput();
-            //    //PlayerInput.SwitchCurrentActionMap(null);
-            //    Destroy(player);
-            //}
+            foreach (var player in playerinput)
+            {
+                PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
+                PlayerInput.DeactivateInput();
+                //PlayerInput.SwitchCurrentActionMap(null);
+                Destroy(player);
+            }
             SceneManager.LoadScene("MainMenu");
             //SceneManager.LoadScene("CarSelection");
 

@@ -28,16 +28,9 @@ public class S_InputEventCarSelection : MonoBehaviour
     {
         DisableAllInputCarSelection();
         ClearExistingPlayers();
-        var playerinput = GameObject.FindGameObjectsWithTag("Player");
         _players.Clear();
 
-        foreach (var player in playerinput)
-        {
-            PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
-            PlayerInput.DeactivateInput();
-            //PlayerInput.SwitchCurrentActionMap(null);
-            Destroy(player);
-        }
+       
 
     }
     private void OnEnable()

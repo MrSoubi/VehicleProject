@@ -43,6 +43,9 @@ public class S_InputEventMapSelection : MonoBehaviour
         {
             DesableInputMapSelection();
         }
+        //DesableInputMapSelectionForTest();
+        //DesableInputMapSelection();
+
     }
 
     public void EnableInputMapSelectionForTest()
