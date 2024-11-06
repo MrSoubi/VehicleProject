@@ -2,6 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+public enum KillBy
+{
+    P1,
+    P2,
+    P3,
+    P4,
+    Environement,
+}
 public class ImpactManager : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
@@ -11,6 +20,11 @@ public class ImpactManager : MonoBehaviour
     [SerializeField] private float _pourcentageMultiplier;
     [SerializeField][Range(0, 0.1f)] private float _verticalBumpForce;
     [SerializeField] private GameObject _impactSFX;
+    [SerializeField] private S_CarInputEvent _carInputEvent;
+    
+    public int playerId => _carInputEvent.PlayerID;
+
+    int otherPlayerId;
 
     [SerializeField][Range(0, 1)] private float _advantageMultiplier; //Le multiplicateur pour le joueur qui a l avantage dans la collision
 
@@ -21,7 +35,6 @@ public class ImpactManager : MonoBehaviour
 
     public UnityEvent OnImpactAsAVictim;
     public UnityEvent OnImpactWithAdvantage;
-
 
     private void Start()
     {
@@ -57,7 +70,7 @@ public class ImpactManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         ImpactManager otherCar;
-
+        //otherPlayerId = otherCar.playerId;
         if (!collision.gameObject.TryGetComponent<ImpactManager>(out otherCar))
         {
             

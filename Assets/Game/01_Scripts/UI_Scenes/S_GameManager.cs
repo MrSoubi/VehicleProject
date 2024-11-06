@@ -192,8 +192,8 @@ public class S_GameManager : MonoBehaviour
             //    //PlayerInput.SwitchCurrentActionMap(null);
             //    Destroy(player);
             //}
-            //SceneManager.LoadScene("MainMenu");
-            SceneManager.LoadScene("CarSelection");
+            SceneManager.LoadScene("MainMenu");
+            //SceneManager.LoadScene("CarSelection");
 
         }
     }

@@ -1,7 +1,9 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -13,6 +15,7 @@ public class S_MapSelection : MonoBehaviour
     [Title("MapData")]
     [Tooltip("Mettre ici tous les MapData créer dans l'ordre voulu d'apparition lord de la selection.")]
     [SerializeField] private List<MapsData> _mapsData;
+    private List<GameObject> _maps;
 
     [SerializeField] private GameObject _defaultMapObject;
 
@@ -20,8 +23,8 @@ public class S_MapSelection : MonoBehaviour
     [SerializeField] private TMP_Text _textMapName;
 
     private Vector3 _firstMapPosition = new Vector3(-5f, -1, -10f);
-    private Vector3 _secondMapPosition = new Vector3(7.5f, -1f, 5.5f);
-    private Vector3 _mapBeforeposition = new Vector3(-17.5f, -1f, 5.5f);
+    private Vector3 _secondMapPosition = new Vector3(7.5f, -1f, 0);
+    private Vector3 _mapBeforeposition = new Vector3(-17.5f, -1f, 0);
     private float _distanceXBetweenMap = 15f;
     private Dictionary<InputDevice, PlayerInfo> _players => _playerData.players;
 
@@ -37,7 +40,36 @@ public class S_MapSelection : MonoBehaviour
                 var mapObject = Instantiate(_defaultMapObject);
                 mapData.MapObject = mapObject;
             }
+            else
+            {
+                //var mapObject = Instantiate(mapData.MapObject);
+                //mapData.MapObject = mapObject;
+            }
+
         }
+
+        //foreach (var mapData in _mapsData)
+        //{
+        //    Debug.Log("t");
+        //    if (mapData.MapObject == null)
+        //    {
+        //        _maps.Add(_defaultMapObject);
+
+        //    }
+        //    else
+        //    {
+        //        _maps.Add(mapData.MapObject);
+
+        //    }
+
+        //}
+
+        //for (int i = 0; i < _maps.Count; i++)
+        //{
+        //    var mapObject = Instantiate(_maps[i]);
+        //    _mapsData[i].MapObject = mapObject;
+        //}
+
     }
     private void Start()
     {
@@ -84,6 +116,7 @@ public class S_MapSelection : MonoBehaviour
         foreach (var mapData in _mapsData)
         {
             mapData.MapObject.transform.position = new Vector3(mapData.MapObject.transform.position.x - _distanceXBetweenMap, mapData.MapObject.transform.position.y);
+
         }
 
         _mapsData[_currentMapIndex].MapObject.transform.position = _firstMapPosition;
