@@ -44,7 +44,7 @@ public class S_InputEventMapSelection : MonoBehaviour
             DesableInputMapSelection();
         }
         //DesableInputMapSelectionForTest();
-        //DesableInputMapSelection();
+        DesableInputMapSelection();
 
     }
 
@@ -52,13 +52,11 @@ public class S_InputEventMapSelection : MonoBehaviour
     {
         _playerInput.actions["MoveSelection"].performed += _mapSelection.SelectMap;
         _playerInput.actions["Select"].performed += _mapSelection.ValidateSelection;
-        _playerInput.actions["Back"].performed += _mapSelection.CancelMapSelection;
     }
     public void DesableInputMapSelectionForTest()
     {
         _playerInput.actions["MoveSelection"].performed -= _mapSelection.SelectMap;
         _playerInput.actions["Select"].performed -= _mapSelection.ValidateSelection;
-        _playerInput.actions["Back"].performed -= _mapSelection.CancelMapSelection;
     }
 
     //Donne l'action seulementau joueur 0 pour choisir la map
@@ -69,16 +67,18 @@ public class S_InputEventMapSelection : MonoBehaviour
         _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Select"].Enable();
 
         _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Select"].performed += _mapSelection.ValidateSelection;
-        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Back"].Enable();
 
-        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Back"].performed += _mapSelection.CancelMapSelection;
     }
 
     public void DesableInputMapSelection()
     {
         _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["MoveSelection"].performed -= _mapSelection.SelectMap;
         _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Select"].performed -= _mapSelection.ValidateSelection;
-        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Back"].performed -= _mapSelection.CancelMapSelection;
+        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["MoveSelection"].Disable();
+        _players[_players.FirstOrDefault(x => x.Value.playerId == 0).Key]._playerInput.actions["Select"].Disable();
+
+
+
     }
 
 

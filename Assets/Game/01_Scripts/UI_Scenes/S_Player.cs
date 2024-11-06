@@ -13,7 +13,7 @@ public class S_Player : MonoBehaviour
 
     public void OnDestroy()
     {
-        input.SwitchCurrentActionMap(null);
+        //input.SwitchCurrentActionMap(null);
 
         input.DeactivateInput();
 

@@ -94,9 +94,15 @@ public class S_CarSelection : MonoBehaviour
         
         if (_isLoadingScene)
         {
-            StopCoroutine(_loadSceneCoroutine);
+            if (this != null)
+            {
+                StopCoroutine(_loadSceneCoroutine);
+            }
             _isLoadingScene = false;
-            _timerText.gameObject.SetActive(false);
+            if (_timerText != null)
+            {
+                _timerText.gameObject.SetActive(false);
+            }
             _inputEvent.EnableAllPlayersInputEndSelection();
             UnValideSelection();
         }

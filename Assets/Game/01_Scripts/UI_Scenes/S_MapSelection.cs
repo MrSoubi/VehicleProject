@@ -197,6 +197,12 @@ public class S_MapSelection : MonoBehaviour
     {
         foreach (var player in _players)
         {
+            player.Value._playerInput.actions["MoveSelection"].performed -= SelectMap;
+            player.Value._playerInput.actions["Select"].performed -= ValidateSelection;
+            player.Value._playerInput.actions["MoveSelection"].Disable();
+            player.Value._playerInput.actions["Select"].Disable();
+            player.Value._playerInput.actions["Back"].Disable();
+
             player.Value._playerInput.SwitchCurrentActionMap("CarControl");
             Debug.Log(player.Value._playerInput.currentActionMap.ToString());
         }

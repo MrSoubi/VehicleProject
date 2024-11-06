@@ -43,6 +43,22 @@ public class S_GameManager : MonoBehaviour
         _onTimerEnd.onEventTriggered.RemoveListener(StartPlayTimeTimer);
         _gameOverEvent.onEventTriggered.RemoveListener(CheckAlivePlayers);
 
+        foreach (var player in _players)
+        {
+            player.Value._playerInput.actions["Select"].performed -= ValidateCheckStats;
+            //player.Value._playerInput.SwitchCurrentActionMap(null);
+            player.Value._playerInput.DeactivateInput();
+        }
+        _players.Clear();
+
+        var playerinput = GameObject.FindGameObjectsWithTag("Player");
+        foreach (var player in playerinput)
+        {
+            PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
+            PlayerInput.DeactivateInput();
+            //PlayerInput.SwitchCurrentActionMap(null);
+            Destroy(player);
+        }
     }
 
     // Update is called once per frame
@@ -139,8 +155,10 @@ public class S_GameManager : MonoBehaviour
     {
         foreach (var player in _players)
         {
-            //player.Value._playerInput.DeactivateInput();
             player.Value._playerInput.SwitchCurrentActionMap("MenuSelection");
+            player.Value._playerInput.actions["Select"].Enable();
+            //player.Value._playerInput.actions["Select"].Enable();
+
             player.Value._playerInput.actions["Select"].performed += ValidateCheckStats;
 
         }
@@ -150,10 +168,7 @@ public class S_GameManager : MonoBehaviour
     private void ValidateCheckStats(InputAction.CallbackContext context)
     {
         _players.FirstOrDefault(x => x.Key == context.control.device).Value.isCheckStats = true;
-        if (context.performed)
-        {
-            Debug.Log("Tcheck");
-        }
+        
         _textOk[_players.FirstOrDefault(x => x.Key == context.control.device).Value.playerId].gameObject.SetActive(true);
         CheckStatsValidation();
 
@@ -173,28 +188,13 @@ public class S_GameManager : MonoBehaviour
 
         if (countCheck == _players.Count())
         {
-            Debug.Log("Full");
 
             //_gameLoopEnd.onEventTriggered.Invoke();
-            foreach (var player in _players)
-            {
-                player.Value._playerInput.actions["Select"].performed -= ValidateCheckStats;
-                //player.Value._playerInput.SwitchCurrentActionMap(null);
-                //player.Value._playerInput.DeactivateInput();
-            }
-            //_players.Clear();
-
-            var playerinput = GameObject.FindGameObjectsWithTag("Player");
-            foreach (var player in playerinput)
-            {
-                PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
-                PlayerInput.DeactivateInput();
-                //PlayerInput.SwitchCurrentActionMap(null);
-                Destroy(player);
-            }
+            
             SceneManager.LoadScene("MainMenu");
             //SceneManager.LoadScene("CarSelection");
 
         }
     }
+
 }

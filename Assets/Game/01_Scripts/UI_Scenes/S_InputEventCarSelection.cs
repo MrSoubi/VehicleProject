@@ -28,14 +28,22 @@ public class S_InputEventCarSelection : MonoBehaviour
     {
         DisableAllInputCarSelection();
         ClearExistingPlayers();
+        var playerinput = GameObject.FindGameObjectsWithTag("Player");
         _players.Clear();
+        foreach (var player in playerinput)
+        {
+            PlayerInput PlayerInput = player.GetComponent<PlayerInput>();
+            PlayerInput.DeactivateInput();
+            //PlayerInput.SwitchCurrentActionMap(null);
+            Destroy(player);
+        }
 
-       
 
     }
     private void OnEnable()
     {
         playerInputManager.onPlayerJoined += OnPlayerJoined;
+        playerInputManager.onPlayerLeft += OnPlayerLeft;
     }
 
    
@@ -43,6 +51,7 @@ public class S_InputEventCarSelection : MonoBehaviour
     {
         DisableAllInputCarSelection();
         playerInputManager.onPlayerJoined -= OnPlayerJoined;
+        playerInputManager.onPlayerLeft -= OnPlayerLeft;
     }
 
     //Quand le joueur rejoint avec le boutton sud de la manette lui assigne ses touches disponible avec leurs actions
@@ -55,7 +64,18 @@ public class S_InputEventCarSelection : MonoBehaviour
         playerInput.actions["Back"].performed += context => _carSelectionManager.BackToSelection(playerInput, context);
 
     }
-    
+
+    private void OnPlayerLeft(PlayerInput playerInput)
+    {
+        playerInput.actions["MoveSelection"].performed -= carSwitchManager.SwitchCar;
+        playerInput.actions["Select"].performed -= context => carSwitchManager.OnValidateButtonPress(playerInput, context);
+        playerInput.actions["Back"].performed -= context => _carSelectionManager.BackToSelection(playerInput, context);
+        if (playerInput != null)
+        {
+            playerInput.actions["ValidateButton"].performed -= context => carSwitchManager.OnValidateButtonPress(playerInput, context); ;
+        }
+    }
+
 
     public void DisablePlayerInputEndSelection(PlayerInput playerInput)
     {
@@ -97,7 +117,6 @@ public class S_InputEventCarSelection : MonoBehaviour
 
             player.Value._playerInput.actions["Back"].performed -= context => _carSelectionManager.BackToSelection(player.Value._playerInput, context);
             player.Value._playerInput.actions["Back"].Disable();
-
         }
 
     }
