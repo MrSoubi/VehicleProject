@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class S_GameEndDisplay : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> _textRank = new List<TextMeshProUGUI>();
     [SerializeField] List<TextMeshProUGUI> _textGetKilled = new List<TextMeshProUGUI>();
     [SerializeField] List<TextMeshProUGUI> _textPeopleKilled = new List<TextMeshProUGUI>();
+    [SerializeField] List<TextMeshProUGUI> _textPlayersNames = new List<TextMeshProUGUI>();
+
 
 
 
@@ -47,6 +50,8 @@ public class S_GameEndDisplay : MonoBehaviour
             _playersCars.Add(carVisuel);
             carVisuel.transform.SetPositionAndRotation(_visuelsPosition[playerID].position, _visuelsPosition[playerID].rotation);
 
+            _textPlayersNames[playerID].text += (player.Value.playerId + 1);
+
             _playersPanels[playerID].SetActive(true);
 
 
@@ -66,7 +71,7 @@ public class S_GameEndDisplay : MonoBehaviour
             _textRank[player.Value.playerId].text = "#" + player.Value.rank;
 
             //_textGetKilled[player.Value.playerId].text += "\n";
-            //_textPeopleKilled[player.Value.playerId].text += "\n";
+            _textPeopleKilled[player.Value.playerId].text += "\n";
 
             for (int i = 0; i < player.Value.listKilledBy.Count; i++)
             {
@@ -76,7 +81,7 @@ public class S_GameEndDisplay : MonoBehaviour
             }
             for (int i = 0; i < player.Value.listYouKilled.Count; i++)
             {
-                _textPeopleKilled[player.Value.playerId].text += "\n" + player.Value.listYouKilled[i];
+                _textPeopleKilled[player.Value.playerId].text +=  player.Value.listYouKilled[i] + " ";
             }
             
 

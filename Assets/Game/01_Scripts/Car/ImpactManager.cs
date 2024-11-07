@@ -10,7 +10,7 @@ public enum KillBy
     P2,
     P3,
     P4,
-    Wild,
+    Self,
 }
 public class ImpactManager : MonoBehaviour
 {
@@ -28,7 +28,7 @@ public class ImpactManager : MonoBehaviour
     private KillBy _playerName => (KillBy)_playerId;
 
 
-    int _otherPlayerId = (int)KillBy.Wild;
+    int _otherPlayerId = (int)KillBy.Self;
 
     [SerializeField][Range(0, 1)] private float _advantageMultiplier; //Le multiplicateur pour le joueur qui a l avantage dans la collision
 
@@ -173,7 +173,7 @@ public class ImpactManager : MonoBehaviour
 
         yield return new WaitForSeconds(10f);
         _registerEnnemyCoroutine = null;
-        _otherPlayerId = (int)KillBy.Wild;
+        _otherPlayerId = (int)KillBy.Self;
         _isRegisting = false;
     } 
 
@@ -204,7 +204,7 @@ public class ImpactManager : MonoBehaviour
                 RegisterEnnemy(KillBy.P4.ToString());
                 break;
             case 4:
-                RegisterEnnemy(KillBy.Wild.ToString());
+                RegisterEnnemy(KillBy.Self.ToString());
                 break;
             default:
                 break;
@@ -216,12 +216,17 @@ public class ImpactManager : MonoBehaviour
     {
         _playersData.players.FirstOrDefault(x => x.Value.playerId == _playerId).Value.listKilledBy.Add(ennemyName);
 
+        if (_otherPlayerId < (int)KillBy.Self)
+        {
+            _playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.listYouKilled.Add(_playerName.ToString());
+            _otherPlayerId = (int)KillBy.Self;
 
-        //if (_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId == _otherPlayerId)
-        //{
-        //    _playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.listYouKilled.Add(_playerName.ToString());
-        //}
-        _otherPlayerId = (int)KillBy.Wild;
+        }
+        else
+        {
+            _otherPlayerId = (int)KillBy.Self;
+        }
+
 
     }
 
