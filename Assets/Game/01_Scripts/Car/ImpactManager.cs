@@ -24,8 +24,8 @@ public class ImpactManager : MonoBehaviour
     [SerializeField] private S_CarInputEvent _carInputEvent;
     [SerializeField] PlayersData _playersData;
 
-    private int playerId => _carInputEvent.PlayerID;
-    private KillBy _playerName => (KillBy)playerId;
+    private int _playerId => _carInputEvent.PlayerID;
+    private KillBy _playerName => (KillBy)_playerId;
 
 
     int _otherPlayerId;
@@ -101,12 +101,12 @@ public class ImpactManager : MonoBehaviour
 
         }
 
-        _otherPlayerId = otherCar.playerId;
+        _otherPlayerId = otherCar._playerId;
 
         RegisterEnnemyId();
 
-        Debug.Log($"Player ID: {playerId} and PlayerName {_playerName}" );
-        Debug.Log($"PlayerEnnemy ID: {_otherPlayerId} and PlayerName {_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId}");
+        Debug.Log($"Player ID: {_playerId} and PlayerName {_playerName}" );
+        Debug.Log($"PlayerEnnemy ID: {_otherPlayerId} and PlayerEnnemyName {_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId}");
 
 
         // Determination de l'avantage
@@ -209,11 +209,12 @@ public class ImpactManager : MonoBehaviour
 
     private void RegisterEnnemy(string ennemyName)
     {
-       _playersData.players.FirstOrDefault(x => x.Value.playerId == playerId).Value.listKilledBy.Add(ennemyName);
+        _playersData.players.FirstOrDefault(x => x.Value.playerId == _playerId).Value.listKilledBy.Add(ennemyName);
 
-        if(_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId == _otherPlayerId)
+
+        if (_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId == _otherPlayerId)
         {
-            _playersData.players.FirstOrDefault(x => x.Value.playerId == playerId).Value.listYouKilled.Add(_playerName.ToString());
+            _playersData.players.FirstOrDefault(x => x.Value.playerId == _playerId).Value.listYouKilled.Add(_playerName.ToString());
         }
     }
 
