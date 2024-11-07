@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +10,7 @@ public enum KillBy
     P2,
     P3,
     P4,
-    Environement,
+    Wild,
 }
 public class ImpactManager : MonoBehaviour
 {
@@ -21,10 +22,13 @@ public class ImpactManager : MonoBehaviour
     [SerializeField][Range(0, 0.1f)] private float _verticalBumpForce;
     [SerializeField] private GameObject _impactSFX;
     [SerializeField] private S_CarInputEvent _carInputEvent;
-    
-    public int playerId => _carInputEvent.PlayerID;
+    [SerializeField] PlayersData _playersData;
 
-    int otherPlayerId;
+    private int _playerId => _carInputEvent.PlayerID;
+    private KillBy _playerName => (KillBy)_playerId;
+
+
+    int _otherPlayerId;
 
     [SerializeField][Range(0, 1)] private float _advantageMultiplier; //Le multiplicateur pour le joueur qui a l avantage dans la collision
 
@@ -35,6 +39,9 @@ public class ImpactManager : MonoBehaviour
 
     public UnityEvent OnImpactAsAVictim;
     public UnityEvent OnImpactWithAdvantage;
+
+    private Coroutine _registerEnnemyCoroutine;
+    private bool _isRegisting = false;
 
     private void Start()
     {
@@ -70,7 +77,6 @@ public class ImpactManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         ImpactManager otherCar;
-        //otherPlayerId = otherCar.playerId;
         if (!collision.gameObject.TryGetComponent<ImpactManager>(out otherCar))
         {
             
@@ -89,6 +95,20 @@ public class ImpactManager : MonoBehaviour
 
     private void HandleImpact(ImpactManager otherCar, Collision collision)
     {
+        if (_registerEnnemyCoroutine != null)
+        {
+            StopRegisterCoroutine();
+
+        }
+
+        _otherPlayerId = otherCar._playerId;
+
+        RegisterEnnemyId();
+
+        Debug.Log($"Player ID: {_playerId} and PlayerName {_playerName}" );
+        Debug.Log($"PlayerEnnemy ID: {_otherPlayerId} and PlayerEnnemyName {_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId}");
+
+
         // Determination de l'avantage
         // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
         // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
@@ -138,4 +158,65 @@ public class ImpactManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         isInvicible = false;
     }
+
+    private void RegisterEnnemyId()
+    {
+        while (_isRegisting)
+        {
+            _registerEnnemyCoroutine = StartCoroutine(WaitToRegisterEnnemy());
+        }
+    }
+    private IEnumerator WaitToRegisterEnnemy()
+    {
+        
+
+        yield return new WaitForSeconds(10f);
+        _registerEnnemyCoroutine = null;
+        _otherPlayerId = (int)KillBy.Wild;
+    } 
+
+    private void StopRegisterCoroutine()
+    {
+        StopCoroutine(_registerEnnemyCoroutine);
+        _registerEnnemyCoroutine = null;
+
+    }
+
+    public void SelectNamesForPlayer()
+    {
+        switch (_otherPlayerId)
+        {
+            case 0:
+                RegisterEnnemy(KillBy.P1.ToString());
+                break;
+            case 1:
+                RegisterEnnemy(KillBy.P2.ToString());
+                break;
+            case 2:
+                RegisterEnnemy(KillBy.P3.ToString());
+                break;
+            case 3:
+                RegisterEnnemy(KillBy.P4.ToString());
+                break;
+            case 4:
+                RegisterEnnemy(KillBy.Wild.ToString());
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void RegisterEnnemy(string ennemyName)
+    {
+        _playersData.players.FirstOrDefault(x => x.Value.playerId == _playerId).Value.listKilledBy.Add(ennemyName);
+
+
+        if (_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId == _otherPlayerId)
+        {
+            _playersData.players.FirstOrDefault(x => x.Value.playerId == _playerId).Value.listYouKilled.Add(_playerName.ToString());
+        }
+    }
+
+
 }
