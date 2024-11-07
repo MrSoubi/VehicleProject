@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -79,6 +78,13 @@ public class S_GameEndDisplay : MonoBehaviour
             for (int i = 0; i < player.Value.listKilledBy.Count; i++)
             {
                 Debug.Log(player.Value.listKilledBy[i]);
+                //TextMeshProUGUI text = new TextMeshProUGUI();
+                //string textes = player.Value.listKilledBy[i];
+                //text.text = textes;
+                //text.color = Color.green;
+                ////SetTextColor(text, player.Value.playerId);
+                //_textGetKilled[player.Value.playerId].text += "\n" + text;
+                //_textGetKilled[player.Value.playerId].color = Color.red;
                 _textGetKilled[player.Value.playerId].text += "\n" + player.Value.listKilledBy[i];
 
             }
@@ -89,6 +95,32 @@ public class S_GameEndDisplay : MonoBehaviour
             
 
         }
+    }
+
+    public TextMeshProUGUI SetTextColor(TextMeshProUGUI text, int playerID)
+    {
+        switch (playerID)
+        {
+            case 0:
+                text.color = Color.green;
+                break;
+            case 1:
+                text.color = Color.red;
+                break;
+            case 2:
+                text.color = Color.yellow;
+                break;
+            case 3:
+                text.color = Color.blue;
+                break;
+            case 4:
+                text.color = Color.grey;
+                break;
+            default:
+                text.color = Color.green;
+                break;
+        }
+        return text;
     }
 
     private void AssignRanks()
