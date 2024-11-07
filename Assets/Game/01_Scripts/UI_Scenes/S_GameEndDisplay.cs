@@ -13,6 +13,10 @@ public class S_GameEndDisplay : MonoBehaviour
     [SerializeField] List<Transform> _cameraPosition = new List<Transform>();
     [SerializeField] List<Transform> _visuelsPosition = new List<Transform>();
     [SerializeField] List<TextMeshProUGUI> _textRank = new List<TextMeshProUGUI>();
+    [SerializeField] List<TextMeshProUGUI> _textGetKilled = new List<TextMeshProUGUI>();
+    [SerializeField] List<TextMeshProUGUI> _textPeopleKilled = new List<TextMeshProUGUI>();
+
+
 
 
 
@@ -60,6 +64,21 @@ public class S_GameEndDisplay : MonoBehaviour
         foreach (var player in _players)
         {
             _textRank[player.Value.playerId].text = "#" + player.Value.rank;
+
+            //_textGetKilled[player.Value.playerId].text += "\n";
+            //_textPeopleKilled[player.Value.playerId].text += "\n";
+
+            for (int i = 0; i < player.Value.listKilledBy.Count; i++)
+            {
+                Debug.Log(player.Value.listKilledBy[i]);
+                _textGetKilled[player.Value.playerId].text += "\n" + player.Value.listKilledBy[i];
+
+            }
+            for (int i = 0; i < player.Value.listYouKilled.Count; i++)
+            {
+                _textPeopleKilled[player.Value.playerId].text += "\n" + player.Value.listYouKilled[i];
+            }
+            
 
         }
     }
