@@ -984,7 +984,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660562871341422033}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.058038186, y: 0.0000000026837128, z: -1.5602361e-10, w: 0.9983144}
+  m_LocalRotation: {x: 0.058038183, y: -0, z: -0, w: 0.9983144}
   m_LocalPosition: {x: 0, y: 3, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1701,7 +1701,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3319720032405248726}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0035694195, y: -0.002827153, z: 0.000010091411, w: 0.9999897}
+  m_LocalRotation: {x: 0.0035694093, y: -0.0028262595, z: 0.000010088179, w: 0.9999896}
   m_LocalPosition: {x: 0, y: 2, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3737,6 +3737,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1472218681921628560}
+        m_TargetAssemblyTypeName: ImpactManager, Assembly-CSharp
+        m_MethodName: SelectNamesForPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnKilled:
     m_PersistentCalls:
       m_Calls: []
@@ -3898,7 +3910,8 @@ MonoBehaviour:
   _verticalBumpForce: 0.05
   _impactSFX: {fileID: 6649054028638981966, guid: b1c6bb2e6dc902d45801e7971e393046,
     type: 3}
-  _carInputEvent: {fileID: 0}
+  _carInputEvent: {fileID: 3309298421097135141}
+  _playersData: {fileID: 11400000, guid: e5cbfb698474daf4fb1bf09d55eb7292, type: 2}
   _advantageMultiplier: 0.5
   velocityOddFrame: {x: 0, y: 0, z: 0}
   velocityEvenFrame: {x: 0, y: 0, z: 0}
@@ -4355,8 +4368,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789691986761638008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0035694202, y: -0.0028271535, z: 0.000010091402, w: 0.9999896}
-  m_LocalPosition: {x: 0, y: 2, z: -6}
+  m_LocalRotation: {x: 0, y: 0.9992035, z: -0.039904393, w: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4397,7 +4410,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 50
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: 0

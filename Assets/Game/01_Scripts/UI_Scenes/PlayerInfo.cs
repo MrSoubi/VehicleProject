@@ -18,8 +18,8 @@ public class PlayerInfo
     public int playerLife = 3;
     public float bumpPourcentage = 0;
     public bool isCheckStats;
-    public List<string> listKilledBy;
-    public List<string> listYouKilled;
+    public List<string> listKilledBy = new List<string>();
+    public List<string> listYouKilled = new List<string>();
 
 
 }

@@ -266,7 +266,6 @@ public class CarController : MonoBehaviour
         transform.position = spawnPosition;
 
         //_deathEvent.onEventTriggered.Invoke();
-        OnDeath.Invoke();
 
         transform.rotation = spawnRotation;
         rb.velocity = Vector3.zero;
@@ -276,6 +275,9 @@ public class CarController : MonoBehaviour
         _rumbleManager.InvokeDeathVibration();
 
         OnKilled.Invoke();
+
+        OnDeath.Invoke();
+
 
         Invoke(nameof(ResetTeleport), 0.5f);
     }
