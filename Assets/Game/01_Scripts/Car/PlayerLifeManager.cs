@@ -10,6 +10,8 @@ public class PlayerLifeManager : MonoBehaviour
 {
     public UnityEvent OnPercentageValueChanged;
     public UnityEvent OnGameOver;
+    public UnityEvent OnLastDeath;
+
 
     private float _bumpLifeMultiplierPourcentage = 0f;
     [SerializeField] private float _mutiplierByBumpPourcentage;
@@ -74,6 +76,7 @@ public class PlayerLifeManager : MonoBehaviour
         ResetBumpPourcentage();
         if (_playerLife <= 0)
         {
+            OnLastDeath.Invoke();
             int playerAliveCount = _playersData.players.Count;
             foreach(var players in _playersData.players)
             {
