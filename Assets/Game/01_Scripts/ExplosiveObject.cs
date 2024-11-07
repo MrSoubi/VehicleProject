@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ExplosiveObject : MonoBehaviour
 {
+    [SerializeField] private bool useDetonateV2;
     [SerializeField] private float rangeOfExplosion;
     [SerializeField] private float delayBeforeExplosion;
     [SerializeField] private float forceOfExplosion;
     [SerializeField] private float upForce;
     [SerializeField] private ParticleSystem particleExplosion;
     [SerializeField] private Animator animBomb;
+    [SerializeField] private AnimationCurve curve;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,7 +28,6 @@ public class ExplosiveObject : MonoBehaviour
 
     void Detonate()
     {
-
         Vector3 explosionPosition = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, rangeOfExplosion);
         foreach (Collider hit in colliders)
@@ -40,6 +41,28 @@ public class ExplosiveObject : MonoBehaviour
         Instantiate(particleExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+    void DetonateV2()
+    {
+        Vector3 explosionPosition = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPosition, rangeOfExplosion);
+
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb;
+            
+            if (hit.TryGetComponent<Rigidbody>(out rb))
+            {
+                Vector3 direction = (rb.transform.position - explosionPosition).normalized;
+                float distanceToTarget = (rb.transform.position - explosionPosition).magnitude;
+                float forceRatio = Mathf.Min(distanceToTarget / rangeOfExplosion, 1);
+                float force = forceOfExplosion * curve.Evaluate(forceRatio);
+                rb.AddForce(force * direction, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * upForce, ForceMode.Impulse);
+            }
+        }
+        Instantiate(particleExplosion, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
     void AnimBomb()
     {
         animBomb.Play("anim_Bomb_Idle", 0, 0.0f);
@@ -48,7 +71,15 @@ public class ExplosiveObject : MonoBehaviour
     {
         AnimBomb();
         yield return new WaitForSeconds(delay);
-        Detonate();
+        if (useDetonateV2)
+        {
+            DetonateV2();
+        }
+        else
+        {
+            Detonate();
+        }
+        
     }
 
     public void SpawnDetonate()

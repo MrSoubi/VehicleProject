@@ -100,13 +100,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8e7e00e8b026845b788ae5e3a76261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useDetonateV2: 1
   rangeOfExplosion: 25
   delayBeforeExplosion: 2
-  forceOfExplosion: 6000
-  upForce: 6.5
+  forceOfExplosion: 10000
+  upForce: 5000
   particleExplosion: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312,
     type: 3}
   animBomb: {fileID: 216160172442723619}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.009238565
+      inSlope: -2.9914584
+      outSlope: -2.9914584
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.018140614
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!54 &8375251972312042959
 Rigidbody:
   m_ObjectHideFlags: 0
