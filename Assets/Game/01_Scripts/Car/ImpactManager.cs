@@ -2,6 +2,8 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
+
 
 
 public enum KillBy
@@ -33,7 +35,7 @@ public class ImpactManager : MonoBehaviour
     [SerializeField][Range(0, 1)] private float _advantageMultiplier; //Le multiplicateur pour le joueur qui a l avantage dans la collision
 
     public Vector3 velocityOddFrame, velocityEvenFrame, lastVelocity;
-    bool isInvicible = false;
+    bool isInvincible = false;
 
     private float lastSpeed, _speedOddFrame, _speedEvenFrame;
 
@@ -42,6 +44,15 @@ public class ImpactManager : MonoBehaviour
 
     private Coroutine _registerEnnemyCoroutine;
     private bool _isRegisting = false;
+
+    private float _blinkInterval = 0.3f;
+    private bool _isInvincible = false;
+    private float _timeInvicibleRespawn = 3f;
+    private float _timeInvicibleWhenImpact = 2f;
+
+    [SerializeField] private List<Renderer> _carParts = new List<Renderer>();
+    private List<Material> _originalColors = new List<Material>();
+    [SerializeField] Material invincibleMaterial;
 
     private void Start()
     {
@@ -52,6 +63,13 @@ public class ImpactManager : MonoBehaviour
         _speedOddFrame = rb.velocity.magnitude;
         _speedEvenFrame = rb.velocity.magnitude;
         lastSpeed = rb.velocity.magnitude;
+
+      
+        foreach (var part in _carParts) {
+            _originalColors.Add(part.material);
+
+        }
+
     }
 
     private void FixedUpdate()
@@ -83,12 +101,10 @@ public class ImpactManager : MonoBehaviour
             return;
         }
 
-        if (isInvicible)
+        if (isInvincible == true)
         {
             return;
         }
-
-        isInvicible = true;
 
         HandleImpact(otherCar, collision);
     }
@@ -105,10 +121,10 @@ public class ImpactManager : MonoBehaviour
 
         RegisterEnnemyId();
 
-        Debug.Log($"Player ID: {_playerId} and PlayerName {_playerName}" );
-        Debug.Log($"PlayerEnnemy ID: {_otherPlayerId} and PlayerEnnemyName {_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId}");
+        //Debug.Log($"Player ID: {_playerId} and PlayerName {_playerName}" );
+        //Debug.Log($"PlayerEnnemy ID: {_otherPlayerId} and PlayerEnnemyName {_playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.playerId}");
 
-
+        Debug.Log($"Je me fait taper par un joueur");
         // Determination de l'avantage
         // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
         // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
@@ -125,9 +141,8 @@ public class ImpactManager : MonoBehaviour
         bool hasAdvantage = score_A > score_B;
 
         // On lance une invincibilité après chaque impact
-        StartCoroutine(nameof(InvicibilityRoutine));
 
-        if (!hasAdvantage)
+        if (!hasAdvantage && isInvincible == false)
         {
             Vector3 impactForce = rb.velocity - lastVelocity;
             //Vector3 impactForce = rb.velocity - lastVelocity + Vector3.up;
@@ -145,6 +160,8 @@ public class ImpactManager : MonoBehaviour
             Instantiate(_impactSFX, collision.transform.position, Quaternion.identity);
 
             OnImpactAsAVictim.Invoke();
+
+            TriggerInvincibility(_timeInvicibleWhenImpact);
         }
         else // Avec l'avantage on ne subit rien du tout
         {
@@ -153,11 +170,49 @@ public class ImpactManager : MonoBehaviour
         
     }
 
-    private IEnumerator InvicibilityRoutine()
+
+    public void TriggerInvincibility(float invincibilityDuration)
     {
-        yield return new WaitForSeconds(1f);
-        isInvicible = false;
+        if (!isInvincible)
+        {
+            StartCoroutine(InvincibilityCoroutine(invincibilityDuration));
+        }
     }
+
+    public void TriggerInvincibilityWhenRespawn()
+    {
+
+        StartCoroutine(InvincibilityCoroutine(_timeInvicibleRespawn));
+    }
+    
+
+    private IEnumerator InvincibilityCoroutine(float invincibilityDuration)
+    {
+        isInvincible = true;
+
+        float elapsedTime = 0f;
+        bool isWhite = false;
+
+        while (elapsedTime < invincibilityDuration && isInvincible == true)
+        {
+            for (int i = 0; i < _carParts.Count; i++)
+            {
+                _carParts[i].material = isWhite ? invincibleMaterial : _originalColors[i];
+            }
+            isWhite = !isWhite;
+
+            yield return new WaitForSeconds(_blinkInterval);
+            elapsedTime += _blinkInterval;
+        }
+
+        for (int i = 0; i < _carParts.Count; i++)
+        {
+            _carParts[i].material = _originalColors[i];
+        }
+
+        isInvincible = false;
+    }
+
 
     private void RegisterEnnemyId()
     {
