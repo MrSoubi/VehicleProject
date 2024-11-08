@@ -192,19 +192,19 @@ public class ImpactManager : MonoBehaviour
         switch (_otherPlayerId)
         {
             case 0:
-                RegisterEnnemy(KillBy.P1.ToString());
+                RegisterEnnemy(KillBy.P1);
                 break;
             case 1:
-                RegisterEnnemy(KillBy.P2.ToString());
+                RegisterEnnemy(KillBy.P2);
                 break;
             case 2:
-                RegisterEnnemy(KillBy.P3.ToString());
+                RegisterEnnemy(KillBy.P3);
                 break;
             case 3:
-                RegisterEnnemy(KillBy.P4.ToString());
+                RegisterEnnemy(KillBy.P4);
                 break;
             case 4:
-                RegisterEnnemy(KillBy.Self.ToString());
+                RegisterEnnemy(KillBy.Self);
                 break;
             default:
                 break;
@@ -212,13 +212,13 @@ public class ImpactManager : MonoBehaviour
 
     }
 
-    private void RegisterEnnemy(string ennemyName)
+    private void RegisterEnnemy(KillBy ennemyName)
     {
         _playersData.players.FirstOrDefault(x => x.Value.playerId == _playerId).Value.listKilledBy.Add(ennemyName);
 
         if (_otherPlayerId < (int)KillBy.Self)
         {
-            _playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.listYouKilled.Add(_playerName.ToString());
+            _playersData.players.FirstOrDefault(x => x.Value.playerId == _otherPlayerId).Value.listYouKilled.Add(_playerName);
             _otherPlayerId = (int)KillBy.Self;
 
         }

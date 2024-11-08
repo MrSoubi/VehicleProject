@@ -53,6 +53,7 @@ public class S_GameEndDisplay : MonoBehaviour
             carVisuel.transform.SetPositionAndRotation(_visuelsPosition[playerID].position, _visuelsPosition[playerID].rotation);
 
             _textPlayersNames[playerID].text += (player.Value.playerId + 1);
+            _textPlayersNames[playerID].text = SetTextColor(_textPlayersNames[playerID].text, player.Value.playerId);
 
             _playersPanels[playerID].SetActive(true);
 
@@ -70,54 +71,68 @@ public class S_GameEndDisplay : MonoBehaviour
         AssignRanks();
         foreach (var player in _players)
         {
-            _textRank[player.Value.playerId].text = "#" + player.Value.rank;
+            _textRank[player.Value.playerId].text = SetTextRankColor("#" + player.Value.rank, player.Value.rank);
 
             //_textGetKilled[player.Value.playerId].text += "\n";
             _textPeopleKilled[player.Value.playerId].text += "\n";
 
             for (int i = 0; i < player.Value.listKilledBy.Count; i++)
             {
-                Debug.Log(player.Value.listKilledBy[i]);
-                //TextMeshProUGUI text = new TextMeshProUGUI();
-                //string textes = player.Value.listKilledBy[i];
-                //text.text = textes;
-                //text.color = Color.green;
-                ////SetTextColor(text, player.Value.playerId);
-                //_textGetKilled[player.Value.playerId].text += "\n" + text;
-                //_textGetKilled[player.Value.playerId].color = Color.red;
-                _textGetKilled[player.Value.playerId].text += "\n" + player.Value.listKilledBy[i];
+                _textGetKilled[player.Value.playerId].text += "\n" + SetTextColor(player.Value.listKilledBy[i].ToString(), (int)player.Value.listKilledBy[i]);
 
             }
             for (int i = 0; i < player.Value.listYouKilled.Count; i++)
             {
-                _textPeopleKilled[player.Value.playerId].text +=  player.Value.listYouKilled[i] + " ";
+                _textPeopleKilled[player.Value.playerId].text += SetTextColor(player.Value.listYouKilled[i].ToString(), (int)player.Value.listYouKilled[i]) + " ";
             }
-            
-
         }
     }
 
-    public TextMeshProUGUI SetTextColor(TextMeshProUGUI text, int playerID)
+    public string SetTextColor(string text, int playerID)
     {
         switch (playerID)
         {
             case 0:
-                text.color = Color.green;
+                text = $"<color=green>{text}</color>";
+
                 break;
             case 1:
-                text.color = Color.red;
+                text = $"<color=red>{text}</color>";
                 break;
             case 2:
-                text.color = Color.yellow;
+                text = $"<color=yellow>{text}</color>";
                 break;
             case 3:
-                text.color = Color.blue;
+                text = $"<color=blue>{text}</color>";
                 break;
             case 4:
-                text.color = Color.grey;
+                text = $"<color=black>{text}</color>";
                 break;
             default:
-                text.color = Color.green;
+                text = $"<color=red>{text}</color>";
+                break;
+        }
+        return text;
+    }
+
+    public string SetTextRankColor(string text, int playerRank)
+    {
+        switch (playerRank)
+        {
+            case 1:
+                text = $"<color=#FFD700>{text}</color>";
+                break;
+            case 2:
+                text = $"<color=#C0C0C0>{text}</color>";
+                break;
+            case 3:
+                text = $"<color=#CD7F32>{text}</color>";
+                break;
+            case 4:
+                text = $"<color=#B87333>{text}</color>";
+                break;
+            default:
+                text = $"<color=#B87333>{text}</color>";
                 break;
         }
         return text;
