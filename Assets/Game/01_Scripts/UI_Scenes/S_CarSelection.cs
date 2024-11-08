@@ -8,11 +8,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using UnityEngine.Windows;
+using DG.Tweening;
 
 
 public class S_CarSelection : MonoBehaviour
 {
     [SerializeField] private GameObject[] _carSelectionPanels;
+    [SerializeField] private GameObject[] _garageDoor;
     [SerializeField] private GameObject[] _textPressATojoin;
     [SerializeField] private GameObject[] _textReady;
     [SerializeField] private TextMeshProUGUI _timerText;
@@ -35,7 +37,7 @@ public class S_CarSelection : MonoBehaviour
         //Desactive les panel de selection et ajoute des panels disponible
         for (int i = 0; i < _carSelectionPanels.Length; i++)
         {
-            _carSelectionPanels[i].SetActive(false);
+            //_carSelectionPanels[i].SetActive(false);
             _availablePanels.Add(i);
         }
 
@@ -72,6 +74,9 @@ public class S_CarSelection : MonoBehaviour
                 };
 
                 _players.Add(playerDevice, newPlayer);
+
+                _garageDoor[assignedPanel].transform.DOMove(_garageDoor[assignedPanel].transform.position + Vector3.up * 5, 1);
+
                 _carSelectionPanels[assignedPanel].SetActive(true);
                 _textPressATojoin[assignedPanel].SetActive(false);
 
