@@ -33,8 +33,7 @@ public class TrickManager : MonoBehaviour
 
     private void Start()
     {
-        carController.OnJump.AddListener(HandleTakeOff);
-        carController.OnLanding.AddListener(HandleLanding);
+
         impactManager.OnImpactAsAVictim.AddListener(HandleImpact);
 
         lastForward = transform.forward;

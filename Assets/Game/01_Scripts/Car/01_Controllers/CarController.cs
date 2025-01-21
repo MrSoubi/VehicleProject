@@ -8,20 +8,11 @@ using UnityEngine.Events;
 
 public class CarController : MonoBehaviour
 {
-    public UnityEvent OnDeath;
-    public UnityEvent OnKilled;
-    public UnityEvent OnJump;
-    public UnityEvent OnTakeOff;
-    public UnityEvent OnLanding;
-    public UnityEvent OnReverse;
-    public UnityEvent OnForward;
-    public UnityEvent OnJumpEnabled;
-    public UnityEvent OnJumpDisabled;
-
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
 
+    public RSO_IsCarGrounded RSO_IsCarGrounded;
 
 
     public int gamepadIndex;
@@ -101,11 +92,6 @@ public class CarController : MonoBehaviour
         // On air (or flipped)
         if (!IsGrounded())
         {
-            if (framesSinceLastGrounded == 0)
-            {
-                OnTakeOff.Invoke();
-            }
-
             framesSinceLastGrounded++;
 
             rb.linearDamping = 0.1f;
@@ -138,27 +124,17 @@ public class CarController : MonoBehaviour
                 {
                     StartCoroutine(JumpReloadRoutine());
                 }
-
-                // A modifier ! Sert � redonner une bonne velo � la voiture lors de la r�ception
-                // rb.velocity = Vector3.ProjectOnPlane(transform.forward, GetFloorNormal()) * lastSpeed;
-
-                OnLanding.Invoke();
             }
 
             framesSinceLastGrounded = 0;
 
             if (IsGoingInReverse())
             {
-                if (framesSinceGoingReverse == 0)
-                {
-                    OnReverse.Invoke();
-                }
                 framesSinceGoingReverse++;
             }
             else
             {
                 framesSinceGoingReverse = 0;
-                OnForward.Invoke();
             }
         }
 
@@ -196,9 +172,7 @@ public class CarController : MonoBehaviour
         if (canJump && context.performed)
         {
             rb.AddForce(transform.up * data.jumpForce, ForceMode.Impulse);
-            OnJump.Invoke();
             canJump = false;
-            OnJumpDisabled.Invoke();
             return;
         }
     }
@@ -207,7 +181,6 @@ public class CarController : MonoBehaviour
     {
         yield return new WaitForSeconds(jumpDelay);
         canJump = true;
-        OnJumpEnabled.Invoke();
     }
 
     // TODO : Make the forces applied more effective to untilt the car
@@ -224,6 +197,9 @@ public class CarController : MonoBehaviour
         {
             result |= wheel.isGrounded();
         }
+
+        RSO_IsCarGrounded.Value = result;
+
         return result;
     }
 
@@ -261,15 +237,9 @@ public class CarController : MonoBehaviour
     {
         transform.position = spawnPosition;
 
-        //_deathEvent.onEventTriggered.Invoke();
-        OnDeath.Invoke();
-
-
         transform.rotation = spawnRotation;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-
-        OnKilled.Invoke();
 
         Invoke(nameof(ResetTeleport), 0.5f);
     }

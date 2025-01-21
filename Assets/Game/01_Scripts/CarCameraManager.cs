@@ -18,12 +18,7 @@ public class CarCameraManager : MonoBehaviour
 
     private void Start()
     {
-        carController.OnTakeOff.AddListener(ActivateAirCamera);
-        carController.OnJump.AddListener(ActivateAirCamera);
-        carController.OnLanding.AddListener(ActivateGroundCamera);
-        carController.OnKilled.AddListener(ActivateDeathCamera);
-        carController.OnForward.AddListener(ActivateGroundCamera);
-        carController.OnReverse.AddListener(ActivateReverseCamera);
+
 
         boostController.OnBoostActivation.AddListener(OnBoost);
         boostController.OnBoostDeactivation.AddListener(OnBoost);

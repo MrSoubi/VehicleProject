@@ -20,9 +20,6 @@ public class VFXWheelMud : MonoBehaviour
             mud[i].Play();
         }
 
-        carController.OnLanding.AddListener(ActiveVFXMud);
-        carController.OnJump.AddListener(DeactivateVFXMud);
-        carController.OnTakeOff.AddListener(DeactivateVFXMud);
     }
 
 

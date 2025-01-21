@@ -1427,33 +1427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d3351868cfe9c46863f9b2c74e062a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  OnKilled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnJump:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTakeOff:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLanding:
-    m_PersistentCalls:
-      m_Calls: []
-  OnReverse:
-    m_PersistentCalls:
-      m_Calls: []
-  OnForward:
-    m_PersistentCalls:
-      m_Calls: []
-  OnJumpEnabled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnJumpDisabled:
-    m_PersistentCalls:
-      m_Calls: []
   wheels:
   - {fileID: 4088218057308776533}
   - {fileID: 2505223751262498561}
@@ -1461,6 +1434,7 @@ MonoBehaviour:
   - {fileID: 7864800604596187820}
   data: {fileID: 11400000, guid: d5492877f1fb99d47a4058260a3cc223, type: 2}
   rb: {fileID: 5304856961037199411}
+  RSO_IsCarGrounded: {fileID: 11400000, guid: 8832e3cff237f1e469bef4d290111101, type: 2}
   gamepadIndex: 0
   jumpDelay: 1
   canJump: 1

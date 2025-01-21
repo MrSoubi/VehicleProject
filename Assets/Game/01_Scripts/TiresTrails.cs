@@ -14,9 +14,7 @@ public class TiresTrails : MonoBehaviour
 
     private void Start()
     {
-        carController.OnLanding.AddListener(ActiveVFXTireTrail);
-        carController.OnJump.AddListener(DesactivateVFXTireTrail);
-        carController.OnTakeOff.AddListener(DesactivateVFXTireTrail);
+
     }
     private void Update()
     {

@@ -34,8 +34,7 @@ public class CarUIManager : MonoBehaviour
     {
         boostController.OnBoostValueChanged.AddListener(UpdateBoostUI);
         playerLifeManager.OnPercentageValueChanged.AddListener(UpdateDamageUI);
-        carController.OnJump.AddListener(SetJumpIndicatorDisabled);
-        carController.OnLanding.AddListener(RechargeJump);
+
 
         boostGaugeInitialPosition = boostGauge.transform.localPosition;
     }
