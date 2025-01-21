@@ -1766,37 +1766,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MuscleCar
       objectReference: {fileID: 0}
-    - target: {fileID: 7349948595769956154, guid: 77f9732ccf7041f44a930ba32a59fb8c,
-        type: 3}
-      propertyPath: carLanding
-      value: 
-      objectReference: {fileID: 11400000, guid: a0c37934a348a60419fd7ed83b8bcda0,
-        type: 2}
-    - target: {fileID: 7349948595769956154, guid: 77f9732ccf7041f44a930ba32a59fb8c,
-        type: 3}
-      propertyPath: boostStrength
-      value: 150000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2294184215963115435, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
-    - {fileID: 7881642480713983484, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
-    - {fileID: 6985579040267303805, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
-    - {fileID: 6423733743170563362, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
-    - {fileID: 4165019252157897389, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
-    - {fileID: 5435623449802071578, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
-    - {fileID: 6248230730041000440, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
-    - {fileID: 8804805690536835635, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2448460959159480039, guid: 77f9732ccf7041f44a930ba32a59fb8c,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9170006272951224538}
-    - targetCorrespondingSourceObject: {fileID: 5725748239349608808, guid: 77f9732ccf7041f44a930ba32a59fb8c,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7220457753351578085}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77f9732ccf7041f44a930ba32a59fb8c, type: 3}
 --- !u!4 &1595534063161063818 stripped
 Transform:
@@ -1818,18 +1791,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3696929997418475200, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
-      propertyPath: carLanding
-      value: 
-      objectReference: {fileID: 11400000, guid: a0c37934a348a60419fd7ed83b8bcda0,
-        type: 2}
-    - target: {fileID: 3696929997418475200, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
-      propertyPath: landingShakeDefinition
-      value: 
-      objectReference: {fileID: 11400000, guid: d4f40588e71e152418bc30fac4d4cdb7,
-        type: 2}
     - target: {fileID: 4790306576368980542, guid: 4dcd5aca3ac53584e82446534450fdc0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1892,51 +1853,14 @@ PrefabInstance:
       objectReference: {fileID: 1595534063161063818}
     - target: {fileID: 6614841537681061841, guid: 4dcd5aca3ac53584e82446534450fdc0,
         type: 3}
-      propertyPath: returnSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6614841537681061841, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
       propertyPath: carRigidbody
       value: 
       objectReference: {fileID: 1627784915712089286}
-    - target: {fileID: 6614841537681061841, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
-      propertyPath: followDamping
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6614841537681061841, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
-      propertyPath: iscarGrounded
-      value: 
-      objectReference: {fileID: 11400000, guid: 8832e3cff237f1e469bef4d290111101,
-        type: 2}
-    - target: {fileID: 6614841537681061841, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
-      propertyPath: maxCameraDistance
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6772761296784534713, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8369285642416009579, guid: 4dcd5aca3ac53584e82446534450fdc0,
-        type: 3}
-      propertyPath: m_Name
-      value: MainCamera
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcd5aca3ac53584e82446534450fdc0, type: 3}
---- !u!1 &4766977315491070751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5725748239349608808, guid: 77f9732ccf7041f44a930ba32a59fb8c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1141112606307231840}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5449396610678153760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2005,33 +1929,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb05c476951fd664397011d3e485f71a, type: 3}
---- !u!1 &6408559515755160161 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2448460959159480039, guid: 77f9732ccf7041f44a930ba32a59fb8c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1141112606307231840}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7220457753351578085
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4766977315491070751}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &9004211814771517899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2100,27 +1997,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dabe8ebe069d6949b3ff1fc27f1e1b4, type: 3}
---- !u!95 &9170006272951224538
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6408559515755160161}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -47,14 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   carRigidbody: {fileID: 0}
-  isCarGrounded: {fileID: 11400000, guid: 8832e3cff237f1e469bef4d290111101, type: 2}
+  iscarGrounded: {fileID: 11400000, guid: 8832e3cff237f1e469bef4d290111101, type: 2}
   distance: 8
   height: 3
-  rotationSpeed: 100
-  returnSpeed: 3
+  returnSpeed: 5
   defaultPitch: 10
   minPitch: -60
   maxPitch: 60
+  followDamping: 10
+  minCameraDistance: 2
+  maxCameraDistance: 20
 --- !u!1 &8369285642416009579
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,9 +69,10 @@ GameObject:
   - component: {fileID: 6772761296784534713}
   - component: {fileID: 2723668339525057850}
   - component: {fileID: 2875382178870175354}
+  - component: {fileID: 4520557930305982388}
   - component: {fileID: 3696929997418475200}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: MainCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,6 +196,23 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &4520557930305982388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369285642416009579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f2f8c866f6e484492ce978d970ab04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseFOV: 60
+  boostFOV: 90
+  zoomInDuration: 0.5
+  zoomOutDuration: 2
+  boostActivated: {fileID: 11400000, guid: 39a5345c69415bc49b362e0381a9894d, type: 2}
 --- !u!114 &3696929997418475200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e527f24d4d1e3f1459b8cde379c3636f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensity: 0.3
-  duration: 0.5
-  axis: {x: 1, y: 1, z: 1}
-  release: 1
+  landingShakeDefinition: {fileID: 11400000, guid: d4f40588e71e152418bc30fac4d4cdb7,
+    type: 2}
+  carLanding: {fileID: 11400000, guid: a0c37934a348a60419fd7ed83b8bcda0, type: 2}
