@@ -9,9 +9,8 @@ public class S_CarInputEvent : MonoBehaviour
     private PlayerInput _playerInput;
     [SerializeField] private CarController _carController;
     [SerializeField] private WheelController[] _wheelCollider;
-    [SerializeField] private BoostController _boostController;
     [SerializeField] private bool _isForTest;
-    [SerializeField] private CarColorManager _carColorManager;
+
     public int PlayerID { get; private set; }
 
     private void Awake()
@@ -29,8 +28,6 @@ public class S_CarInputEvent : MonoBehaviour
 
         _playerInput = playerInput;
         PlayerID = playerID;
-
-        _carColorManager.SetColor(playerID);
 
         _playerInput.actions["Jump"].performed += _carController.Jump;
         _playerInput.actions["Steer"].performed += _carController.SteerInAir;
@@ -50,8 +47,8 @@ public class S_CarInputEvent : MonoBehaviour
             _playerInput.actions["Reverse"].canceled += wheelController.OnReverseCancel;
         }
 
-        _playerInput.actions["Boost"].performed += _boostController.StartBoost;
-        _playerInput.actions["Boost"].canceled += _boostController.StopBoost;
+/*        _playerInput.actions["Boost"].performed += _boostController.StartBoost;
+        _playerInput.actions["Boost"].canceled += _boostController.StopBoost;*/
 
     }
 
@@ -73,8 +70,8 @@ public class S_CarInputEvent : MonoBehaviour
             _playerInput.actions["Reverse"].canceled -= wheelController.OnReverseCancel;
         }
 
-        _playerInput.actions["Boost"].performed -= _boostController.StartBoost;
-        _playerInput.actions["Boost"].canceled -= _boostController.StopBoost;
+/*        _playerInput.actions["Boost"].performed -= _boostController.StartBoost;
+        _playerInput.actions["Boost"].canceled -= _boostController.StopBoost;*/
     }
 
     public PlayerInput GetPlayerInput()

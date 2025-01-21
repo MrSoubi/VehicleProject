@@ -21,9 +21,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private List<WheelController> wheels = new List<WheelController>();
     [SerializeField] private SO_Car data;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private S_RumbleManager _rumbleManager;
-    [SerializeField] private EventChannel _deathEvent;
-    [SerializeField] EventChannel _gameLoopEnd;
 
 
 
@@ -74,7 +71,6 @@ public class CarController : MonoBehaviour
     }
 
     float steerInput, pitchInput;
-    bool desiredJump;
     int framesSinceLastGrounded;
     int framesSinceGoingReverse;
 
@@ -273,12 +269,7 @@ public class CarController : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-
-        _rumbleManager.InvokeDeathVibration();
-
         OnKilled.Invoke();
-
-
 
         Invoke(nameof(ResetTeleport), 0.5f);
     }
@@ -317,15 +308,6 @@ public class CarController : MonoBehaviour
         Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + rb.linearVelocity);
     }
 
-    private void OnEnable()
-    {
-        _gameLoopEnd.onEventTriggered.AddListener(StopTheCar);
-    }
-
-    private void OnDisable()
-    {
-        _gameLoopEnd.onEventTriggered.RemoveListener(StopTheCar);
-    }
     #region INPUT
     public void SteerInAir(InputAction.CallbackContext context)
     {
