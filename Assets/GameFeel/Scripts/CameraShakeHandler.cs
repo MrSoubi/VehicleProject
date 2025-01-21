@@ -6,8 +6,10 @@ public class AdvancedCameraShake : MonoBehaviour
     private CameraShakeDefinition currentShakeDefinition;
 
     public CameraShakeDefinition landingShakeDefinition;
+    public CameraShakeDefinition boostShakeDefinition;
 
     public RSE_CarLanding carLanding;
+    public RSE_BoostActivated boostActivated;
 
     float intensity = 0.3f;
 
@@ -19,11 +21,13 @@ public class AdvancedCameraShake : MonoBehaviour
     private void OnEnable()
     {
         carLanding.trigger += TriggerLandingShake;
+        boostActivated.trigger += TriggerBoostShake;
     }
 
     private void OnDisable()
     {
         carLanding.trigger -= TriggerLandingShake;
+        boostActivated.trigger -= TriggerBoostShake;
     }
 
 
@@ -69,5 +73,12 @@ public class AdvancedCameraShake : MonoBehaviour
             this.intensity = intensity;
             shakeTimer = currentShakeDefinition.duration;
         }
+    }
+
+    void TriggerBoostShake()
+    {
+        currentShakeDefinition = boostShakeDefinition;
+        this.intensity = 0.5f;
+        shakeTimer = currentShakeDefinition.duration;
     }
 }
