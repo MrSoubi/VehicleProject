@@ -1,133 +1,146 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Pour accéder à Gamepad
 
-public class CameraController : MonoBehaviour
+public class CarCameraController3Cases : MonoBehaviour
 {
     [Header("Cible à suivre")]
     public Transform target;           // Transform de la voiture
     public Rigidbody carRigidbody;     // Pour connaître la vélocité
 
-    public RSO_IsCarGrounded isCarGrounded;
+    [Header("Détection voiture en l’air")]
+    public RSO_IsCarGrounded iscarGrounded;
 
     [Header("Positionnement caméra")]
-    public float distance = 5f;        // Distance derrière la voiture
+    public float distance = 5f;        // Distance idéale derrière la voiture
     public float height = 2f;          // Hauteur de la caméra
 
-    [Header("Contrôle manuel")]
-    public float rotationSpeed = 100f; // Sensibilité du stick droit
-
-    [Header("Recentrage auto")]
+    [Header("Recentrage auto (rotation)")]
     public float returnSpeed = 5f;     // Vitesse de recentrage automatique
     public float defaultPitch = 10f;   // Inclinaison verticale par défaut quand on se recentre
-
-    [Header("Limites verticales")]
     public float minPitch = -60f;
     public float maxPitch = 60f;
 
-    // Variables internes pour la rotation de la caméra
-    private float yaw = 0f;
-    private float pitch = 0f;
+    [Header("Damping de suivi (position)")]
+    public float followDamping = 5f;        // Vitesse de “rattrapage” de la position cible
+    public float minCameraDistance = 2f;    // Distance min entre la caméra et la voiture
+    public float maxCameraDistance = 10f;   // Distance max entre la caméra et la voiture
+
+    // Variables internes pour la rotation
+    private float yaw = 0f;   // Rotation horizontale (axe Y)
+    private float pitch = 0f; // Rotation verticale (axe X)
 
     private void Start()
     {
-        // Initialiser la caméra directement derrière la voiture (optionnel)
+        // Initialiser la caméra derrière la voiture (optionnel)
         if (target != null)
         {
-            yaw = target.eulerAngles.y + 180f;
+            yaw = target.eulerAngles.y;
             pitch = defaultPitch;
         }
     }
 
     private void Update()
     {
-        // Sécurité : on arrête si pas de cible ou pas de manette
-        if (target == null || carRigidbody == null || Gamepad.all.Count == 0)
+        if (target == null || carRigidbody == null)
             return;
 
-        Gamepad gamepad = Gamepad.all[0];
-        if (gamepad == null) return;
-
-        // Récupère l’input du stick droit
-        Vector2 rightStick = gamepad.rightStick.ReadValue();
-        float stickMagnitude = rightStick.magnitude;
-
-        // --- 1) Contrôle manuel si l’utilisateur bouge le stick droit ---
-        if (stickMagnitude > 0.01f)
-        {
-            yaw += rightStick.x * rotationSpeed * Time.deltaTime;
-            pitch -= rightStick.y * rotationSpeed * Time.deltaTime;
-            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-        }
-        else
-        {
-            // --- 2) Recentrage automatique si le stick est relâché ---
-            AutoCenterCamera();
-        }
+        // La caméra se recentre automatiquement en permanence (aucun contrôle joystick)
+        AutoCenterCamera();
     }
 
     private void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null)
+            return;
 
-        // Calcule la rotation en Quaternion
+        // 1) Calcul de la rotation finale de la caméra
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
 
-        // Calcule la position désirée de la caméra
+        // 2) Position idéale : offset local [0, height, -distance]
         Vector3 desiredPosition = target.position + rotation * new Vector3(0f, height, -distance);
 
-        // Applique la position
-        transform.position = desiredPosition;
+        // 3) Détermination de la direction de la vélocité
+        Vector3 velocity = carRigidbody.velocity;
+        float speed = velocity.magnitude;
 
-        // Oriente la caméra vers la voiture (avec un léger offset vertical si souhaité)
+        // Si la vitesse est trop faible, damping global
+        if (speed < 0.01f)
+        {
+            Vector3 nextPos = Vector3.Lerp(transform.position, desiredPosition, followDamping * Time.deltaTime);
+            ApplyDistanceClampAndSetPosition(nextPos);
+        }
+        else
+        {
+            // On applique un damping uniquement dans l’axe de la vélocité
+            Vector3 velocityDir = velocity.normalized;
+            Vector3 currentPos = transform.position;
+            Vector3 toDesired = desiredPosition - currentPos;
+
+            // Projection parallèle et perpendiculaire
+            Vector3 parallel = Vector3.Project(toDesired, velocityDir);
+            Vector3 perpendicular = toDesired - parallel;
+
+            // Lerp seulement sur la composante parallèle
+            Vector3 parallelDamped = Vector3.Lerp(Vector3.zero, parallel, followDamping * Time.deltaTime);
+            Vector3 nextPos = currentPos + perpendicular + parallelDamped;
+
+            ApplyDistanceClampAndSetPosition(nextPos);
+        }
+
+        // Oriente la caméra vers la voiture (légèrement au-dessus, si désiré)
         Vector3 lookTarget = target.position + Vector3.up * height * 0.5f;
         transform.LookAt(lookTarget);
     }
 
     /// <summary>
-    /// Gère le recentrage automatique de la caméra
-    /// en fonction de la situation (avant, arrière, ou en l’air).
+    /// Recentrage automatique de la rotation (yaw/pitch),
+    /// selon 2 cas : au sol (orientation de la voiture) ou en l’air (vélocité).
     /// </summary>
     private void AutoCenterCamera()
     {
         float desiredYaw;
         float desiredPitch;
 
-        if (!isCarGrounded.Value)
+        if (!iscarGrounded.Value)
         {
-            // --- CAS 3 : la voiture est en l’air ---
-            // On s’aligne sur la direction de la vélocité
-            Vector3 velocity = carRigidbody.velocity;
-            // Angle horizontal à partir de la vélocité
-            float velocityAngle = Mathf.Atan2(velocity.x, velocity.z) * Mathf.Rad2Deg;
-            desiredYaw = velocityAngle;
-            desiredPitch = defaultPitch;           // On peut choisir un pitch par défaut
+            // CAS "en l’air" : aligné sur la direction de la vélocité
+            Vector3 vel = carRigidbody.velocity;
+            float velAngle = Mathf.Atan2(vel.x, vel.z) * Mathf.Rad2Deg;
+            desiredYaw = velAngle;
+            desiredPitch = pitch;  // on ne change pas le pitch
         }
         else
         {
-            // --- CAS 1 et 2 : la voiture est au sol ---
-            // On différencie la marche avant et arrière via la vélocité locale
-            Vector3 localVelocity = target.InverseTransformDirection(carRigidbody.velocity);
-            float zVel = localVelocity.z;
-
-            if (zVel >= 0)
-            {
-                // --- CAS 1 : Avancer ---
-                // (Comportement identique à avant, mais séparé pour modifications futures)
-                desiredYaw = target.eulerAngles.y;
-                desiredPitch = defaultPitch;
-            }
-            else
-            {
-                // --- CAS 2 : Reculer ---
-                // (Pour l’instant, on applique le même positionnement ; 
-                //  on pourra le changer facilement si besoin)
-                desiredYaw = target.eulerAngles.y + 180f;
-                desiredPitch = defaultPitch;
-            }
+            // CAS "au sol" : on prend l'orientation de la voiture
+            desiredYaw = target.eulerAngles.y;
+            desiredPitch = defaultPitch;
         }
 
-        // On approche progressivement les angles "yaw" et "pitch" vers desiredYaw / desiredPitch
+        // Transition douce des angles
         yaw = Mathf.LerpAngle(yaw, desiredYaw, Time.deltaTime * returnSpeed);
         pitch = Mathf.Lerp(pitch, desiredPitch, Time.deltaTime * returnSpeed);
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+    }
+
+    /// <summary>
+    /// Applique la limite min/max de distance et définit la position de la caméra.
+    /// </summary>
+    private void ApplyDistanceClampAndSetPosition(Vector3 candidatePos)
+    {
+        float distToTarget = Vector3.Distance(candidatePos, target.position);
+
+        if (distToTarget < minCameraDistance)
+        {
+            // Trop près : on pousse la caméra à minCameraDistance
+            candidatePos = target.position +
+                           (candidatePos - target.position).normalized * minCameraDistance;
+        }
+        else if (distToTarget > maxCameraDistance)
+        {
+            // Trop loin : on rapproche la caméra à maxCameraDistance
+            candidatePos = target.position +
+                           (candidatePos - target.position).normalized * maxCameraDistance;
+        }
+
+        transform.position = candidatePos;
     }
 }

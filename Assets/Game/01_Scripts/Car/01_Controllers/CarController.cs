@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class CarController : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class CarController : MonoBehaviour
     [SerializeField] private Rigidbody rb;
 
     public RSO_IsCarGrounded RSO_IsCarGrounded;
-
+    public RSE_MetalCollision metalCollision;
+    public RSE_CarLanding carLanding;
+    public RSE_BoostActivated boostActivated;
 
     public int gamepadIndex;
 
@@ -64,6 +67,23 @@ public class CarController : MonoBehaviour
     float steerInput, pitchInput;
     int framesSinceLastGrounded;
     int framesSinceGoingReverse;
+
+    bool boostInput;
+    public float boostStrength = 500;
+
+    private void Update()
+    {
+        Gamepad gamepad = Gamepad.all[0];
+        if (gamepad == null)
+            return;
+
+        if (!boostInput && gamepad.bButton.ReadValue() == 1)
+        {
+            boostActivated.trigger?.Invoke();
+        }
+
+        boostInput = gamepad.bButton.ReadValue() == 1;
+    }
 
     private void FixedUpdate()
     {
@@ -118,6 +138,8 @@ public class CarController : MonoBehaviour
             // On landing
             if (framesSinceLastGrounded > 0)
             {
+                carLanding.trigger?.Invoke(-lastVelocity.y, framesSinceLastGrounded);
+
                 rb.linearDamping = drag;
 
                 if (!canJump)
@@ -136,6 +158,11 @@ public class CarController : MonoBehaviour
             {
                 framesSinceGoingReverse = 0;
             }
+
+            if (boostInput)
+            {
+                rb.AddForce(transform.forward * boostStrength);
+            }
         }
 
         // Recover the car if it's stuck for too long
@@ -147,6 +174,14 @@ public class CarController : MonoBehaviour
     }
 
     bool canRecover;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Props")) return;
+
+        Quaternion orientation = Quaternion.FromToRotation(transform.position, collision.contacts[0].point);
+        metalCollision.trigger?.Invoke(collision.contacts[0].point, rb.velocity, orientation);
+    }
 
     Vector3 GetFloorNormal()
     {
