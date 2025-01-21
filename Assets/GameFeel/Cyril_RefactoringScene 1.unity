@@ -492,6 +492,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3696929997418475200, guid: 4dcd5aca3ac53584e82446534450fdc0,
+        type: 3}
+      propertyPath: carLanding
+      value: 
+      objectReference: {fileID: 11400000, guid: a0c37934a348a60419fd7ed83b8bcda0,
+        type: 2}
+    - target: {fileID: 3696929997418475200, guid: 4dcd5aca3ac53584e82446534450fdc0,
+        type: 3}
+      propertyPath: landingShakeDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: d4f40588e71e152418bc30fac4d4cdb7,
+        type: 2}
     - target: {fileID: 4790306576368980542, guid: 4dcd5aca3ac53584e82446534450fdc0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -562,6 +574,12 @@ PrefabInstance:
       propertyPath: carRigidbody
       value: 
       objectReference: {fileID: 1627784915712089286}
+    - target: {fileID: 6614841537681061841, guid: 4dcd5aca3ac53584e82446534450fdc0,
+        type: 3}
+      propertyPath: iscarGrounded
+      value: 
+      objectReference: {fileID: 11400000, guid: 8832e3cff237f1e469bef4d290111101,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6766,6 +6784,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: MuscleCar
       objectReference: {fileID: 0}
+    - target: {fileID: 7349948595769956154, guid: 77f9732ccf7041f44a930ba32a59fb8c,
+        type: 3}
+      propertyPath: carLanding
+      value: 
+      objectReference: {fileID: 11400000, guid: a0c37934a348a60419fd7ed83b8bcda0,
+        type: 2}
+    - target: {fileID: 7349948595769956154, guid: 77f9732ccf7041f44a930ba32a59fb8c,
+        type: 3}
+      propertyPath: boostActivated
+      value: 
+      objectReference: {fileID: 11400000, guid: 39a5345c69415bc49b362e0381a9894d,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
