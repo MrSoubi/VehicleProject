@@ -5,8 +5,20 @@ using UnityEngine.Rendering.Universal;
 
 public class PostProcessingHandler : MonoBehaviour
 {
-    [Tooltip("Durée totale de l'effet")]
-    public float effectDuration = 0.5f;
+    [Tooltip("Durée totale de l'effet Motion Blur")]
+    public float motionBlurDuration = 0.5f;
+
+    [Tooltip("Durée totale de l'effet Lens Distortion")]
+    public float lensDistortionDuration = 0.5f;
+
+    [Tooltip("Durée totale de l'effet Chromatic Aberration")]
+    public float chromaticAberrationDuration = 0.5f;
+
+    [Tooltip("Durée totale de l'effet Bloom")]
+    public float bloomDuration = 0.5f;
+
+    [Tooltip("Durée totale de l'effet Film Grain")]
+    public float grainDuration = 0.5f;
 
     [Tooltip("Courbe permettant de définir l'évolution de l'intensité du Motion Blur en fonction du temps normalisé (0 à 1)")]
     public AnimationCurve motionBlurCurve;
@@ -17,8 +29,11 @@ public class PostProcessingHandler : MonoBehaviour
     [Tooltip("Courbe permettant de définir l'évolution de l'intensité de la Chromatic Aberration en fonction du temps normalisé (0 à 1)")]
     public AnimationCurve chromaticAberrationCurve;
 
-    [Tooltip("Courbe permettant de définir l'évolution de l'intensité de la Chromatic Aberration en fonction du temps normalisé (0 à 1)")]
+    [Tooltip("Courbe permettant de définir l'évolution de l'intensité du Bloom en fonction du temps normalisé (0 à 1)")]
     public AnimationCurve bloomCurve;
+
+    [Tooltip("Courbe permettant de définir l'évolution de l'intensité du Film Grain en fonction du temps normalisé (0 à 1)")]
+    public AnimationCurve grainCurve;
 
     [Tooltip("Référence au Global Volume contenant les effets")]
     public Volume globalVolume;
@@ -29,6 +44,7 @@ public class PostProcessingHandler : MonoBehaviour
     private LensDistortion lensDistortion;
     private ChromaticAberration chromaticAberration;
     private Bloom bloom;
+    private FilmGrain grain;
 
     private void Awake()
     {
@@ -38,28 +54,17 @@ public class PostProcessingHandler : MonoBehaviour
             return;
         }
 
-        // Récupérer Motion Blur depuis le Volume Profile
+        // Récupérer les effets depuis le Volume Profile
         if (!globalVolume.profile.TryGet(out motionBlur))
-        {
             Debug.LogError("Motion Blur non trouvé dans le Volume Profile !");
-        }
-
-        if (!globalVolume.profile.TryGet(out bloom))
-        {
-            Debug.LogError("Bloom non trouvé dans le Volume Profile !");
-        }
-
-        // Récupérer Lens Distortion depuis le Volume Profile
         if (!globalVolume.profile.TryGet(out lensDistortion))
-        {
             Debug.LogError("Lens Distortion non trouvé dans le Volume Profile !");
-        }
-
-        // Récupérer Chromatic Aberration depuis le Volume Profile
         if (!globalVolume.profile.TryGet(out chromaticAberration))
-        {
             Debug.LogError("Chromatic Aberration non trouvé dans le Volume Profile !");
-        }
+        if (!globalVolume.profile.TryGet(out bloom))
+            Debug.LogError("Bloom non trouvé dans le Volume Profile !");
+        if (!globalVolume.profile.TryGet(out grain))
+            Debug.LogError("Film Grain non trouvé dans le Volume Profile !");
     }
 
     private void OnEnable()
@@ -74,45 +79,105 @@ public class PostProcessingHandler : MonoBehaviour
 
     private void HandleCarLanding()
     {
-        StartCoroutine(HandlePostProcessingEffects());
+        StartCoroutine(HandleMotionBlur());
+        StartCoroutine(HandleLensDistortion());
+        StartCoroutine(HandleChromaticAberration());
+        StartCoroutine(HandleBloom());
+        StartCoroutine(HandleFilmGrain());
     }
 
-    private IEnumerator HandlePostProcessingEffects()
+    private IEnumerator HandleMotionBlur()
     {
-        if (motionBlur == null || lensDistortion == null || chromaticAberration == null)
-        {
+        if (motionBlur == null)
             yield break;
-        }
 
         float elapsedTime = 0f;
-
-        while (elapsedTime < effectDuration)
+        while (elapsedTime < motionBlurDuration)
         {
-            // Calcul de la progression normalisée (entre 0 et 1)
-            float t = elapsedTime / effectDuration;
+            float t = elapsedTime / motionBlurDuration;
+            float intensity = motionBlurCurve.Evaluate(t);
+            motionBlur.intensity.Override(intensity);
 
-            // Évaluation des courbes
-            float motionBlurValue = motionBlurCurve.Evaluate(t);
-            float lensDistortionValue = lensDistortionCurve.Evaluate(t);
-            float chromaticAberrationValue = chromaticAberrationCurve.Evaluate(t);
-            float bloomValue = bloomCurve.Evaluate(t) * 10;
-
-            // Application des valeurs
-            motionBlur.intensity.Override(motionBlurValue);
-            lensDistortion.intensity.Override(lensDistortionValue);
-            chromaticAberration.intensity.Override(chromaticAberrationValue);
-            bloom.intensity.Override(chromaticAberrationValue);
-
-            // Incrémentation avec le temps non affecté par Time.timeScale
             elapsedTime += Time.unscaledDeltaTime;
-
-            yield return null; // Attente de la frame suivante
+            yield return null;
         }
 
-        // Réinitialisation des valeurs après l'effet
         motionBlur.intensity.Override(0f);
+    }
+
+    private IEnumerator HandleLensDistortion()
+    {
+        if (lensDistortion == null)
+            yield break;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < lensDistortionDuration)
+        {
+            float t = elapsedTime / lensDistortionDuration;
+            float intensity = lensDistortionCurve.Evaluate(t);
+            lensDistortion.intensity.Override(intensity);
+
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
         lensDistortion.intensity.Override(0f);
+    }
+
+    private IEnumerator HandleChromaticAberration()
+    {
+        if (chromaticAberration == null)
+            yield break;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < chromaticAberrationDuration)
+        {
+            float t = elapsedTime / chromaticAberrationDuration;
+            float intensity = chromaticAberrationCurve.Evaluate(t);
+            chromaticAberration.intensity.Override(intensity);
+
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
         chromaticAberration.intensity.Override(0f);
+    }
+
+    private IEnumerator HandleBloom()
+    {
+        if (bloom == null)
+            yield break;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < bloomDuration)
+        {
+            float t = elapsedTime / bloomDuration;
+            float intensity = bloomCurve.Evaluate(t);
+            bloom.intensity.Override(intensity);
+
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
         bloom.intensity.Override(0f);
+    }
+
+    private IEnumerator HandleFilmGrain()
+    {
+        if (grain == null)
+            yield break;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < grainDuration)
+        {
+            float t = elapsedTime / grainDuration;
+            float intensity = grainCurve.Evaluate(t);
+            grain.intensity.Override(intensity);
+
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        grain.intensity.Override(0f);
     }
 }
