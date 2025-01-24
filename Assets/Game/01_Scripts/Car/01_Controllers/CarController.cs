@@ -17,6 +17,7 @@ public class CarController : MonoBehaviour
     public RSE_MetalCollision metalCollision;
     public RSE_CarLanding carLanding;
     public RSE_BoostActivated boostActivated;
+    public RSO_CarBoosting carBoosting;
 
     public int gamepadIndex;
 
@@ -83,6 +84,7 @@ public class CarController : MonoBehaviour
         }
 
         boostInput = gamepad.bButton.ReadValue() == 1;
+        carBoosting.Value = boostInput;
     }
 
     private void FixedUpdate()
