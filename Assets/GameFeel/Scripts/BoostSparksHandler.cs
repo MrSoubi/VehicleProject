@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class BoostSparksHandler : MonoBehaviour
 {
@@ -31,6 +33,12 @@ public class BoostSparksHandler : MonoBehaviour
     private void OnDisable()
     {
         boostActivated.trigger -= HandleBoostActivation;
+    }
+
+    private void Start()
+    {
+        ParticleSystem.EmissionModule emission = particleSystemRef.emission;
+        emission.rateOverTime = new ParticleSystem.MinMaxCurve(baseEmissionRate);
     }
 
     private void HandleBoostActivation()
