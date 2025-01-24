@@ -11,10 +11,8 @@
 /* Uncomment this line if you want to globally disable soft particles */
 // #define GLOBAL_DISABLE_SOFT_PARTICLES
 
-/* Uncomment this line to do Soft Particles depth calculation in Orthographic mode */
-// #define SOFT_PARTICLES_ORTHOGRAPHIC
-
 /* Change this value if you want to globally scale the HDR effects */
+/* (e.g. if your bloom effect is too strong or too weak on the effects) */
 #define GLOBAL_HDR_MULTIPLIER 1
 
 /* Comment this line if you want to disable point lights for lit particles */

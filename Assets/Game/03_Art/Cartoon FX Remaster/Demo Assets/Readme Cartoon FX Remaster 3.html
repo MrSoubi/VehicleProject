@@ -41,7 +41,7 @@
 			}
 
 			em { color: #2F8DC7; }
-			b { font-weight: bold; color: #555; }
+			b { font-weight: bold; color: #444; font-size: 15px; }
 
 			ul { margin: 0.2em 0; }
 			p { margin: 0.3em; }
@@ -116,7 +116,7 @@
 		<div id="main">
 			<div id="header">
 				<div id="title">Cartoon FX Remaster 3</div>
-				<div id="version">R 1.4, May 2024 (<a href="#changelog">changelog</a>)</div>
+				<div id="version">R 1.4.2, December 2024 (<a href="#changelog">changelog</a>)</div>
 				<div id="copyright">© 2012-2024 - Jean Moreno</div>
 				<div id="email"><span id="email_link">jean&#46;&#109;oreno&#46;<b>nonsense</b>pu&#98;lic+&#117;&#110;i&#116;&#121;&#64;gmai&#108;&#46;com</span></div>
 			</div>
@@ -197,27 +197,36 @@
 			<h2 id="troubleshooting">Troubleshooting</h2>
 			<div class="section troubleshooting">
 				<ul>
-					<li><b>License:</b> The full legal license can be found here: <a href="https://unity.com/legal/as-terms" target="_blank">https://unity.com/legal/as-terms</a> (see <em>Appendix 1: Asset Store End User License Agreement</em>)<br>
-					You can only use the effects in a commercial game or application when used as described in the above license.
-					<li><b>URP:</b> If almost all effects don't show when using URP, it likely is because the <em>'Depth Texture'</em> is disabled, and it is needed for soft particles to work.<br>You can either:
+					<li><b>Invisible effects with URP:</b><br>If almost all effects don't show when using URP, it likely is because the <em>'Depth Texture'</em> is disabled, and it is needed for soft particles to work.<br>You can either:
 						<ul>
 						<li>Enable the 'Depth Texture' option in the URP asset</li>
 						<li>Disable soft particles entirely by editing the <span class='code'>CFXR Settings.cginc</span> file and uncommenting the relevant line</li>
 						</ul>
+						Unfortunately, Unity doesn't provide any way to know if the depth texture is enabled to the shaders, and thus this process cannot be automatic.
 					</li>
-					<li><b>Magenta/Pink Effects:</b> If the shaders don't work and effects are <span style='color: #ff00ff;'>magenta</span>, then you may need to recompile the shaders for the currently active render pipeline: right-click on the <span class='code'>Shaders</span> folder, and hit <span class='code'>Reimport</span></li>
-					<li><b>Addressables/Asset Bundles:</b> if the effect don't work when using addressables, you can try to force the selected render pipeline for the shaders (select the shader files, and change the relevant option in their inspector).<br>
+					<li><b>Invisible effects on Android/iOS/other platform:</b><br>Most likely this is due to the depth texture not being enabled by default on those platforms and thus soft particles breaks. See the above point for a solution.</li>
+					<li><b>Magenta/Pink Effects:</b><br> If the shaders don't work and effects are <span style='color: #ff00ff;'>magenta</span>, then you may need to recompile the shaders for the currently active render pipeline: right-click on the <span class='code'>Shaders</span> folder, and hit <span class='code'>Reimport</span></li>
+					<li><b>Addressables/Asset Bundles:</b><br>If the effect don't work when using addressables, you can try to force the selected render pipeline for the shaders (select the shader files, and change the relevant option in their inspector).<br>
 					Some users also reported that using the <span class='code'>'Build&nbsp;>&nbsp;Clean&nbsp;Build&nbsp;>&nbsp;Build&nbsp;Pipeline&nbsp;Cache'</span> option in the Addressables window did solve the issue afterwards.</li>
-					<li><b>CFXR_Effect script:</b> Almost all prefabs have the CFXR_Effect script attached: it handles auto-destruction or deactivation of the GameObject once an effect has finished playing, as well as camera shake and light animation where relevant</li>
-					<li><b>Sorting:</b> If you have problems with z-sorting (transparent objects appearing in front of other when their position is actually behind), try changing the values in the <span class='code'>Particle&nbsp;System&nbsp;>&nbsp;Renderer&nbsp;>&nbsp;Sorting&nbsp;Fudge</span>; as long as the relative order is respected between the different particle systems of a same prefab, it should work ok.</li>
-					<li><b>Color Space:</b> Effects were authored using <em>Linear Color Space</em>; use that for the best results (in the <span class='code'>Player</span> project settings)</li>
-					<li><b>HDR:</b> If some effects show washed out colors, it likely is because HDR isn't enabled for the camera (or in the URP asset), and thus colors will be clamped.</li>
+					<li><b>CFXR_Effect script:</b><br>Almost all prefabs have the CFXR_Effect script attached: it handles auto-destruction or deactivation of the GameObject once an effect has finished playing, as well as camera shake and light animation where relevant</li>
+					<li><b>Sorting:</b><br>If you have problems with z-sorting (transparent objects appearing in front of other when their position is actually behind), try changing the values in the <span class='code'>Particle&nbsp;System&nbsp;>&nbsp;Renderer&nbsp;>&nbsp;Sorting&nbsp;Fudge</span>; as long as the relative order is respected between the different particle systems of a same prefab, it should work ok.</li>
+					<li><b>Color Space:</b><br>Effects were authored using <em>Linear Color Space</em>; use that for the best results (in the <span class='code'>Player</span> project settings)</li>
+					<li><b>HDR:</b><br>If some effects show washed out colors, it likely is because HDR isn't enabled for the camera (or in the URP asset), and thus colors will be clamped.</li>
+					<li><b>License:</b><br>The full legal license can be found here: <a href="https://unity.com/legal/as-terms" target="_blank">https://unity.com/legal/as-terms</a> (see <em>Appendix 1: Asset Store End User License Agreement</em>)<br>
+					You can only use the effects in a commercial game or application when used as described in the above license.</li>
 				</ul>
 				<p>Please send me an email if you are having other issues or have any question: <span id="email_link2">jean&#46;&#109;oreno&#46;<b>nonsense</b>pu&#98;lic+&#117;&#110;i&#116;&#121;&#64;gmai&#108;&#46;com</span></p>
 			</div>
 			<h2 id="changelog">Changelog</h2>
 			<div class="section">
-				<div id="changelog_content"> R 1.4.0
+				<div id="changelog_content"> R 1.4.2
+  - Updated readme with a specific troubleshooting section for effects not showing on Android/other platforms
+  
+  R 1.4.1
+  - Shaders: automatic detection of orthographic cameras (URP only)
+  - Demo scene: automatic ground shader selected based on the active render pipeline (fixed pink ground in URP)
+  
+  R 1.4.0
   - Shaders: Greatly reduced the number of possible shader variants (e.g. for Ubershader from roughly 130M to 12k possible variants)
   - Shaders: Added option to force compilation for a specific render pipeline (select the shader file and look in its Inspector window)
   - Shaders: fixed incorrect color for text effecs (green channel was always forced to 0.5)

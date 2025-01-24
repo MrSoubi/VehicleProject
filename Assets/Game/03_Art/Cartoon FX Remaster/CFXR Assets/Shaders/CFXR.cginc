@@ -21,16 +21,19 @@
 	{
 		float sceneZ = SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(projection)).r;
 
-	#if defined(SOFT_PARTICLES_ORTHOGRAPHIC)
-		// orthographic camera
-		#if defined(UNITY_REVERSED_Z)
-			sceneZ = 1.0f - sceneZ;
-		#endif
-		sceneZ = (sceneZ * _ProjectionParams.z) + _ProjectionParams.y;
-	#else
-		// perspective camera
-		sceneZ = LinearEyeDepthURP(sceneZ, _ZBufferParams);
-	#endif
+		if (unity_OrthoParams.w == 1)
+		{
+			// orthographic camera
+			#if defined(UNITY_REVERSED_Z)
+				sceneZ = 1.0f - sceneZ;
+			#endif
+			sceneZ = (sceneZ * _ProjectionParams.z) + _ProjectionParams.y;
+		}
+		else
+		{
+			// perspective camera
+			sceneZ = LinearEyeDepthURP(sceneZ, _ZBufferParams);
+		}
 
 		float fade = saturate (far * ((sceneZ - near) - projection.z));
 		return fade;
@@ -39,16 +42,19 @@
 	float SoftParticles(float near, float far, float4 projection)
 	{
 		float sceneZ = (SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(projection)));
-	#if defined(SOFT_PARTICLES_ORTHOGRAPHIC)
-		// orthographic camera
-		#if defined(UNITY_REVERSED_Z)
-			sceneZ = 1.0f - sceneZ;
-		#endif
-		sceneZ = (sceneZ * _ProjectionParams.z) + _ProjectionParams.y;
-	#else
-		// perspective camera
-		sceneZ = LinearEyeDepth(sceneZ);
-	#endif
+		if (unity_OrthoParams.w == 1)
+		{
+			// orthographic camera
+			#if defined(UNITY_REVERSED_Z)
+				sceneZ = 1.0f - sceneZ;
+			#endif
+			sceneZ = (sceneZ * _ProjectionParams.z) + _ProjectionParams.y;
+		}
+		else
+		{
+			// perspective camera
+			sceneZ = LinearEyeDepth(sceneZ);
+		}
 
 		float fade = saturate (far * ((sceneZ - near) - projection.z));
 		return fade;

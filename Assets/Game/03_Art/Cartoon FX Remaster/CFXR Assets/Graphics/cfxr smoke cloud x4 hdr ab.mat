@@ -73,7 +73,7 @@ Material:
     - _DebugDissolveTime: 0
     - _DirLightScreenAtten: 1
     - _DirectLightingRamp: 1
-    - _DissolveSmooth: 0.15
+    - _DissolveSmooth: 0.2
     - _Distort: 0.1
     - _DoubleDissolve: 0
     - _DstBlend: 10
@@ -81,6 +81,7 @@ Material:
     - _FadeAlongU: 0
     - _HdrBoost: 1
     - _HdrMultiply: 4
+    - _IndirectLightingMix: 0.5
     - _IndirectLightingMix: 0.5
     - _InvertDissolveTex: 0
     - _LightingWorldPosStrength: 0.2
@@ -113,6 +114,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 2, g: 2, b: 2, a: 1}
+    - _DissolveScroll: {r: 0, g: 0, b: 0, a: 0}
     - _DissolveScroll: {r: 0, g: 0, b: 0, a: 0}
     - _DistortScrolling: {r: 0, g: 0, b: 1, a: 1}
     - _OverlayTex_Scroll: {r: 0.1, g: 0.1, b: 1, a: 1}
