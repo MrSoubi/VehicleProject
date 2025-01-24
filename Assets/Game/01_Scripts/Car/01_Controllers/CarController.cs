@@ -159,10 +159,7 @@ public class CarController : MonoBehaviour
                 framesSinceGoingReverse = 0;
             }
 
-            if (boostInput)
-            {
-                rb.AddForce(transform.forward * boostStrength);
-            }
+
         }
 
         // Recover the car if it's stuck for too long
@@ -171,6 +168,11 @@ public class CarController : MonoBehaviour
             canRecover = true;
         }
         //Debug.Log(rb.angularDrag);
+
+        if (boostInput)
+        {
+            rb.AddForce(transform.forward * boostStrength);
+        }
     }
 
     bool canRecover;
