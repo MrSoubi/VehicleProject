@@ -5415,6 +5415,7 @@ GameObject:
   - component: {fileID: 6401570239689368236}
   - component: {fileID: 1049752012961716295}
   - component: {fileID: 3854393400500239009}
+  - component: {fileID: 6342516082603968486}
   m_Layer: 0
   m_Name: CFX4_Space Thruster C (Red-Orange, CFX Blend)
   m_TagString: Untagged
@@ -10141,6 +10142,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6342516082603968486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867720040813554231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795c8ac941c5cf14b8382e9be6200bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostActivated: {fileID: 11400000, guid: 39a5345c69415bc49b362e0381a9894d, type: 2}
+  animator: {fileID: 3854393400500239009}
+  animationTriggerName: BoostActivated
 --- !u!1 &2103540011839647323
 GameObject:
   m_ObjectHideFlags: 0
