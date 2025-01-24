@@ -17,6 +17,9 @@ public class PostProcessingHandler : MonoBehaviour
     [Tooltip("Courbe permettant de définir l'évolution de l'intensité de la Chromatic Aberration en fonction du temps normalisé (0 à 1)")]
     public AnimationCurve chromaticAberrationCurve;
 
+    [Tooltip("Courbe permettant de définir l'évolution de l'intensité de la Chromatic Aberration en fonction du temps normalisé (0 à 1)")]
+    public AnimationCurve bloomCurve;
+
     [Tooltip("Référence au Global Volume contenant les effets")]
     public Volume globalVolume;
 
@@ -25,6 +28,7 @@ public class PostProcessingHandler : MonoBehaviour
     private MotionBlur motionBlur;
     private LensDistortion lensDistortion;
     private ChromaticAberration chromaticAberration;
+    private Bloom bloom;
 
     private void Awake()
     {
@@ -38,6 +42,11 @@ public class PostProcessingHandler : MonoBehaviour
         if (!globalVolume.profile.TryGet(out motionBlur))
         {
             Debug.LogError("Motion Blur non trouvé dans le Volume Profile !");
+        }
+
+        if (!globalVolume.profile.TryGet(out bloom))
+        {
+            Debug.LogError("Bloom non trouvé dans le Volume Profile !");
         }
 
         // Récupérer Lens Distortion depuis le Volume Profile
@@ -86,11 +95,13 @@ public class PostProcessingHandler : MonoBehaviour
             float motionBlurValue = motionBlurCurve.Evaluate(t);
             float lensDistortionValue = lensDistortionCurve.Evaluate(t);
             float chromaticAberrationValue = chromaticAberrationCurve.Evaluate(t);
+            float bloomValue = bloomCurve.Evaluate(t) * 10;
 
             // Application des valeurs
             motionBlur.intensity.Override(motionBlurValue);
             lensDistortion.intensity.Override(lensDistortionValue);
             chromaticAberration.intensity.Override(chromaticAberrationValue);
+            bloom.intensity.Override(chromaticAberrationValue);
 
             // Incrémentation avec le temps non affecté par Time.timeScale
             elapsedTime += Time.unscaledDeltaTime;
@@ -102,5 +113,6 @@ public class PostProcessingHandler : MonoBehaviour
         motionBlur.intensity.Override(0f);
         lensDistortion.intensity.Override(0f);
         chromaticAberration.intensity.Override(0f);
+        bloom.intensity.Override(0f);
     }
 }
