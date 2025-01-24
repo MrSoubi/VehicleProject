@@ -442,7 +442,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -492,9 +492,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e527f24d4d1e3f1459b8cde379c3636f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  landingShakeDefinition: {fileID: 11400000, guid: d4f40588e71e152418bc30fac4d4cdb7,
-    type: 2}
-  boostShakeDefinition: {fileID: 11400000, guid: 65f0210083a9c7c4186b795d99f1ba0c,
-    type: 2}
-  carLanding: {fileID: 11400000, guid: a0c37934a348a60419fd7ed83b8bcda0, type: 2}
-  boostActivated: {fileID: 11400000, guid: 39a5345c69415bc49b362e0381a9894d, type: 2}
+  shakeDuration: 2
+  shakeIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxPositionOffset: 0.5
+  maxRotationOffset: 5
+  boostActivation: {fileID: 11400000, guid: 39a5345c69415bc49b362e0381a9894d, type: 2}

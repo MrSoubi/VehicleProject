@@ -1,84 +1,92 @@
-using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
-public class AdvancedCameraShake : MonoBehaviour
+public class CameraShakeHandler : MonoBehaviour
 {
-    private CameraShakeDefinition currentShakeDefinition;
+    [Tooltip("Durée totale de l'effet de Camera Shake")]
+    public float shakeDuration = 0.5f;
 
-    public CameraShakeDefinition landingShakeDefinition;
-    public CameraShakeDefinition boostShakeDefinition;
+    [Tooltip("Courbe permettant de définir l'évolution de l'intensité du Camera Shake en fonction du temps normalisé (0 à 1)")]
+    public AnimationCurve shakeIntensityCurve;
 
-    public RSE_CarLanding carLanding;
-    public RSE_BoostActivated boostActivated;
+    [Tooltip("Amplitude maximale du mouvement de position (en unités)")]
+    public float maxPositionOffset = 0.5f;
 
-    float intensity = 0.3f;
+    [Tooltip("Amplitude maximale du mouvement de rotation (en degrés)")]
+    public float maxRotationOffset = 5f;
 
-    // Timer interne pour suivre le tremblement en cours
-    private float shakeTimer = 0f;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+    private Coroutine shakeCoroutine;
 
-    // Position initiale de la caméra
-    private Vector3 initialPosition;
+    public RSE_BoostActivated boostActivation;
+
+    private void Awake()
+    {
+        // Sauvegarder la position et la rotation initiales
+        originalPosition = transform.localPosition;
+        originalRotation = transform.localRotation;
+    }
+
     private void OnEnable()
     {
-        carLanding.trigger += TriggerLandingShake;
-        boostActivated.trigger += TriggerBoostShake;
+        boostActivation.trigger += TriggerShake;
     }
 
     private void OnDisable()
     {
-        carLanding.trigger -= TriggerLandingShake;
-        boostActivated.trigger -= TriggerBoostShake;
+        boostActivation.trigger -= TriggerShake;
     }
 
-
-    void Awake()
+    public void TriggerShake()
     {
-        // On stocke la position de départ
-        initialPosition = transform.localPosition;
-    }
-
-    void Update()
-    {
-        if (shakeTimer > 0f)
+        if (shakeCoroutine != null)
         {
-            // Proportion de temps restant (0 à 1)
-            float progress = shakeTimer / currentShakeDefinition.duration;
-
-            // Génération d'un offset aléatoire sur les axes choisis
-            Vector3 randomOffset = new Vector3(
-                currentShakeDefinition.axis.x * Random.Range(-1f, 1f),
-                currentShakeDefinition.axis.y * Random.Range(-1f, 1f),
-                currentShakeDefinition.axis.z * Random.Range(-1f, 1f)
-            ) * intensity * progress;
-
-            // Application de l'offset à la position d'origine
-            transform.localPosition = initialPosition + randomOffset;
-
-            // On décrémente le timer en tenant compte de la valeur "release"
-            shakeTimer -= Time.deltaTime * currentShakeDefinition.release;
+            StopCoroutine(shakeCoroutine);
         }
-        else
-        {
-            // Quand le tremblement est terminé, on remet la caméra à sa position initiale
-            shakeTimer = 0f;
-            transform.localPosition = initialPosition;
-        }
+
+        shakeCoroutine = StartCoroutine(HandleCameraShake());
     }
 
-    void TriggerLandingShake(float intensity, float airTime)
+    private IEnumerator HandleCameraShake()
     {
-        if (airTime > 30)
-        {
-            currentShakeDefinition = landingShakeDefinition;
-            this.intensity = intensity;
-            shakeTimer = currentShakeDefinition.duration;
-        }
-    }
+        float elapsedTime = 0f;
 
-    void TriggerBoostShake()
-    {
-        currentShakeDefinition = boostShakeDefinition;
-        this.intensity = 0.5f;
-        shakeTimer = currentShakeDefinition.duration;
+        while (elapsedTime < shakeDuration)
+        {
+            // Calcul de la progression normalisée (entre 0 et 1)
+            float t = elapsedTime / shakeDuration;
+
+            // Évaluation de la courbe pour l'intensité
+            float intensity = shakeIntensityCurve.Evaluate(t);
+
+            // Calcul des offsets de position et de rotation
+            Vector3 positionOffset = new Vector3(
+                Random.Range(-1f, 1f) * maxPositionOffset * intensity,
+                Random.Range(-1f, 1f) * maxPositionOffset * intensity,
+                Random.Range(-1f, 1f) * maxPositionOffset * intensity
+            );
+
+            Vector3 rotationOffset = new Vector3(
+                Random.Range(-1f, 1f) * maxRotationOffset * intensity,
+                Random.Range(-1f, 1f) * maxRotationOffset * intensity,
+                Random.Range(-1f, 1f) * maxRotationOffset * intensity
+            );
+
+            // Appliquer les offsets
+            transform.localPosition = originalPosition + positionOffset;
+            transform.localRotation = originalRotation * Quaternion.Euler(rotationOffset);
+
+            // Incrémentation du temps
+            elapsedTime += Time.deltaTime;
+
+            yield return null; // Attendre la prochaine frame
+        }
+
+        // Réinitialisation de la position et de la rotation
+        transform.localPosition = originalPosition;
+        transform.localRotation = originalRotation;
+
+        shakeCoroutine = null;
     }
 }
