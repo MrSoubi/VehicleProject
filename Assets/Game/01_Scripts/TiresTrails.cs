@@ -20,7 +20,7 @@ public class TiresTrails : MonoBehaviour
     }
     private void Update()
     {
-       if(shouldDrawLines && Vector3.Dot(carRB.velocity.normalized, transform.forward) < driftLimit)
+       if(shouldDrawLines && Vector3.Dot(carRB.linearVelocity.normalized, transform.forward) < driftLimit)
         {
             trail.emitting = true;
         }

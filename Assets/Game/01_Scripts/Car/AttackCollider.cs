@@ -9,6 +9,6 @@ public class AttackCollider : MonoBehaviour
 
     public Vector3 GetVelocity()
     {
-        return carRigidBody.velocity;
+        return carRigidBody.linearVelocity;
     }
 }

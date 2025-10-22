@@ -31,7 +31,7 @@ public class VFXWheelMud : MonoBehaviour
         for (int i = 0; i < mud.Count; i++)
         {
             var em = mud[i].emission;
-            em.rateOverTime = rb.velocity.magnitude * emissionFactor;
+            em.rateOverTime = rb.linearVelocity.magnitude * emissionFactor;
         }
     }
 

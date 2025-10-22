@@ -56,13 +56,13 @@ public class ImpactManager : MonoBehaviour
 
     private void Start()
     {
-        velocityOddFrame = rb.velocity;
-        velocityEvenFrame = rb.velocity;
-        lastVelocity = rb.velocity;
+        velocityOddFrame = rb.linearVelocity;
+        velocityEvenFrame = rb.linearVelocity;
+        lastVelocity = rb.linearVelocity;
 
-        _speedOddFrame = rb.velocity.magnitude;
-        _speedEvenFrame = rb.velocity.magnitude;
-        lastSpeed = rb.velocity.magnitude;
+        _speedOddFrame = rb.linearVelocity.magnitude;
+        _speedEvenFrame = rb.linearVelocity.magnitude;
+        lastSpeed = rb.linearVelocity.magnitude;
 
       
         foreach (var part in _carParts) {
@@ -76,18 +76,18 @@ public class ImpactManager : MonoBehaviour
     {
         if (Time.frameCount % 2 == 0)
         {
-            velocityEvenFrame = rb.velocity;
+            velocityEvenFrame = rb.linearVelocity;
             lastVelocity = velocityOddFrame;
 
-            _speedEvenFrame = rb.velocity.magnitude;
+            _speedEvenFrame = rb.linearVelocity.magnitude;
             lastSpeed = _speedOddFrame;
         }
         else
         {
-            velocityOddFrame = rb.velocity;
+            velocityOddFrame = rb.linearVelocity;
             lastVelocity = velocityEvenFrame;
 
-            _speedOddFrame = rb.velocity.magnitude;
+            _speedOddFrame = rb.linearVelocity.magnitude;
             lastSpeed = _speedEvenFrame;
         }
     }
@@ -126,8 +126,8 @@ public class ImpactManager : MonoBehaviour
 
         Debug.Log($"Je me fait taper par un joueur");
         // Determination de l'avantage
-        // On compare l'alignement entre la vélocité de chaque voiture avant l'impact à la direction de la somme de ces vélocités
-        // La voiture dont la vélocité est la plus alignée à la somme est celle qui a l'avantage.
+        // On compare l'alignement entre la vï¿½locitï¿½ de chaque voiture avant l'impact ï¿½ la direction de la somme de ces vï¿½locitï¿½s
+        // La voiture dont la vï¿½locitï¿½ est la plus alignï¿½e ï¿½ la somme est celle qui a l'avantage.
         Vector3 impactVelocity = lastVelocity + otherCar.lastVelocity;
 
         float ImpactVibrationValue = otherCar.lastSpeed;
@@ -140,11 +140,11 @@ public class ImpactManager : MonoBehaviour
 
         bool hasAdvantage = score_A > score_B;
 
-        // On lance une invincibilité après chaque impact
+        // On lance une invincibilitï¿½ aprï¿½s chaque impact
 
         if (!hasAdvantage && isInvincible == false)
         {
-            Vector3 impactForce = rb.velocity - lastVelocity;
+            Vector3 impactForce = rb.linearVelocity - lastVelocity;
             //Vector3 impactForce = rb.velocity - lastVelocity + Vector3.up;
 
             impactForce.y += _verticalBumpForce * LastSpeedOtherCar;

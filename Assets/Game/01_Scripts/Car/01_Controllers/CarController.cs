@@ -62,15 +62,15 @@ public class CarController : MonoBehaviour
             Debug.LogWarning("Wheels not set correctly on " + gameObject.name);
         }
 
-        drag = rb.drag;
+        drag = rb.linearDamping;
 
-        velocityOddFrame = rb.velocity;
-        velocityEvenFrame = rb.velocity;
-        lastVelocity = rb.velocity;
+        velocityOddFrame = rb.linearVelocity;
+        velocityEvenFrame = rb.linearVelocity;
+        lastVelocity = rb.linearVelocity;
 
-        speedOddFrame = rb.velocity.magnitude;
-        speedEvenFrame = rb.velocity.magnitude;
-        lastSpeed = rb.velocity.magnitude;
+        speedOddFrame = rb.linearVelocity.magnitude;
+        speedEvenFrame = rb.linearVelocity.magnitude;
+        lastSpeed = rb.linearVelocity.magnitude;
     }
 
     float steerInput, pitchInput;
@@ -83,18 +83,18 @@ public class CarController : MonoBehaviour
         // TODO : change to a different frame count !!!
         if (Time.frameCount % 2 == 0)
         {
-            velocityEvenFrame = rb.velocity;
+            velocityEvenFrame = rb.linearVelocity;
             lastVelocity = velocityOddFrame;
 
-            speedEvenFrame = rb.velocity.magnitude;
+            speedEvenFrame = rb.linearVelocity.magnitude;
             lastSpeed = speedOddFrame;
         }
         else
         {
-            velocityOddFrame = rb.velocity;
+            velocityOddFrame = rb.linearVelocity;
             lastVelocity = velocityEvenFrame;
 
-            speedOddFrame = rb.velocity.magnitude;
+            speedOddFrame = rb.linearVelocity.magnitude;
             lastSpeed = speedEvenFrame;
 
         }
@@ -112,7 +112,7 @@ public class CarController : MonoBehaviour
 
             framesSinceLastGrounded++;
 
-            rb.drag = 0.1f;
+            rb.linearDamping = 0.1f;
 
             // Air control
             rb.AddTorque(transform.up * steerInput * data.airSteerForce);
@@ -136,7 +136,7 @@ public class CarController : MonoBehaviour
             // On landing
             if (framesSinceLastGrounded > 0)
             {
-                rb.drag = drag;
+                rb.linearDamping = drag;
 
                 if (!canJump)
                 {
@@ -185,7 +185,7 @@ public class CarController : MonoBehaviour
     }
     private bool IsGoingInReverse()
     {
-        return Vector3.Dot(rb.velocity, transform.forward) < 0 && reverseValue > 0;
+        return Vector3.Dot(rb.linearVelocity, transform.forward) < 0 && reverseValue > 0;
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -234,16 +234,16 @@ public class CarController : MonoBehaviour
     public void SetAngularDrag()
     {
         if (IsGrounded()){
-            rb.angularDrag = 0;
+            rb.angularDamping = 0;
         }else{
             // Angular drag setting depending on playerInput
             if (Mathf.Abs(steerInput) == 0 && Mathf.Abs(pitchInput) == 0)
             {
-                rb.angularDrag = data.angularDrag_NoInput;
+                rb.angularDamping = data.angularDrag_NoInput;
             }
             else
             {
-                rb.angularDrag = data.angularDrag_Input;
+                rb.angularDamping = data.angularDrag_Input;
             }
         }
     }
@@ -255,7 +255,7 @@ public class CarController : MonoBehaviour
 
     public float GetSpeedRatio()
     {
-        float speed = rb.velocity.magnitude / data.maxSpeed;
+        float speed = rb.linearVelocity.magnitude / data.maxSpeed;
         float value = data.powerCurve.Evaluate(speed);
 
         return value;
@@ -270,7 +270,7 @@ public class CarController : MonoBehaviour
 
 
         transform.rotation = spawnRotation;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
 
@@ -289,7 +289,7 @@ public class CarController : MonoBehaviour
 
     private void StopTheCar()
     {     
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.useGravity = false;
         rb.isKinematic = true;
@@ -314,7 +314,7 @@ public class CarController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position + rb.centerOfMass, 0.2f);
-        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + rb.velocity);
+        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + rb.linearVelocity);
     }
 
     private void OnEnable()

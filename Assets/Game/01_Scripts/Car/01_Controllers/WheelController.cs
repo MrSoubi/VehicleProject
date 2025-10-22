@@ -34,13 +34,13 @@ public class WheelController : MonoBehaviour
     {
         // Mesh rotation around X axis depending on the car velocity
         // Bug with the rotation, something to do with the forward of the velocity and of the wheel.
-        mesh.transform.Rotate(Mathf.Rad2Deg * carRigidBody.velocity.magnitude / data.wheelRadius * Time.deltaTime, 0, 0);
+        mesh.transform.Rotate(Mathf.Rad2Deg * carRigidBody.linearVelocity.magnitude / data.wheelRadius * Time.deltaTime, 0, 0);
     }
 
     // Update is called once per frame
     void FixedUpdate(){
         transform.rotation = carTransform.rotation;
-        float steeringAngle = data.steeringSpeedFactor.Evaluate(carRigidBody.velocity.magnitude / carData.maxSpeed) * data.steeringInputFactor.Evaluate(Mathf.Abs(steerInput)) * Mathf.Sign(steerInput) * data.maxSteeringAngle;
+        float steeringAngle = data.steeringSpeedFactor.Evaluate(carRigidBody.linearVelocity.magnitude / carData.maxSpeed) * data.steeringInputFactor.Evaluate(Mathf.Abs(steerInput)) * Mathf.Sign(steerInput) * data.maxSteeringAngle;
         transform.Rotate(transform.up, steeringAngle);
 
         LayerMask mask = LayerMask.GetMask("Ground");
@@ -98,7 +98,7 @@ public class WheelController : MonoBehaviour
         Vector3 accelDir = transform.forward;
         if (Mathf.Abs(accelInput) > 0.0f){
 
-            float carSpeed = Vector3.Dot(carTransform.forward, carRigidBody.velocity);
+            float carSpeed = Vector3.Dot(carTransform.forward, carRigidBody.linearVelocity);
             float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(carSpeed) / carData.maxSpeed);
 
             float availableTorque = carData.powerCurve.Evaluate(normalizedSpeed) * accelInput;
