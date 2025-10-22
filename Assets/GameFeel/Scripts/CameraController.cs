@@ -2,27 +2,27 @@ using UnityEngine;
 
 public class CarCameraController3Cases : MonoBehaviour
 {
-    [Header("Cible à suivre")]
+    [Header("Cible ï¿½ suivre")]
     public Transform target;           // Transform de la voiture
-    public Rigidbody carRigidbody;     // Pour connaître la vélocité
+    public Rigidbody carRigidbody;     // Pour connaï¿½tre la vï¿½locitï¿½
 
-    [Header("Détection voiture en l’air")]
+    [Header("Dï¿½tection voiture en lï¿½air")]
     public RSO_IsCarGrounded iscarGrounded;
 
-    [Header("Positionnement caméra")]
-    public float distance = 5f;        // Distance idéale derrière la voiture
-    public float height = 2f;          // Hauteur de la caméra
+    [Header("Positionnement camï¿½ra")]
+    public float distance = 5f;        // Distance idï¿½ale derriï¿½re la voiture
+    public float height = 2f;          // Hauteur de la camï¿½ra
 
     [Header("Recentrage auto (rotation)")]
     public float returnSpeed = 5f;     // Vitesse de recentrage automatique
-    public float defaultPitch = 10f;   // Inclinaison verticale par défaut quand on se recentre
+    public float defaultPitch = 10f;   // Inclinaison verticale par dï¿½faut quand on se recentre
     public float minPitch = -60f;
     public float maxPitch = 60f;
 
     [Header("Damping de suivi (position)")]
-    public float followDamping = 5f;        // Vitesse de “rattrapage” de la position cible
-    public float minCameraDistance = 2f;    // Distance min entre la caméra et la voiture
-    public float maxCameraDistance = 10f;   // Distance max entre la caméra et la voiture
+    public float followDamping = 5f;        // Vitesse de ï¿½rattrapageï¿½ de la position cible
+    public float minCameraDistance = 2f;    // Distance min entre la camï¿½ra et la voiture
+    public float maxCameraDistance = 10f;   // Distance max entre la camï¿½ra et la voiture
 
     // Variables internes pour la rotation
     private float yaw = 0f;   // Rotation horizontale (axe Y)
@@ -30,7 +30,7 @@ public class CarCameraController3Cases : MonoBehaviour
 
     private void Start()
     {
-        // Initialiser la caméra derrière la voiture (optionnel)
+        // Initialiser la camï¿½ra derriï¿½re la voiture (optionnel)
         if (target != null)
         {
             yaw = target.eulerAngles.y;
@@ -43,7 +43,7 @@ public class CarCameraController3Cases : MonoBehaviour
         if (target == null || carRigidbody == null)
             return;
 
-        // La caméra se recentre automatiquement en permanence (aucun contrôle joystick)
+        // La camï¿½ra se recentre automatiquement en permanence (aucun contrï¿½le joystick)
         AutoCenterCamera();
     }
 
@@ -52,14 +52,14 @@ public class CarCameraController3Cases : MonoBehaviour
         if (target == null)
             return;
 
-        // 1) Calcul de la rotation finale de la caméra
+        // 1) Calcul de la rotation finale de la camï¿½ra
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
 
-        // 2) Position idéale : offset local [0, height, -distance]
+        // 2) Position idï¿½ale : offset local [0, height, -distance]
         Vector3 desiredPosition = target.position + rotation * new Vector3(0f, height, -distance);
 
-        // 3) Détermination de la direction de la vélocité
-        Vector3 velocity = carRigidbody.velocity;
+        // 3) Dï¿½termination de la direction de la vï¿½locitï¿½
+        Vector3 velocity = carRigidbody.linearVelocity;
         float speed = velocity.magnitude;
 
         // Si la vitesse est trop faible, damping global
@@ -70,30 +70,30 @@ public class CarCameraController3Cases : MonoBehaviour
         }
         else
         {
-            // On applique un damping uniquement dans l’axe de la vélocité
+            // On applique un damping uniquement dans lï¿½axe de la vï¿½locitï¿½
             Vector3 velocityDir = velocity.normalized;
             Vector3 currentPos = transform.position;
             Vector3 toDesired = desiredPosition - currentPos;
 
-            // Projection parallèle et perpendiculaire
+            // Projection parallï¿½le et perpendiculaire
             Vector3 parallel = Vector3.Project(toDesired, velocityDir);
             Vector3 perpendicular = toDesired - parallel;
 
-            // Lerp seulement sur la composante parallèle
+            // Lerp seulement sur la composante parallï¿½le
             Vector3 parallelDamped = Vector3.Lerp(Vector3.zero, parallel, followDamping * Time.deltaTime);
             Vector3 nextPos = currentPos + perpendicular + parallelDamped;
 
             ApplyDistanceClampAndSetPosition(nextPos);
         }
 
-        // Oriente la caméra vers la voiture (légèrement au-dessus, si désiré)
+        // Oriente la camï¿½ra vers la voiture (lï¿½gï¿½rement au-dessus, si dï¿½sirï¿½)
         Vector3 lookTarget = target.position + Vector3.up * height * 0.5f;
         transform.LookAt(lookTarget);
     }
 
     /// <summary>
     /// Recentrage automatique de la rotation (yaw/pitch),
-    /// selon 2 cas : au sol (orientation de la voiture) ou en l’air (vélocité).
+    /// selon 2 cas : au sol (orientation de la voiture) ou en lï¿½air (vï¿½locitï¿½).
     /// </summary>
     private void AutoCenterCamera()
     {
@@ -102,8 +102,8 @@ public class CarCameraController3Cases : MonoBehaviour
 
         if (!iscarGrounded.Value)
         {
-            // CAS "en l’air" : aligné sur la direction de la vélocité
-            Vector3 vel = carRigidbody.velocity;
+            // CAS "en lï¿½air" : alignï¿½ sur la direction de la vï¿½locitï¿½
+            Vector3 vel = carRigidbody.linearVelocity;
             float velAngle = Mathf.Atan2(vel.x, vel.z) * Mathf.Rad2Deg;
             desiredYaw = velAngle;
             desiredPitch = pitch;  // on ne change pas le pitch
@@ -122,7 +122,7 @@ public class CarCameraController3Cases : MonoBehaviour
     }
 
     /// <summary>
-    /// Applique la limite min/max de distance et définit la position de la caméra.
+    /// Applique la limite min/max de distance et dï¿½finit la position de la camï¿½ra.
     /// </summary>
     private void ApplyDistanceClampAndSetPosition(Vector3 candidatePos)
     {
@@ -130,13 +130,13 @@ public class CarCameraController3Cases : MonoBehaviour
 
         if (distToTarget < minCameraDistance)
         {
-            // Trop près : on pousse la caméra à minCameraDistance
+            // Trop prï¿½s : on pousse la camï¿½ra ï¿½ minCameraDistance
             candidatePos = target.position +
                            (candidatePos - target.position).normalized * minCameraDistance;
         }
         else if (distToTarget > maxCameraDistance)
         {
-            // Trop loin : on rapproche la caméra à maxCameraDistance
+            // Trop loin : on rapproche la camï¿½ra ï¿½ maxCameraDistance
             candidatePos = target.position +
                            (candidatePos - target.position).normalized * maxCameraDistance;
         }

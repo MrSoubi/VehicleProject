@@ -21,6 +21,6 @@ public class SparksGenerator : MonoBehaviour
     void GenerateSparks(Vector3 position, Vector3 velocity, Quaternion orientation)
     {
         GameObject sparks = Instantiate(prefab_Sparks, position, orientation);
-        sparks.GetComponent<Rigidbody>().velocity = velocity;
+        sparks.GetComponent<Rigidbody>().linearVelocity = velocity;
     }
 }

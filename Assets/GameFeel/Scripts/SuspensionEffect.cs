@@ -2,37 +2,37 @@ using UnityEngine;
 
 public class SuspensionEffect : MonoBehaviour
 {
-    [Header("Références")]
-    [Tooltip("Transform de l'objet qui contrôle réellement l'orientation/position du véhicule (ex: GameObject parent).")]
+    [Header("Rï¿½fï¿½rences")]
+    [Tooltip("Transform de l'objet qui contrï¿½le rï¿½ellement l'orientation/position du vï¿½hicule (ex: GameObject parent).")]
     public Transform carTransform;
 
-    [Tooltip("Rigidbody du véhicule (celui qui a la physique).")]
+    [Tooltip("Rigidbody du vï¿½hicule (celui qui a la physique).")]
     public Rigidbody carRigidbody;
 
-    [Header("Réglages du tangage (pitch)")]
-    [Tooltip("Facteur d'intensité de l'inclinaison avant/arrière.")]
+    [Header("Rï¿½glages du tangage (pitch)")]
+    [Tooltip("Facteur d'intensitï¿½ de l'inclinaison avant/arriï¿½re.")]
     public float pitchFactor = 0.1f;
 
-    [Header("Réglages de la gîte (roll)")]
-    [Tooltip("Facteur d'intensité de l'inclinaison gauche/droite.")]
+    [Header("Rï¿½glages de la gï¿½te (roll)")]
+    [Tooltip("Facteur d'intensitï¿½ de l'inclinaison gauche/droite.")]
     public float rollFactor = 0.1f;
 
     [Header("Vitesse de lissage")]
-    [Tooltip("Plus c’est grand, plus la transition est rapide (pour pitch et roll).")]
+    [Tooltip("Plus cï¿½est grand, plus la transition est rapide (pour pitch et roll).")]
     public float smoothSpeed = 2f;
 
     // Variables internes pour stocker les angles courants
     private float currentPitch;
     private float currentRoll;
 
-    // Vitesse du véhicule au frame précédent, pour calculer la variation
+    // Vitesse du vï¿½hicule au frame prï¿½cï¿½dent, pour calculer la variation
     private Vector3 lastVelocity;
 
     private void Start()
     {
         if (carRigidbody != null)
         {
-            lastVelocity = carRigidbody.velocity;
+            lastVelocity = carRigidbody.linearVelocity;
         }
     }
 
@@ -40,36 +40,36 @@ public class SuspensionEffect : MonoBehaviour
     {
         if (carRigidbody == null || carTransform == null) return;
 
-        // Récupère la vélocité actuelle
-        Vector3 currentVelocity = carRigidbody.velocity;
+        // Rï¿½cupï¿½re la vï¿½locitï¿½ actuelle
+        Vector3 currentVelocity = carRigidbody.linearVelocity;
 
-        // Calcule la différence de vélocité (accélération brute)
+        // Calcule la diffï¿½rence de vï¿½locitï¿½ (accï¿½lï¿½ration brute)
         Vector3 velocityChange = currentVelocity - lastVelocity;
 
-        // Divise par deltaTime pour obtenir une accélération sur la frame
+        // Divise par deltaTime pour obtenir une accï¿½lï¿½ration sur la frame
         Vector3 worldAcceleration = velocityChange / Time.deltaTime;
 
-        // Convertit cette accélération en repère local (par rapport à la voiture)
+        // Convertit cette accï¿½lï¿½ration en repï¿½re local (par rapport ï¿½ la voiture)
         Vector3 localAcceleration = carTransform.InverseTransformDirection(worldAcceleration);
 
         // --- Tangage (Pitch) ---
-        // Si localAcceleration.z est positif, la voiture accélère vers l'avant,
-        // on incline donc le nez vers le haut. On peut inverser si on veut l’effet inverse.
+        // Si localAcceleration.z est positif, la voiture accï¿½lï¿½re vers l'avant,
+        // on incline donc le nez vers le haut. On peut inverser si on veut lï¿½effet inverse.
         float targetPitch = -localAcceleration.z * pitchFactor;
         currentPitch = Mathf.Lerp(currentPitch, targetPitch, smoothSpeed * Time.deltaTime);
 
-        // --- Gîte (Roll) ---
-        // Si localAcceleration.x est positif, la voiture dérive sur la droite (tournant à droite),
-        // elle doit donc s’incliner sur la gauche (rouler à gauche).
+        // --- Gï¿½te (Roll) ---
+        // Si localAcceleration.x est positif, la voiture dï¿½rive sur la droite (tournant ï¿½ droite),
+        // elle doit donc sï¿½incliner sur la gauche (rouler ï¿½ gauche).
         // Ajustez le signe si vous souhaitez un comportement inverse.
         float targetRoll = localAcceleration.x * rollFactor;
         currentRoll = Mathf.Lerp(currentRoll, targetRoll, smoothSpeed * Time.deltaTime);
 
         // Applique la rotation sur le mesh : X = pitch, Z = roll
-        // Ici on ignore l'axe Y, mais vous pouvez le gérer si besoin
+        // Ici on ignore l'axe Y, mais vous pouvez le gï¿½rer si besoin
         transform.localRotation = Quaternion.Euler(currentPitch, 0f, currentRoll);
 
-        // Stocke la vélocité pour la prochaine frame
+        // Stocke la vï¿½locitï¿½ pour la prochaine frame
         lastVelocity = currentVelocity;
     }
 }

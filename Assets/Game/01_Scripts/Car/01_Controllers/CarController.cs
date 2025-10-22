@@ -184,7 +184,7 @@ public class CarController : MonoBehaviour
         if (!collision.gameObject.CompareTag("Props")) return;
 
         Quaternion orientation = Quaternion.FromToRotation(transform.position, collision.contacts[0].point);
-        metalCollision.trigger?.Invoke(collision.contacts[0].point, rb.velocity, orientation);
+        metalCollision.trigger?.Invoke(collision.contacts[0].point, rb.linearVelocity, orientation);
     }
 
     Vector3 GetFloorNormal()
